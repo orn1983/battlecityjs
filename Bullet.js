@@ -41,7 +41,7 @@ Bullet.prototype.zappedSound = new Audio(
 Bullet.prototype.cx = 200;
 Bullet.prototype.cy = 200;
 Bullet.prototype.vel = 0;
-Bullet.prototype.direction = UP;
+Bullet.prototype.direction = entityManager.DIRECTION_UP;
 Bullet.prototype.strength = 1;
 Bullet.prototype.player = true;
 
@@ -54,10 +54,10 @@ Bullet.prototype.update = function (du) {
 	
 	// move bullet
 	switch (this.direction) {
-		UP	  : this.cy -= vel * du; break;
-		DOWN  : this.cy += vel * du; break;
-		RIGHT : this.cx += vel * du; break;
-		LEFT  : this.cx -= vel * du; break;
+		case(entityManager.DIRECTION_UP)	: this.cy -= vel * du; break;
+		case(entityManager.DIRECTION_DOWN)  : this.cy += vel * du; break;
+		case(entityManager.DIRECTION_RIGHT) : this.cx += vel * du; break;
+		case(entityManager.DIRECTION_LEFT)  : this.cx -= vel * du; break;
 	}
 
     //
