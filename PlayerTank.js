@@ -36,8 +36,6 @@ PlayerTank.prototype.rememberResets = function () {
     this.reset_cx = this.cx;
     this.reset_cy = this.cy;
 
-    //TODO: Decide how to handle rotation. Easiest hack right now
-    //could be something like int 0,1,2,3 for up, down, left, right
     this.reset_orientation = this.orientation;
 };
 
@@ -111,6 +109,7 @@ PlayerTank.prototype.warpSound = new Audio(
 
 PlayerTank.prototype.update = function (du) {
     spatialManager.unregister(this);
+
     if (this._isDeadNow)
         return entityManager.KILL_ME_NOW;
 

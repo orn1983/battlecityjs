@@ -139,8 +139,8 @@ function requestPreloads() {
 var g_sprites = {};
 
 function preloadDone() {
-
-    g_sprites.playerTank1  = new Sprite(g_images.spritesheet, 0, 0, 16, 16, 1, 1);
+    g_sprites.playerTank1  = new animatedSprite(g_images.spritesheet, 0, 0, 16, 16, 2, 1, 1);
+//    g_sprites.playerTank1  = new Sprite(g_images.spritesheet, 0, 0, 16, 16, 1, 1);
     //g_sprites.ship2 = new Sprite(g_images.ship2);
     //g_sprites.rock  = new Sprite(g_images.rock);
 
