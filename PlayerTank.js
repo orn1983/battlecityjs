@@ -125,7 +125,7 @@ PlayerTank.prototype.update = function (du) {
 
     var sliding = false;
     if(this.slideCounter > 0)
-    sliding = true;
+        sliding = true;
 
     if(sliding) {
         //HD NB: It's possible we may have to check first for a keypress,
