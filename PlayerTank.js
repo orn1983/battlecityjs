@@ -131,12 +131,12 @@ PlayerTank.prototype.computeSubStep = function (du) {
   if (keys[this.KEY_UP])
   {
       thrustX = 0;
-      thrustY = 0.2;
+      thrustY = -0.2;
   }
   if (keys[this.KEY_DOWN])
   {
       thrustX = 0;
-      thrustY = -0.2;
+      thrustY = 0.2;
   }
   if (keys[this.KEY_LEFT])
   {
