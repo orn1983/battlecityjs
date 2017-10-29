@@ -160,7 +160,7 @@ PlayerTank.prototype.update = function (du) {
             this.move(this.cx, this.cy + this.moveDistance);
     }
     if (keys[this.KEY_LEFT]) {
-            this.orientation = entityManager.DIRECTION_LEFT;
+        this.orientation = entityManager.DIRECTION_LEFT;
         if(!sliding)
             this.move(this.cx - this.moveDistance, this.cy);
     }
