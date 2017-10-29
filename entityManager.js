@@ -100,14 +100,15 @@ init: function() {
     //this._generateShip();
 },
 
-fireBullet: function(cx, cy, velX, velY, rotation) {
+fireBullet: function(cx, cy, vel, direction, strength, player, tank) {
     this._bullets.push(new Bullet({
-        cx   : cx,
-        cy   : cy,
-        velX : velX,
-        velY : velY,
-
-        rotation : rotation
+        cx   		: cx,
+        cy			: cy,
+        vel  		: vel,
+		direction 	: direction,
+        strength 	: strength,
+		player 	 	: player,
+		tank 	 	: tank
     }));
 },
 

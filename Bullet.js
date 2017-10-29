@@ -38,39 +38,35 @@ Bullet.prototype.zappedSound = new Audio(
     "sounds/bulletZapped.ogg");
     
 // Initial, inheritable, default values
-Bullet.prototype.rotation = 0;
 Bullet.prototype.cx = 200;
 Bullet.prototype.cy = 200;
-Bullet.prototype.velX = 1;
-Bullet.prototype.velY = 1;
+Bullet.prototype.vel = 0;
+Bullet.prototype.direction = UP;
+Bullet.prototype.strength = 1;
+Bullet.prototype.player = true;
 
 // Convert times from milliseconds to "nominal" time units.
-Bullet.prototype.lifeSpan = 3000 / NOMINAL_UPDATE_INTERVAL;
+//Bullet.prototype.lifeSpan = 3000 / NOMINAL_UPDATE_INTERVAL;
 
 Bullet.prototype.update = function (du) {
 
     spatialManager.unregister(this);
+	
+	// move bullet
+	switch (this.direction) {
+		UP	  : this.cy -= vel * du; break;
+		DOWN  : this.cy += vel * du; break;
+		RIGHT : this.cx += vel * du; break;
+		LEFT  : this.cx -= vel * du; break;
+	}
 
-    this.lifeSpan -= du;
-    if (this.lifeSpan < 0) return entityManager.KILL_ME_NOW;
-
-    this.cx += this.velX * du;
-    this.cy += this.velY * du;
-
-    this.rotation += 1 * du;
-    this.rotation = util.wrapRange(this.rotation,
-                                   0, consts.FULL_CIRCLE);
-
-    this.wrapPosition();
-    
-    // TODO? NO, ACTUALLY, I JUST DID THIS BIT FOR YOU! :-)
     //
     // Handle collisions
     //
     var hitEntity = this.findHitEntity();
     if (hitEntity) {
         var canTakeHit = hitEntity.takeBulletHit;
-        if (canTakeHit) canTakeHit.call(hitEntity); 
+        if (canTakeHit) canTakeHit.call(hitEntity, this); 
         return entityManager.KILL_ME_NOW;
     }
     
@@ -82,7 +78,9 @@ Bullet.prototype.getRadius = function () {
     return 4;
 };
 
-Bullet.prototype.takeBulletHit = function () {
+
+// takes bullet argument
+Bullet.prototype.takeBulletHit = function (bullet) {
     this.kill();
     
     // Make a noise when I am zapped by another bullet
@@ -91,15 +89,8 @@ Bullet.prototype.takeBulletHit = function () {
 
 Bullet.prototype.render = function (ctx) {
 
-    var fadeThresh = Bullet.prototype.lifeSpan / 3;
-
-    if (this.lifeSpan < fadeThresh) {
-        ctx.globalAlpha = this.lifeSpan / fadeThresh;
-    }
-
     g_sprites.bullet.drawCentredAt(
         ctx, this.cx, this.cy, this.rotation
     );
 
-    ctx.globalAlpha = 1;
 };
