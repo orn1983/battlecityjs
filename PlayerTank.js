@@ -93,7 +93,7 @@ PlayerTank.prototype.frozenCounter = 0;
 //HD: This is how far you move in a single step, either through a keypress
 //or by sliding on ice. (I picked the value simply because it's what part
 //used for the thrust value in Asteroids)
-PlayerTank.prototype.moveDistance = 0.2
+PlayerTank.prototype.moveDistance = 0.2;
 
 //HD: Starting off facing up. Defined as a global in entityManager
 PlayerTank.prototype.orientation = entityManager.DIRECTION_UP;
@@ -119,69 +119,61 @@ PlayerTank.prototype.warpSound = new Audio(
 
 
 PlayerTank.prototype.update = function (du) {
-
-  spatialManager.unregister(this);
-  if (this._isDeadNow)
+    spatialManager.unregister(this);
+    if (this._isDeadNow)
     return entityManager.KILL_ME_NOW;
 
-  var sliding = false;
-  if(this.slideCounter > 0)
+    var sliding = false;
+    if(this.slideCounter > 0)
     sliding = true;
 
-  if(sliding)
-  {
-    //HD NB: It's possible we may have to check first for a keypress,
-    //to see if the orientation has changed. Let's try this version for now,
-    //since it makes for simpler code.
-    switch(this.orientation)
-    {
-      case(entityManager.DIRECTION_UP):
-        this.move(this.cx, this.cy - this.moveDistance);
-        break;
-      case(entityManager.DIRECTION_DOWN):
-        this.move(this.cx, this.cy + this.moveDistance);
-        break;
-      case(entityManager.DIRECTION_LEFT):
-        this.move(this.cx - this.moveDistance, this.cy);
-        break;
-      case(entityManager.DIRECTION_RIGHT):
-        this.move(this.cx + this.moveDistance, this.cy);
-        break;
+    if(sliding) {
+        //HD NB: It's possible we may have to check first for a keypress,
+        //to see if the orientation has changed. Let's try this version for now,
+        //since it makes for simpler code.
+        switch(this.orientation) {
+            case(entityManager.DIRECTION_UP):
+                this.move(this.cx, this.cy - this.moveDistance);
+                break;
+            case(entityManager.DIRECTION_DOWN):
+                this.move(this.cx, this.cy + this.moveDistance);
+                break;
+            case(entityManager.DIRECTION_LEFT):
+                this.move(this.cx - this.moveDistance, this.cy);
+                break;
+            case(entityManager.DIRECTION_RIGHT):
+                this.move(this.cx + this.moveDistance, this.cy);
+                break;
+        }
+        this.SlideCounter -= 1;
     }
-    this.SlideCounter -= 1;
-  }
 
-  //Check for keypress, but don't move if you've already slid.
-  if (keys[this.KEY_UP])
-  {
-    this.orientation = entityManager.DIRECTION_UP;
-    if(!sliding)
-      this.move(this.cx, this.cy - this.moveDistance);
-  }
-  if (keys[this.KEY_DOWN])
-  {
-    this.orientation = entityManager.DIRECTION_DOWN;
-    if(!sliding)
-      this.move(this.cx, this.cy + this.moveDistance);
+    //Check for keypress, but don't move if you've already slid.
+    if (keys[this.KEY_UP]) {
+        this.orientation = entityManager.DIRECTION_UP;
+        if(!sliding)
+            this.move(this.cx, this.cy - this.moveDistance);
+    }
+    if (keys[this.KEY_DOWN]) {
+        this.orientation = entityManager.DIRECTION_DOWN;
+        if(!sliding)
+            this.move(this.cx, this.cy + this.moveDistance);
+    }
+    if (keys[this.KEY_LEFT]) {
+            this.orientation = entityManager.DIRECTION_LEFT;
+        if(!sliding)
+            this.move(this.cx - this.moveDistance, this.cy);
+    }
+    if (keys[this.KEY_RIGHT]) {
+        this.orientation = entityManager.DIRECTION_RIGHT;
+        if(!sliding)
+          this.move(this.cx + this.moveDistance, this.cy);
+    }
 
-  }
-  if (keys[this.KEY_LEFT])
-  {
-    this.orientation = entityManager.DIRECTION_LEFT;
-    if(!sliding)
-        this.move(this.cx - this.moveDistance, this.cy);
-  }
-  if (keys[this.KEY_RIGHT])
-  {
-    this.orientation = entityManager.DIRECTION_RIGHT;
-    if(!sliding)
-      this.move(this.cx + this.moveDistance, this.cy);
-  }
+    //HD: Handle firing. (Remember that we can fire even if we can't move.)
+    this.maybeFireBullet();
 
-  //HD: Handle firing. (Remember that we can fire even if we can't move.)
-  this.maybeFireBullet();
-
-  spatialManager.register(this);
+    spatialManager.register(this);
 
 };
 
