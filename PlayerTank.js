@@ -230,7 +230,7 @@ PlayerTank.prototype.maybeFireBullet = function () {
       //Also, this.rotation is now only 0..3, so it'll break the code within
       //firebullet() in some way.
       entityManager.fireBullet(
-         turretX, turretY, velX, velY, this.rotation);
+         turretX, turretY, velX, velY, this.orientation);
 
     }
 
