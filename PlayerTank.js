@@ -93,7 +93,7 @@ PlayerTank.prototype.frozenCounter = 0;
 //HD: This is how far you move in a single step, either through a keypress
 //or by sliding on ice. (I picked the value simply because it's what part
 //used for the thrust value in Asteroids)
-PlayerTank.prototype.moveDistance = 0.2;
+PlayerTank.prototype.moveDistance = 2;
 
 //HD: Starting off facing up. Defined as a global in entityManager
 PlayerTank.prototype.orientation = entityManager.DIRECTION_UP;
@@ -121,7 +121,7 @@ PlayerTank.prototype.warpSound = new Audio(
 PlayerTank.prototype.update = function (du) {
     spatialManager.unregister(this);
     if (this._isDeadNow)
-    return entityManager.KILL_ME_NOW;
+        return entityManager.KILL_ME_NOW;
 
     var sliding = false;
     if(this.slideCounter > 0)
@@ -133,16 +133,16 @@ PlayerTank.prototype.update = function (du) {
         //since it makes for simpler code.
         switch(this.orientation) {
             case(entityManager.DIRECTION_UP):
-                this.move(this.cx, this.cy - this.moveDistance);
+                this.move(du, this.cx, this.cy - this.moveDistance);
                 break;
             case(entityManager.DIRECTION_DOWN):
-                this.move(this.cx, this.cy + this.moveDistance);
+                this.move(du, this.cx, this.cy + this.moveDistance);
                 break;
             case(entityManager.DIRECTION_LEFT):
-                this.move(this.cx - this.moveDistance, this.cy);
+                this.move(du, this.cx - this.moveDistance, this.cy);
                 break;
             case(entityManager.DIRECTION_RIGHT):
-                this.move(this.cx + this.moveDistance, this.cy);
+                this.move(du, this.cx + this.moveDistance, this.cy);
                 break;
         }
         this.SlideCounter -= 1;
@@ -152,22 +152,23 @@ PlayerTank.prototype.update = function (du) {
     if (keys[this.KEY_UP]) {
         this.orientation = entityManager.DIRECTION_UP;
         if(!sliding)
-            this.move(this.cx, this.cy - this.moveDistance);
+            this.move(du, this.cx, this.cy - this.moveDistance);
     }
     if (keys[this.KEY_DOWN]) {
         this.orientation = entityManager.DIRECTION_DOWN;
         if(!sliding)
-            this.move(this.cx, this.cy + this.moveDistance);
+            this.move(du, this.cx, this.cy + this.moveDistance);
     }
     if (keys[this.KEY_LEFT]) {
         this.orientation = entityManager.DIRECTION_LEFT;
+        console.log("cx - moveDistance og cy " + this.cx + " - "+this.moveDistance + " , " + this.cy);
         if(!sliding)
-            this.move(this.cx - this.moveDistance, this.cy);
+            this.move(du, this.cx - this.moveDistance, this.cy);
     }
     if (keys[this.KEY_RIGHT]) {
         this.orientation = entityManager.DIRECTION_RIGHT;
         if(!sliding)
-          this.move(this.cx + this.moveDistance, this.cy);
+          this.move(du, this.cx + this.moveDistance, this.cy);
     }
 
     //HD: Handle firing. (Remember that we can fire even if we can't move.)
@@ -179,25 +180,22 @@ PlayerTank.prototype.update = function (du) {
 
 PlayerTank.prototype.move = function(du, newX, newY)
 {
-
-  //HD: Check if we're driving into anything. If not, move.
-  var hitEntity = this.findHitEntity(newX, newY);
-  if (!hitEntity)
-  {
-    this.cx = newX;
-    this.cy = newY;
-    //HD: Old substep code. Commenting it out in case we need it for
-    //reference later
-    //var steps = this.numSubSteps;
-    //var dStep = du / steps;
-    //for (var i = 0; i < steps; ++i)
-    //{
-    //    this.computeSubStep(dStep);
-    //}
+    //HD: Check if we're driving into anything. If not, move.
+    var hitEntity = this.findHitEntity(newX, newY);
+    if (!hitEntity)
+    {
+        this.cx = newX;
+        this.cy = newY;
+        //HD: Old substep code. Commenting it out in case we need it for
+        //reference later
+        //var steps = this.numSubSteps;
+        //var dStep = du / steps;
+        //for (var i = 0; i < steps; ++i)
+        //{
+        //    this.computeSubStep(dStep);
+        //}
   }
 }
-
-
 
 PlayerTank.prototype.maybeFireBullet = function () {
 
@@ -205,24 +203,23 @@ PlayerTank.prototype.maybeFireBullet = function () {
 
     var turretX, turretY;
 
-    switch(this.orientation)
-    {
-      case(entityManager.DIRECTION_UP):
-        turretX = this.cx;
-        turretY = this.cy - this.halfHeight;
-        break;
-      case(entityManager.DIRECTION_DOWN):
-        turretX = this.cx;
-        turretY = this.cy + this.halfHeight;
-        break;
-      case(entityManager.DIRECTION_LEFT):
-        turretX = this.cx - this.halfWidth;
-        turretY = this.cy;
-        break;
-      case(entityManager.DIRECTION_RIGHT):
-        turretX = this.cx + this.halfWidth;
-        turretY = this.cy;
-        break;
+    switch(this.orientation) {
+        case(entityManager.DIRECTION_UP):
+            turretX = this.cx;
+            turretY = this.cy - this.halfHeight;
+            break;
+        case(entityManager.DIRECTION_DOWN):
+            turretX = this.cx;
+            turretY = this.cy + this.halfHeight;
+            break;
+        case(entityManager.DIRECTION_LEFT):
+            turretX = this.cx - this.halfWidth;
+            turretY = this.cy;
+            break;
+        case(entityManager.DIRECTION_RIGHT):
+            turretX = this.cx + this.halfWidth;
+            turretY = this.cy;
+            break;
       }
 
       //HD: We send in "this" so that entityManager can calculate
@@ -234,17 +231,17 @@ PlayerTank.prototype.maybeFireBullet = function () {
 };
 
 PlayerTank.prototype.takeBulletHit = function (bullet) {
-  //HD: Player got shot by enemy
-  if((this.isPlayer) && (!bullet.isPlayer))
-    this.kill();
+    //HD: Player got shot by enemy
+    if((this.isPlayer) && (!bullet.isPlayer))
+        this.kill();
 
-  //HD: Enemy got shot by player. We'll have to do other things here later on,
-  //such as incrementing the score for the player who owned the bullet,
-  //and possibly simply lower the tank's health instead of killing it.
-  if((!this.isPlayer) && (bullet.isPlayer))
-      this.kill();
+    //HD: Enemy got shot by player. We'll have to do other things here later on,
+    //such as incrementing the score for the player who owned the bullet,
+    //and possibly simply lower the tank's health instead of killing it.
+    if((!this.isPlayer) && (bullet.isPlayer))
+        this.kill();
 
-};
+    };
 
 PlayerTank.prototype.reset = function () {
     this.setPos(this.reset_cx, this.reset_cy);
