@@ -27,15 +27,6 @@ function PlayerTank(descr) {
     this.setup(descr);
 
     this.rememberResets();
-
-    // Default sprite, if not otherwise specified
-
-    //TODO: Swap out sprite code for Tank
-    this.sprite = this.sprite || g_sprites.ship;
-
-    // Set normal drawing scale
-    this._scale = 1;
-
 };
 
 PlayerTank.prototype = new Entity();
@@ -132,16 +123,16 @@ PlayerTank.prototype.update = function (du) {
         //to see if the orientation has changed. Let's try this version for now,
         //since it makes for simpler code.
         switch(this.orientation) {
-            case(entityManager.DIRECTION_UP):
+            case(consts.DIRECTION_UP):
                 this.move(du, this.cx, this.cy - this.moveDistance);
                 break;
-            case(entityManager.DIRECTION_DOWN):
+            case(consts.DIRECTION_DOWN):
                 this.move(du, this.cx, this.cy + this.moveDistance);
                 break;
-            case(entityManager.DIRECTION_LEFT):
+            case(consts.DIRECTION_LEFT):
                 this.move(du, this.cx - this.moveDistance, this.cy);
                 break;
-            case(entityManager.DIRECTION_RIGHT):
+            case(consts.DIRECTION_RIGHT):
                 this.move(du, this.cx + this.moveDistance, this.cy);
                 break;
         }
@@ -150,23 +141,22 @@ PlayerTank.prototype.update = function (du) {
 
     //Check for keypress, but don't move if you've already slid.
     if (keys[this.KEY_UP]) {
-        this.orientation = entityManager.DIRECTION_UP;
+        this.orientation = consts.DIRECTION_UP;
         if(!sliding)
             this.move(du, this.cx, this.cy - this.moveDistance);
     }
     if (keys[this.KEY_DOWN]) {
-        this.orientation = entityManager.DIRECTION_DOWN;
+        this.orientation = consts.DIRECTION_DOWN;
         if(!sliding)
             this.move(du, this.cx, this.cy + this.moveDistance);
     }
     if (keys[this.KEY_LEFT]) {
-        this.orientation = entityManager.DIRECTION_LEFT;
-        console.log("cx - moveDistance og cy " + this.cx + " - "+this.moveDistance + " , " + this.cy);
+        this.orientation = consts.DIRECTION_LEFT;
         if(!sliding)
             this.move(du, this.cx - this.moveDistance, this.cy);
     }
     if (keys[this.KEY_RIGHT]) {
-        this.orientation = entityManager.DIRECTION_RIGHT;
+        this.orientation = consts.DIRECTION_RIGHT;
         if(!sliding)
           this.move(du, this.cx + this.moveDistance, this.cy);
     }
@@ -204,19 +194,19 @@ PlayerTank.prototype.maybeFireBullet = function () {
     var turretX, turretY;
 
     switch(this.orientation) {
-        case(entityManager.DIRECTION_UP):
+        case(consts.DIRECTION_UP):
             turretX = this.cx;
             turretY = this.cy - this.halfHeight;
             break;
-        case(entityManager.DIRECTION_DOWN):
+        case(consts.DIRECTION_DOWN):
             turretX = this.cx;
             turretY = this.cy + this.halfHeight;
             break;
-        case(entityManager.DIRECTION_LEFT):
+        case(consts.DIRECTION_LEFT):
             turretX = this.cx - this.halfWidth;
             turretY = this.cy;
             break;
-        case(entityManager.DIRECTION_RIGHT):
+        case(consts.DIRECTION_RIGHT):
             turretX = this.cx + this.halfWidth;
             turretY = this.cy;
             break;
@@ -251,14 +241,7 @@ PlayerTank.prototype.reset = function () {
 };
 
 PlayerTank.prototype.render = function (ctx) {
-    var origScale = this.sprite.scale;
-    // pass my scale into the sprite, for drawing
-    this.sprite.scale = this._scale;
-
-    //TODO: Change either how I pass in this.rotation, or how the
-    //Sprite.drawCentredAt function receives rotation values.
     this.sprite.drawCentredAt(
-	ctx, this.cx, this.cy, this.rotation
+        ctx, this.cx, this.cy, this.orientation
     );
-    this.sprite.scale = origScale;
 };

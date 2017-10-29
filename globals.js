@@ -16,6 +16,8 @@ var g_ctx = g_canvas.getContext("2d");
 g_ctx.webkitImageSmoothingEnabled = false;
 g_ctx.mozImageSmoothingEnabled = false;
 g_ctx.imageSmoothingEnabled = false;
+// Grid is symmetric, so g_gridSize N means NxN
+var g_gridSize = 13;
 
 // The "nominal interval" is the one that all of our time-based units are
 // calibrated to e.g. a velocity unit is "pixels per nominal interval"

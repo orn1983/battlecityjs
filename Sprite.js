@@ -14,34 +14,52 @@
 
 // Construct a "sprite" from the given `image`,
 //
-function Sprite(image) {
+function Sprite(image, sx, sy, width, height, numCols=1, numRows=1) {
     this.image = image;
+    if (sx !== undefined && sy !== undefined && width && height && numCols && numRows) {
+        this.width = width;
+        this.height = height;
+        this.sx = sx;
+        this.sy = sy;
+        // Figure out the scale at which to draw from the number of canvas squares
+        // OA: TODO maybe use Environment variables when we've made them publically
+        // accessible?
+        var squareWidth = g_canvas.width / g_gridSize;
+        var squareHeight = g_canvas.height / g_gridSize;
+        this.scaleX = (squareWidth / this.width) * numCols;
+        this.scaleY = (squareHeight / this.height) * numRows;
+    }
 
-    this.width = image.width;
-    this.height = image.height;
-    this.scale = 1;
+    else {
+        this.width = this.image.width;
+        this.height = this.image.height;
+        this.sx = 0;
+        this.sy = 0;
+        this.scaleX = 1;
+        this.scaleY = 1;
+    }
 }
 
 Sprite.prototype.drawAt = function (ctx, x, y) {
     ctx.drawImage(this.image, 
-                  x, y);
+                  this.sx, this.sy, this.width, this.height, 
+                  x, y, this.width, this.height);
 };
 
-Sprite.prototype.drawCentredAt = function (ctx, cx, cy, rotation) {
-    if (rotation === undefined) rotation = 0;
-    
+Sprite.prototype.drawCentredAt = function (ctx, cx, cy, orientation) {
     var w = this.width,
         h = this.height;
 
     ctx.save();
     ctx.translate(cx, cy);
-    ctx.rotate(rotation);
-    ctx.scale(this.scale, this.scale);
+    ctx.rotate(Math.PI/2 * orientation);
+    ctx.scale(this.scaleX, this.scaleY);
     
     // drawImage expects "top-left" coords, so we offset our destination
     // coords accordingly, to draw our sprite centred at the origin
     ctx.drawImage(this.image, 
-                  -w/2, -h/2);
+                  this.sx, this.sy, this.width, this.height,
+                  -w/2, -h/2, this.width, this.height);
     
     ctx.restore();
 };  
