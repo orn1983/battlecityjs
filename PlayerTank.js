@@ -61,7 +61,7 @@ PlayerTank.prototype.SOUTH = 1;
 PlayerTank.prototype.WEST = 2;
 PlayerTank.prototype.EAST = 3;
 
-//TODO: Initialize xy coords based on correct location for tank in environment
+//TODO: Initialize xy coords based on default location for tank in environment
 PlayerTank.prototype.cx = 200;
 PlayerTank.prototype.cy = 200;
 
@@ -74,14 +74,34 @@ PlayerTank.prototype.halfWidth = 50;
 //to increment its movement. It is then decremented with each du
 PlayerTank.prototype.slideCounter = 0;
 
+//HD: Normal bullet speed. Will be changed if player gets a powerup.
+PlayerTank.prototype.bulletVelocity = 1;
+
+//HD: Normal bullet strength. Will be changed if player gets a powerup.
+PlayerTank.prototype.bulletStrength = 1;
+
+//HD: Can only fire one shot at a time. Changed with powerup.
+PlayerTank.prototype.canFireTwice = false;
+
+//HD: Counter while tank is frozen. Will only apply to AI tanks (when a player
+//tank drives over a freeze-time powerup, it'll send a message up to the
+//entityManager, who will then send down a positive integer value for
+//frozenCounter to all tanks who are NOT player1 or player2).
+//When this reaches 0, the tank can move again.
+PlayerTank.prototype.frozenCounter = 0;
+
 //HD: This is how far you move in a single step, either through a keypress
 //or by sliding on ice. (I picked the value simply because it's what part
 //used for the thrust value in Asteroids)
 PlayerTank.prototype.moveDistance = 0.2
 
-//HD: Starting off facing up.
-PlayerTank.prototype.orientation = NORTH;
+//HD: Starting off facing up. Defined as a global in entityManager
+PlayerTank.prototype.orientation = DIRECTION_UP;
 
+PlayerTank.prototype.numberOfLives = 14;
+
+//HD: Used when creating bullets, to avoid friendly fire.
+PlayerTank.prototype.isPlayer = true;
 
 //HD: Commenting out for now - we likely don't need this
 //PlayerTank.prototype.numSubSteps = 1;
@@ -115,16 +135,16 @@ PlayerTank.prototype.update = function (du) {
     //since it makes for simpler code.
     switch(this.orientation)
     {
-      case(NORTH):
+      case(DIRECTION_UP):
         this.move(this.cx, this.cy - this.moveDistance);
         break;
-      case(SOUTH):
+      case(DIRECTION_DOWN):
         this.move(this.cx, this.cy + this.moveDistance);
         break;
-      case(WEST):
+      case(DIRECTION_LEFT):
         this.move(this.cx - this.moveDistance, this.cy);
         break;
-      case(EAST):
+      case(DIRECTION_RIGHT):
         this.move(this.cx + this.moveDistance, this.cy);
         break;
     }
@@ -134,26 +154,26 @@ PlayerTank.prototype.update = function (du) {
   //Check for keypress, but don't move if you've already slid.
   if (keys[this.KEY_UP])
   {
-    this.orientation = NORTH;
+    this.orientation = DIRECTION_UP;
     if(!sliding)
       this.move(this.cx, this.cy - this.moveDistance);
   }
   if (keys[this.KEY_DOWN])
   {
-    this.orientation = SOUTH;
+    this.orientation = DIRECTION_DOWN;
     if(!sliding)
       this.move(this.cx, this.cy + this.moveDistance);
 
   }
   if (keys[this.KEY_LEFT])
   {
-    this.orientation = WEST;
+    this.orientation = DIRECTION_LEFT;
     if(!sliding)
         this.move(this.cx - this.moveDistance, this.cy);
   }
   if (keys[this.KEY_RIGHT])
   {
-    this.orientation = EAST;
+    this.orientation = DIRECTION_RIGHT;
     if(!sliding)
       this.move(this.cx + this.moveDistance, this.cy);
   }
@@ -191,85 +211,63 @@ PlayerTank.prototype.maybeFireBullet = function () {
 
   if (keys[this.KEY_FIRE]) {
 
-    var turretX, turretY, velX, velY;
+    var turretX, turretY;
 
     switch(this.orientation)
     {
-      case(NORTH):
-        //HD: We *could* simply use the old this.radius - it'd work
-        //just fine for a perfect square - but we'll need height and width
-        //anyway for collision detection.
+      case(DIRECTION_UP):
         turretX = this.cx;
-        turretY = this.cY - this.halfHeight;
-        velX = 0;
-        velY = -2;
+        turretY = this.cy - this.halfHeight;
         break;
-      case(SOUTH):
+      case(DIRECTION_DOWN):
         turretX = this.cx;
-        turretY = this.cY + this.halfHeight;
-        velX = 0;
-        velY = 2;
+        turretY = this.cy + this.halfHeight;
         break;
-      case(WEST):
+      case(DIRECTION_LEFT):
         turretX = this.cx - this.halfWidth;
-        turretY = this.cY;
-        velX = -2;
-        velY = 0;
+        turretY = this.cy;
         break;
-      case(EAST):
+      case(DIRECTION_RIGHT):
         turretX = this.cx + this.halfWidth;
-        turretY = this.cY;
-        velX = 2;
-        velY = 0;
+        turretY = this.cy;
         break;
       }
 
-      //HD NB: The fireBullet function variables may also need to include
-      //the entity's identity, or at least a friend-or-foe switch so that
-      //Player2's bullets don't kill Player1.
-      //Also, this.rotation is now only 0..3, so it'll break the code within
-      //firebullet() in some way.
-      entityManager.fireBullet(
-         turretX, turretY, velX, velY, this.orientation);
-
+      //HD: We send in "this" so that entityManager can calculate
+      //whether the tank is allowed to fire again, if it tries to.
+      entityManager.fireBullet(turretX, turretY, this.bulletVelocity,
+        this.orientation, this.isPlayer, this.bulletStrength, this);
     }
 
 };
 
-PlayerTank.prototype.takeBulletHit = function () {
-  //TODO: Code accordingly. Do we call this only when we've been hit by an
-  //enemy's bullet, or by any bullet?
+PlayerTank.prototype.takeBulletHit = function (bullet) {
+  //HD: Player got shot by enemy
+  if((this.isPlayer) && (!bullet.isPlayer))
+    this.kill();
+
+  //HD: Enemy got shot by player. We'll have to do other things here later on,
+  //such as incrementing the score for the player who owned the bullet,
+  //and possibly simply lower the tank's health instead of killing it.
+  if((!this.isPlayer) && (bullet.isPlayer))
+      this.kill();
 
 };
 
 PlayerTank.prototype.reset = function () {
     this.setPos(this.reset_cx, this.reset_cy);
-    this.rotation = this.reset_rotation;
+    this.orientation = this.reset_orientation;
 
     this.halt();
 };
 
-//HD: Commenting this out for now, probably won't need it
-/*
-PlayerTank.prototype.updateRotation = function (du) {
-  if (keys[this.KEY_UP]) {
-      this.rotation = NORTH;
-  }
-  if (keys[this.KEY_DOWN]) {
-      this.rotation = SOUTH;
-  }
-  if (keys[this.KEY_LEFT]) {
-      this.rotation = EAST;
-  }
-  if (keys[this.KEY_RIGHT]) {
-      this.rotation = WEST;
-  }
-};
-*/
 PlayerTank.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;
     // pass my scale into the sprite, for drawing
     this.sprite.scale = this._scale;
+
+    //TODO: Change either how I pass in this.rotation, or how the
+    //Sprite.drawCentredAt function receives rotation values.
     this.sprite.drawCentredAt(
 	ctx, this.cx, this.cy, this.rotation
     );
