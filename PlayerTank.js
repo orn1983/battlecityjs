@@ -96,7 +96,7 @@ PlayerTank.prototype.frozenCounter = 0;
 PlayerTank.prototype.moveDistance = 0.2
 
 //HD: Starting off facing up. Defined as a global in entityManager
-PlayerTank.prototype.orientation = DIRECTION_UP;
+PlayerTank.prototype.orientation = entityManager.DIRECTION_UP;
 
 PlayerTank.prototype.numberOfLives = 14;
 
@@ -135,16 +135,16 @@ PlayerTank.prototype.update = function (du) {
     //since it makes for simpler code.
     switch(this.orientation)
     {
-      case(DIRECTION_UP):
+      case(entityManager.DIRECTION_UP):
         this.move(this.cx, this.cy - this.moveDistance);
         break;
-      case(DIRECTION_DOWN):
+      case(entityManager.DIRECTION_DOWN):
         this.move(this.cx, this.cy + this.moveDistance);
         break;
-      case(DIRECTION_LEFT):
+      case(entityManager.DIRECTION_LEFT):
         this.move(this.cx - this.moveDistance, this.cy);
         break;
-      case(DIRECTION_RIGHT):
+      case(entityManager.DIRECTION_RIGHT):
         this.move(this.cx + this.moveDistance, this.cy);
         break;
     }
@@ -154,26 +154,26 @@ PlayerTank.prototype.update = function (du) {
   //Check for keypress, but don't move if you've already slid.
   if (keys[this.KEY_UP])
   {
-    this.orientation = DIRECTION_UP;
+    this.orientation = entityManager.DIRECTION_UP;
     if(!sliding)
       this.move(this.cx, this.cy - this.moveDistance);
   }
   if (keys[this.KEY_DOWN])
   {
-    this.orientation = DIRECTION_DOWN;
+    this.orientation = entityManager.DIRECTION_DOWN;
     if(!sliding)
       this.move(this.cx, this.cy + this.moveDistance);
 
   }
   if (keys[this.KEY_LEFT])
   {
-    this.orientation = DIRECTION_LEFT;
+    this.orientation = entityManager.DIRECTION_LEFT;
     if(!sliding)
         this.move(this.cx - this.moveDistance, this.cy);
   }
   if (keys[this.KEY_RIGHT])
   {
-    this.orientation = DIRECTION_RIGHT;
+    this.orientation = entityManager.DIRECTION_RIGHT;
     if(!sliding)
       this.move(this.cx + this.moveDistance, this.cy);
   }
@@ -189,11 +189,11 @@ PlayerTank.prototype.move = function(du, newX, newY)
 {
 
   //HD: Check if we're driving into anything. If not, move.
-  var hitEntity = this.findHitEntity(moveX, moveY);
+  var hitEntity = this.findHitEntity(newX, newY);
   if (!hitEntity)
   {
-    this.cx = moveX;
-    this.cy = moveY;
+    this.cx = newX;
+    this.cy = newY;
     //HD: Old substep code. Commenting it out in case we need it for
     //reference later
     //var steps = this.numSubSteps;
@@ -215,19 +215,19 @@ PlayerTank.prototype.maybeFireBullet = function () {
 
     switch(this.orientation)
     {
-      case(DIRECTION_UP):
+      case(entityManager.DIRECTION_UP):
         turretX = this.cx;
         turretY = this.cy - this.halfHeight;
         break;
-      case(DIRECTION_DOWN):
+      case(entityManager.DIRECTION_DOWN):
         turretX = this.cx;
         turretY = this.cy + this.halfHeight;
         break;
-      case(DIRECTION_LEFT):
+      case(entityManager.DIRECTION_LEFT):
         turretX = this.cx - this.halfWidth;
         turretY = this.cy;
         break;
-      case(DIRECTION_RIGHT):
+      case(entityManager.DIRECTION_RIGHT):
         turretX = this.cx + this.halfWidth;
         turretY = this.cy;
         break;
