@@ -299,7 +299,7 @@ PlayerTank.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;
     // pass my scale into the sprite, for drawing
     this.sprite.scale = this._scale;
-    this.sprite.drawWrappedCentredAt(
+    this.sprite.drawCentredAt(
 	ctx, this.cx, this.cy, this.rotation
     );
     this.sprite.scale = origScale;

@@ -21,9 +21,9 @@ var g_ctx = g_canvas.getContext("2d");
 // ====================
 
 function createInitialTanks() {
-    entityManager.generateTank({
+    entityManager.generatePlayerTank({
         type:   "player1",
-        sprite: g_sprites.tank1,
+        sprite: g_sprites.playerTank1,
         cx :    200,
         cy :    200
     });
@@ -67,7 +67,7 @@ function updateSimulation(du) {
     entityManager.update(du);
 
     // Prevent perpetual firing!
-    eatKey(Tank.prototype.KEY_FIRE);
+    eatKey(PlayerTank.prototype.KEY_FIRE);
 }
 
 // GAME-SPECIFIC DIAGNOSTICS
@@ -129,9 +129,8 @@ var g_images = {};
 function requestPreloads() {
 
     var requiredImages = {
-        tank1    : "http://arnarson.net/asteroids/images/ship.png",
-        tank2    : "http://arnarson.net/asteroids/images/ship_2.png",
-        bricks   : "http://arnarson.net/asteroids/images/rock.png"
+		// TODO: change sprite!
+        playerTank1    : "images/ship.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -141,11 +140,11 @@ var g_sprites = {};
 
 function preloadDone() {
 
-    g_sprites.ship  = new Sprite(g_images.ship);
-    g_sprites.ship2 = new Sprite(g_images.ship2);
-    g_sprites.rock  = new Sprite(g_images.rock);
+    g_sprites.playerTank1  = new Sprite(g_images.playerTank1);
+    //g_sprites.ship2 = new Sprite(g_images.ship2);
+    //g_sprites.rock  = new Sprite(g_images.rock);
 
-    g_sprites.bullet = new Sprite(g_images.ship);
+    g_sprites.bullet = new Sprite(g_images.playerTank1);
     g_sprites.bullet.scale = 0.25;
 
     entityManager.init();
