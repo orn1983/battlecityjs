@@ -95,7 +95,7 @@ init: function() {
     //this._generateShip();
 },
 
-fireBullet: function(cx, cy, vel, direction, strength, player, tank) {
+fireBullet: function(cx, cy, vel, direction, player, strength, tank) {
     this._bullets.push(new Bullet({
         cx   		: cx,
         cy			: cy,
@@ -103,7 +103,8 @@ fireBullet: function(cx, cy, vel, direction, strength, player, tank) {
 		direction 	: direction,
         strength 	: strength,
 		player 	 	: player,
-		tank 	 	: tank
+		tank 	 	: tank,
+        sprite      : g_sprites.bullet
     }));
 },
 

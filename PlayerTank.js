@@ -192,33 +192,35 @@ PlayerTank.prototype.move = function(du, newX, newY)
 
 PlayerTank.prototype.maybeFireBullet = function () {
 
-  if (keys[this.KEY_FIRE]) {
+    if (keys[this.KEY_FIRE]) {
 
-    var turretX, turretY;
+        var turretX, turretY;
 
-    switch(this.orientation) {
-        case(consts.DIRECTION_UP):
-            turretX = this.cx;
-            turretY = this.cy - this.halfHeight;
-            break;
-        case(consts.DIRECTION_DOWN):
-            turretX = this.cx;
-            turretY = this.cy + this.halfHeight;
-            break;
-        case(consts.DIRECTION_LEFT):
-            turretX = this.cx - this.halfWidth;
-            turretY = this.cy;
-            break;
-        case(consts.DIRECTION_RIGHT):
-            turretX = this.cx + this.halfWidth;
-            turretY = this.cy;
-            break;
-      }
+        switch(this.orientation) {
+            case(consts.DIRECTION_UP):
+                turretX = this.cx;
+                turretY = this.cy - this.halfHeight;
+                break;
+            case(consts.DIRECTION_DOWN):
+                turretX = this.cx;
+                turretY = this.cy + this.halfHeight;
+                break;
+            case(consts.DIRECTION_LEFT):
+                turretX = this.cx - this.halfWidth;
+                turretY = this.cy;
+                break;
+            case(consts.DIRECTION_RIGHT):
+                turretX = this.cx + this.halfWidth;
+                turretY = this.cy;
+                break;
+        }
 
-      //HD: We send in "this" so that entityManager can calculate
-      //whether the tank is allowed to fire again, if it tries to.
-      entityManager.fireBullet(turretX, turretY, this.bulletVelocity,
-        this.orientation, this.isPlayer, this.bulletStrength, this);
+        //HD: We send in "this" so that entityManager can calculate
+        //whether the tank is allowed to fire again, if it tries to.
+        //console.log(turretX, turretY, this.bulletVelocity,
+           // this.orientation, this.isPlayer, this.bulletStrength, this);
+        entityManager.fireBullet(turretX, turretY, this.bulletVelocity,
+            this.orientation, this.isPlayer, this.bulletStrength, this);
     }
 
 };

@@ -41,7 +41,7 @@ Bullet.prototype.zappedSound = new Audio(
 Bullet.prototype.cx = 200;
 Bullet.prototype.cy = 200;
 Bullet.prototype.vel = 0;
-Bullet.prototype.direction = entityManager.DIRECTION_UP;
+Bullet.prototype.direction = consts.DIRECTION_UP;
 Bullet.prototype.strength = 1;
 Bullet.prototype.player = true;
 
@@ -54,10 +54,10 @@ Bullet.prototype.update = function (du) {
 
 	// move bullet
 	switch (this.direction) {
-		case(entityManager.DIRECTION_UP)	: this.cy -= vel * du; break;
-		case(entityManager.DIRECTION_DOWN)  : this.cy += vel * du; break;
-		case(entityManager.DIRECTION_RIGHT) : this.cx += vel * du; break;
-		case(entityManager.DIRECTION_LEFT)  : this.cx -= vel * du; break;
+		case(consts.DIRECTION_UP)	 : this.cy -= this.vel * du; break;
+		case(consts.DIRECTION_DOWN)  : this.cy += this.vel * du; break;
+		case(consts.DIRECTION_RIGHT) : this.cx += this.vel * du; break;
+		case(consts.DIRECTION_LEFT)  : this.cx -= this.vel * du; break;
 	}
 
     //
@@ -91,8 +91,9 @@ Bullet.prototype.render = function (ctx) {
 
 //HD: Shouldn't bullet call its own sprite like tank does,
 //rather than referencing the g_sprites array?
-  //  g_sprites.bullet.drawCentredAt(
-  this.sprite.drawCentredAt(
+    //g_sprites.bullet.drawCentredAt(
+    //console.log(this);
+    this.sprite.drawCentredAt(
         ctx, this.cx, this.cy, this.rotation
     );
 
