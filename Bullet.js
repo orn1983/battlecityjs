@@ -20,7 +20,7 @@ function Bullet(descr) {
 
     // Make a noise when I am created (i.e. fired)
     this.fireSound.play();
-    
+
 /*
     // Diagnostics to check inheritance stuff
     this._bulletProperty = true;
@@ -36,7 +36,7 @@ Bullet.prototype.fireSound = new Audio(
     "sounds/bulletFire.ogg");
 Bullet.prototype.zappedSound = new Audio(
     "sounds/bulletZapped.ogg");
-    
+
 // Initial, inheritable, default values
 Bullet.prototype.cx = 200;
 Bullet.prototype.cy = 200;
@@ -51,7 +51,7 @@ Bullet.prototype.player = true;
 Bullet.prototype.update = function (du) {
 
     spatialManager.unregister(this);
-	
+
 	// move bullet
 	switch (this.direction) {
 		case(entityManager.DIRECTION_UP)	: this.cy -= vel * du; break;
@@ -66,10 +66,10 @@ Bullet.prototype.update = function (du) {
     var hitEntity = this.findHitEntity();
     if (hitEntity) {
         var canTakeHit = hitEntity.takeBulletHit;
-        if (canTakeHit) canTakeHit.call(hitEntity, this); 
+        if (canTakeHit) canTakeHit.call(hitEntity, this);
         return entityManager.KILL_ME_NOW;
     }
-    
+
     spatialManager.register(this);
 
 };
@@ -82,14 +82,17 @@ Bullet.prototype.getRadius = function () {
 // takes bullet argument
 Bullet.prototype.takeBulletHit = function (bullet) {
     this.kill();
-    
+
     // Make a noise when I am zapped by another bullet
     this.zappedSound.play();
 };
 
 Bullet.prototype.render = function (ctx) {
 
-    g_sprites.bullet.drawCentredAt(
+//HD: Shouldn't bullet call its own sprite like tank does,
+//rather than referencing the g_sprites array?
+  //  g_sprites.bullet.drawCentredAt(
+  this.sprite.drawCentredAt(
         ctx, this.cx, this.cy, this.rotation
     );
 

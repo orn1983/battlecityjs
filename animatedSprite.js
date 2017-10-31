@@ -14,6 +14,14 @@
 // OA: TODO I feel that the tanks should store their own sprites. Maybe they should
 // also determine how rapidly to change between sprite animations.
 // They definitely need to be controlling WHEN to change them.
+// HD: NB: I agree. Devil's advocate: We *could* still let animatedSprite manage
+// all of it, if we change drawCentredAt so that it uses "orientation" not as a
+// call to ctx.rotate(), but as a way of choosing which sprite sprite it's going
+// to draw. But if we do that, we're creating unnecessary code for all the
+// sprites that don't have different orientations (powerups, for example).
+// So I agree with Örn that each entity should store its own sprites and pick
+// which one to display, based on that entity's own internal properties
+//("Which way am I oriented", "How damaged am I", "Should I be changing size", etc.)
 function animatedSprite(image, sx, sy, width, height, count, numCols=1, numRows=1) {
     this.changeAnimCounter = 0;
     this.activeSprite = 0;
