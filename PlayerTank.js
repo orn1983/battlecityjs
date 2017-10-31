@@ -56,8 +56,8 @@ PlayerTank.prototype.cy = 200;
 
 //HD NB: Need these for calculations, but I'm just making up numbers.
 //Adjust them later based on tank size.
-PlayerTank.prototype.halfHeight = 50;
-PlayerTank.prototype.halfWidth = 50;
+PlayerTank.prototype.halfHeight = 20;
+PlayerTank.prototype.halfWidth = 20;
 
 //HD: This is set to a positive integer when the tank is on ice, and is used
 //to increment its movement. It is then decremented with each du
@@ -140,7 +140,8 @@ PlayerTank.prototype.update = function (du) {
         }
         this.SlideCounter -= 1;
     }
-
+    
+    // EAH: currently possible to move diagonally!
     //Check for keypress, but don't move if you've already slid.
     if (keys[this.KEY_UP]) {
         this.orientation = consts.DIRECTION_UP;

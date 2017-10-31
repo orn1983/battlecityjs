@@ -38,12 +38,15 @@ getNewSpatialID : function() {
 
 register: function(entity) {
     var pos = entity.getPos();
-    var radius = entity.getRadius();
+    var halfHeight = entity.halfHeight;
+    var halfWidth = entity.halfWidth;
+    //var radius = entity.getRadius();
     var spatialID = entity.getSpatialID();
     this._entities[spatialID] = {
         posX: pos.posX,
         posY: pos.posY,
-        radius: radius,
+        halfWidth: halfWidth,
+        halfHeight: halfHeight,
         entity: entity
     };
 },
@@ -53,7 +56,24 @@ unregister: function(entity) {
     delete(this._entities[spatialID]);
 },
 
-findEntityInRange: function(posX, posY, radius) {
+// axis-aligned rectangular collision detection
+findEntityInRange: function(x1, y1, x2, y2) {
+    for (var ID in this._entities) {
+        var entity = this._entities[ID];
+        var ex1 = entity.posX - entity.halfWidth;
+        var ex2 = entity.posX + entity.halfWidth;
+        var ey1 = entity.posY - entity.halfHeight;
+        var ey2 = entity.posY + entity.halfHeight;
+
+        if (x1 < ex2 && x2 > ex1 && y1 < ey2 && y2 > ey1) {
+            return entity;
+        }
+        return false;
+    }
+},
+
+// old function from Pat
+/*findEntityInRange: function(posX, posY, radius) {
     var canvasW = g_canvas.width,
         canvasH = g_canvas.height;
 
@@ -67,7 +87,7 @@ findEntityInRange: function(posX, posY, radius) {
         if (distance < radiiSquared)
             return entity.entity;
     }
-},
+},*/
 
 render: function(ctx) {
     var oldStyle = ctx.strokeStyle;

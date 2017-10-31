@@ -179,9 +179,9 @@ function preloadDone() {
     //g_sprites.bullet = new Sprite(g_images.playerTank1);
     //g_sprites.bullet.scale = 0.25;
 
-  //HD: Just adding sample sprite initialization code for the bullet. It's still
-  //broken, but at least now I can remember its coords in the spritesheet :-P
-  g_sprites.bullet = new animatedSprite(g_images.spritesheet, 323, 102, 4, 4, 1,1,1);
+    //HD: Just adding sample sprite initialization code for the bullet. It's still
+    //broken, but at least now I can remember its coords in the spritesheet :-P
+    g_sprites.bullet = new animatedSprite(g_images.spritesheet, 323, 102, 4, 4, 1,1,1);
 
     entityManager.init();
     createInitialTanks();

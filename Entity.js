@@ -67,11 +67,12 @@ Entity.prototype.kill = function () {
     this._isDeadNow = true;
 };
 
-Entity.prototype.findHitEntity = function () {
-    var pos = this.getPos();
-    return spatialManager.findEntityInRange(
-        pos.posX, pos.posY, this.getRadius()
-    );
+Entity.prototype.findHitEntity = function (newX, newY) {
+    var x1 = newX - this.halfWidth;
+    var x2 = newX + this.halfWidth;
+    var y1 = newY - this.halfHeight;
+    var y2 = newY + this.halfHeight;
+    return spatialManager.findEntityInRange(x1, y1, x2, y2);
 };
 
 // This is just little "convenience wrapper"
