@@ -181,7 +181,11 @@ function preloadDone() {
 
     //HD: Just adding sample sprite initialization code for the bullet. It's still
     //broken, but at least now I can remember its coords in the spritesheet :-P
-    g_sprites.bullet = new animatedSprite(g_images.spritesheet, 323, 102, 4, 4, 1,1,1);
+    //g_sprites.bullet = new animatedSprite(g_images.spritesheet, 323, 102, 4, 4, 1,1,1);
+    
+    // EAH: quick hack to get bullets to semi-work
+    g_sprites.bullet = new Sprite(g_images.spritesheet, 323, 102, 4, 4, 1,1);
+    g_sprites.bullet.scale = 2;
 
     entityManager.init();
     createInitialTanks();

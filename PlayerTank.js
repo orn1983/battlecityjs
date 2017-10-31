@@ -195,22 +195,24 @@ PlayerTank.prototype.maybeFireBullet = function () {
     if (keys[this.KEY_FIRE]) {
 
         var turretX, turretY;
+        // EAH: add offset so bullet doesn't collide with tank!
+        var alpha = 5;
 
         switch(this.orientation) {
             case(consts.DIRECTION_UP):
                 turretX = this.cx;
-                turretY = this.cy - this.halfHeight;
+                turretY = this.cy - this.halfHeight - alpha;
                 break;
             case(consts.DIRECTION_DOWN):
                 turretX = this.cx;
-                turretY = this.cy + this.halfHeight;
+                turretY = this.cy + this.halfHeight + alpha;
                 break;
             case(consts.DIRECTION_LEFT):
-                turretX = this.cx - this.halfWidth;
+                turretX = this.cx - this.halfWidth - alpha;
                 turretY = this.cy;
                 break;
             case(consts.DIRECTION_RIGHT):
-                turretX = this.cx + this.halfWidth;
+                turretX = this.cx + this.halfWidth + alpha;
                 turretY = this.cy;
                 break;
         }
