@@ -239,8 +239,53 @@ PlayerTank.prototype.reset = function () {
     this.halt();
 };
 
+PlayerTank.prototype.addSprite = function(image, sx, sy, width, height,
+  numCols=1, numRows=1)
+  {
+    // HD TODO: This is the basic 1st version of having an object load its own
+    // sprites, so I'm skipping animation code for now. We let the tank assume
+    // that every two entries in spriteList are animation frames pointing in
+    //the same direction.
+    this.spriteList.push(new Sprite(image, sx, sy, width, height,
+      numCols, numRows));
+
+  };
+
 PlayerTank.prototype.render = function (ctx) {
-    this.sprite.drawCentredAt(
+  var spriteCount = 0;
+
+  // HD: Unlike other direction-focused switch statements in PlayerTank, this
+  // particular switch is ordered up-left-down-right. That's the reading order
+  // of images in spritesheet.png, so it's probably a good idea to keep that
+  // same order here.
+  switch(this.orientation) {
+      case(consts.DIRECTION_UP):
+        //HD: spriteList[0] and spriteList[1] are two animation frames
+        //for the tank when it's pointed upward. I'm only adding the first
+        //frame for now; later we can easily use a boolean or int counter to
+        //swap between the two sprites.
+        spriteCount = 0;
+      break;
+      case(consts.DIRECTION_LEFT):
+        //First frame of left-pointing tank; second is spriteList[3];
+        spriteCount = 2;
+      break;
+      case(consts.DIRECTION_DOWN):
+        spriteCount = 4;
+      break;
+      case(consts.DIRECTION_RIGHT):
+        spriteCount = 6;
+      break;
+    }
+
+    //HD: Adding a new temp function for this so that we can still use
+    //this.sprite.drawCentredAt() until we don't need it anymore.
+    this.spriteList[spriteCount].drawTankAt(
+      ctx, this.cx, this.cy
+    );
+
+  /*  this.sprite.drawCentredAt(
         ctx, this.cx, this.cy, this.orientation
     );
+    */
 };

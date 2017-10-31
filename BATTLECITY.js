@@ -25,7 +25,12 @@ function createInitialTanks() {
         type:   "player1",
         sprite: g_sprites.playerTank1,
         cx :    200,
-        cy :    200
+        cy :    200,
+        //HD: If we use a spritemanager, we'd probably pull from that and
+        // write it directly into the spriteList below. Since we don't yet
+        // have one, I'm going to let entityManager call the tank's
+        // addSprite() function when it pushes the tank into _playerTanks.
+        spriteList: [],
     });
     // TODO if two players
     //entityManager.generateTank({
@@ -143,6 +148,8 @@ function preloadDone() {
 //    g_sprites.playerTank1  = new Sprite(g_images.spritesheet, 0, 0, 16, 16, 1, 1);
     //g_sprites.ship2 = new Sprite(g_images.ship2);
     //g_sprites.rock  = new Sprite(g_images.rock);
+
+
 
 //    g_sprites.bullet = new Sprite(g_images.playerTank1);
   //  g_sprites.bullet.scale = 0.25;

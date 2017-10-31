@@ -41,8 +41,8 @@ function Sprite(image, sx, sy, width, height, numCols=1, numRows=1) {
 }
 
 Sprite.prototype.drawAt = function (ctx, x, y) {
-    ctx.drawImage(this.image, 
-                  this.sx, this.sy, this.width, this.height, 
+    ctx.drawImage(this.image,
+                  this.sx, this.sy, this.width, this.height,
                   x, y, this.width, this.height);
 };
 
@@ -54,13 +54,31 @@ Sprite.prototype.drawCentredAt = function (ctx, cx, cy, orientation) {
     ctx.translate(cx, cy);
     ctx.rotate(Math.PI/2 * orientation);
     ctx.scale(this.scaleX, this.scaleY);
-    
+
     // drawImage expects "top-left" coords, so we offset our destination
     // coords accordingly, to draw our sprite centred at the origin
-    ctx.drawImage(this.image, 
+    ctx.drawImage(this.image,
                   this.sx, this.sy, this.width, this.height,
                   -w/2, -h/2, this.width, this.height);
-    
-    ctx.restore();
-};  
 
+    ctx.restore();
+};
+
+//HD: Adding this temp function so we can still use drawCentredAt until
+//we no longer need it
+Sprite.prototype.drawTankAt = function (ctx, cx, cy) {
+    var w = this.width,
+        h = this.height;
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.scale(this.scaleX, this.scaleY);
+
+    // drawImage expects "top-left" coords, so we offset our destination
+    // coords accordingly, to draw our sprite centred at the origin
+    ctx.drawImage(this.image,
+                  this.sx, this.sy, this.width, this.height,
+                  -w/2, -h/2, this.width, this.height);
+
+    ctx.restore();
+};
