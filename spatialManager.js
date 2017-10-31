@@ -68,8 +68,16 @@ findEntityInRange: function(x1, y1, x2, y2) {
         if (x1 < ex2 && x2 > ex1 && y1 < ey2 && y2 > ey1) {
             return entity;
         }
-        return false;
     }
+    
+    // check for outer border of playfield
+    if (x1 < 0 || x2 > g_canvas.width || y1 < 0 || y2 > g_canvas.height)
+        // EAH: needs to be modified to return a specific value for e.g.
+        //      bullet hits (maybe?)
+        return true;
+    
+    // no collision
+    return false;
 },
 
 // old function from Pat
