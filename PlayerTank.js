@@ -106,6 +106,9 @@ PlayerTank.prototype.warpSound = new Audio(
 //  this.warpSound.play();
 //}
 
+//HD: Using this as a "1-2" tick between two animation frames in .render()
+PlayerTank.prototype.animationTicker = true;
+
 
 PlayerTank.prototype.update = function (du) {
     spatialManager.unregister(this);
@@ -258,25 +261,54 @@ PlayerTank.prototype.render = function (ctx) {
   // particular switch is ordered up-left-down-right. That's the reading order
   // of images in spritesheet.png, so it's probably a good idea to keep that
   // same order here.
+  // TODO: Only change animation if the tank is actually moving
+  // TODO #2: Fix how rapidly the animatiaion changes.
   switch(this.orientation) {
       case(consts.DIRECTION_UP):
-        //HD: spriteList[0] and spriteList[1] are two animation frames
-        //for the tank when it's pointed upward. I'm only adding the first
-        //frame for now; later we can easily use a boolean or int counter to
-        //swap between the two sprites.
-        spriteCount = 0;
+
+        if(this.animationTicker)
+        {
+          spriteCount = 0;
+        }
+        else
+        {
+          spriteCount = 1;
+        }
       break;
       case(consts.DIRECTION_LEFT):
-        //First frame of left-pointing tank; second is spriteList[3];
-        spriteCount = 2;
+        if(this.animationTicker)
+        {
+          spriteCount = 2;
+        }
+        else
+        {
+          spriteCount = 3;
+        }
       break;
       case(consts.DIRECTION_DOWN):
+      if(this.animationTicker)
+      {
         spriteCount = 4;
+      }
+      else
+      {
+        spriteCount = 5;
+      }
+
       break;
       case(consts.DIRECTION_RIGHT):
+      if(this.animationTicker)
+      {
         spriteCount = 6;
+      }
+      else
+      {
+        spriteCount = 7;
+      }
       break;
     }
+
+    this.animationTicker = !this.animationTicker;
 
     //HD: Adding a new temp function for this so that we can still use
     //this.sprite.drawCentredAt() until we don't need it anymore.
