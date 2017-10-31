@@ -17,7 +17,7 @@ var g_ctx = g_canvas.getContext("2d");
 
 
 // ====================
-// CREATE INITIAL SHIPS
+// CREATE INITIAL TANKS
 // ====================
 
 function createInitialTanks() {
@@ -31,14 +31,35 @@ function createInitialTanks() {
         // have one, I'm going to let entityManager call the tank's
         // addSprite() function when it pushes the tank into _playerTanks.
         spriteList: [],
+        playerSpriteOffset : 0
     });
     // TODO if two players
-    //entityManager.generateTank({
-    //    type:  "player2",
-    //    sprite: g_sprites.tank1,
-    //    cx : 400,
-    //    cy : 200
-    //});
+    if (g_players === 2) {
+        createPlayerTwoTank();
+    }
+}
+
+// creates tank for player 2
+function createPlayerTwoTank() {
+    entityManager.generatePlayerTank({
+        type:   "player2",
+        sprite: g_sprites.playerTank2,
+        cx :    400,
+        cy :    200,
+        //HD: If we use a spritemanager, we'd probably pull from that and
+        // write it directly into the spriteList below. Since we don't yet
+        // have one, I'm going to let entityManager call the tank's
+        // addSprite() function when it pushes the tank into _playerTanks.
+        spriteList: [],
+        // overwrite prototype definitions:
+        KEY_UP    : 38, // up arrow, is there a'W'.charCodeAt(0) version?
+        KEY_DOWN  : 40, // down arrow
+        KEY_LEFT  : 37, // left arrow
+        KEY_RIGHT : 39, // right arrow
+        KEY_FIRE  : 17, // (right) control
+        // sprite offset
+        playerSpriteOffset : 128
+    });
 }
 
 // =============
@@ -89,6 +110,8 @@ var KEY_0 = keyCode('0');
 
 var KEY_K = keyCode('K');
 
+var KEY_2 = keyCode('2'); // for spawning player 2
+
 function processDiagnostics() {
 
     if (eatKey(KEY_MIXED))
@@ -100,6 +123,9 @@ function processDiagnostics() {
 
     if (eatKey(KEY_K)) entityManager.killNearestTank(
         g_mouseX, g_mouseY);
+        
+    if (eatKey(KEY_2) && g_players === 1)
+        createPlayerTwoTank();
 }
 
 
@@ -134,7 +160,7 @@ var g_images = {};
 function requestPreloads() {
 
     var requiredImages = {
-		// TODO: change sprite!
+        // TODO: change sprite!
         spritesheet    : "images/spritesheet.png"
     };
 
@@ -145,14 +171,12 @@ var g_sprites = {};
 
 function preloadDone() {
     g_sprites.playerTank1  = new animatedSprite(g_images.spritesheet, 0, 0, 16, 16, 2, 1, 1);
-//    g_sprites.playerTank1  = new Sprite(g_images.spritesheet, 0, 0, 16, 16, 1, 1);
+    g_sprites.playerTank2  = new animatedSprite(g_images.spritesheet, 128, 0, 16, 16, 2, 1, 1);
     //g_sprites.ship2 = new Sprite(g_images.ship2);
     //g_sprites.rock  = new Sprite(g_images.rock);
 
-
-
-//    g_sprites.bullet = new Sprite(g_images.playerTank1);
-  //  g_sprites.bullet.scale = 0.25;
+    //g_sprites.bullet = new Sprite(g_images.playerTank1);
+    //g_sprites.bullet.scale = 0.25;
 
   //HD: Just adding sample sprite initialization code for the bullet. It's still
   //broken, but at least now I can remember its coords in the spritesheet :-P

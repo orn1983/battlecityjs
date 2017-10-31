@@ -124,8 +124,9 @@ generatePlayerTank : function(descr) {
       for(var i=0; i<8; i++)
       {
             var spriteXOffset = i*16;
+            var spriteYOffset = this._playerTanks[tankIndex].playerSpriteOffset;
             this._playerTanks[tankIndex].addSprite(g_images.spritesheet,
-                spriteXOffset, 0, 16, 16, 1, 1);
+                spriteXOffset, spriteYOffset, 16, 16, 1, 1);
       }
 
 },

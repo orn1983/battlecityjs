@@ -19,6 +19,9 @@ g_ctx.imageSmoothingEnabled = false;
 // Grid is symmetric, so g_gridSize N means NxN
 var g_gridSize = 13;
 
+// number of players, starts as 1
+var g_players = 1;
+
 // The "nominal interval" is the one that all of our time-based units are
 // calibrated to e.g. a velocity unit is "pixels per nominal interval"
 //
