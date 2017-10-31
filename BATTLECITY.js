@@ -34,13 +34,14 @@ function createInitialTanks() {
         playerSpriteOffset : 0
     });
     // TODO if two players
-    if (g_players === 2) {
+    if (g_numPlayers === 2) {
         createPlayerTwoTank();
     }
 }
 
 // creates tank for player 2
 function createPlayerTwoTank() {
+    g_numPlayers++;
     entityManager.generatePlayerTank({
         type:   "player2",
         sprite: g_sprites.playerTank2,
@@ -124,7 +125,7 @@ function processDiagnostics() {
     if (eatKey(KEY_K)) entityManager.killNearestTank(
         g_mouseX, g_mouseY);
         
-    if (eatKey(KEY_2) && g_players === 1)
+    if (eatKey(KEY_2) && g_numPlayers === 1)
         createPlayerTwoTank();
 }
 
