@@ -243,69 +243,66 @@ PlayerTank.prototype.reset = function () {
 };
 
 PlayerTank.prototype.addSprite = function(image, sx, sy, width, height,
-  numCols=1, numRows=1)
-  {
+    numCols=1, numRows=1)
+{
     // HD TODO: This is the basic 1st version of having an object load its own
     // sprites, so I'm skipping animation code for now. We let the tank assume
     // that every two entries in spriteList are animation frames pointing in
     //the same direction.
     this.spriteList.push(new Sprite(image, sx, sy, width, height,
-      numCols, numRows));
-
-  };
+        numCols, numRows));
+};
 
 PlayerTank.prototype.render = function (ctx) {
-  var spriteCount = 0;
+    var spriteCount = 0;
 
-  // HD: Unlike other direction-focused switch statements in PlayerTank, this
-  // particular switch is ordered up-left-down-right. That's the reading order
-  // of images in spritesheet.png, so it's probably a good idea to keep that
-  // same order here.
-  // TODO: Only change animation if the tank is actually moving
-  // TODO #2: Fix how rapidly the animatiaion changes.
-  switch(this.orientation) {
-      case(consts.DIRECTION_UP):
-
-        if(this.animationTicker)
-        {
-          spriteCount = 0;
-        }
-        else
-        {
-          spriteCount = 1;
-        }
-      break;
-      case(consts.DIRECTION_LEFT):
-        if(this.animationTicker)
-        {
-          spriteCount = 2;
-        }
-        else
-        {
-          spriteCount = 3;
-        }
-      break;
-      case(consts.DIRECTION_DOWN):
-      if(this.animationTicker)
-      {
-        spriteCount = 4;
-      }
-      else
-      {
-        spriteCount = 5;
-      }
-
-      break;
-      case(consts.DIRECTION_RIGHT):
-      if(this.animationTicker)
-      {
-        spriteCount = 6;
-      }
-      else
-      {
-        spriteCount = 7;
-      }
-      break;
+    // HD: Unlike other direction-focused switch statements in PlayerTank, this
+    // particular switch is ordered up-left-down-right. That's the reading order
+    // of images in spritesheet.png, so it's probably a good idea to keep that
+    // same order here.
+    // TODO: Only change animation if the tank is actually moving
+    // TODO #2: Fix how rapidly the animatiaion changes.
+        switch(this.orientation) {
+        case(consts.DIRECTION_UP):
+            if(this.animationTicker)
+            {
+                spriteCount = 0;
+            }
+            else
+            {
+                spriteCount = 1;
+            }
+        break;
+        case(consts.DIRECTION_LEFT):
+            if(this.animationTicker)
+            {
+                spriteCount = 2;
+            }
+            else
+            {
+                spriteCount = 3;
+            }
+        break;
+        case(consts.DIRECTION_DOWN):
+            if(this.animationTicker)
+            {
+                spriteCount = 4;
+            }
+            else
+            {
+                spriteCount = 5;
+            }
+        break;
+        case(consts.DIRECTION_RIGHT):
+            if(this.animationTicker)
+            {
+                spriteCount = 6;
+            }
+            else
+            {
+                spriteCount = 7;
+            }
+        break;
     }
 
     this.animationTicker = !this.animationTicker;
