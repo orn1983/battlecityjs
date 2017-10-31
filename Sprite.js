@@ -91,7 +91,7 @@ Sprite.prototype.drawBulletAt = function (ctx, cx, cy, direction) {
 
     ctx.save();
     ctx.translate(cx, cy);
-    ctx.scale(this.scale, this.scale);
+    ctx.scale(g_sprites.bullet.scale, g_sprites.bullet.scale);
 
     // drawImage expects "top-left" coords, so we offset our destination
     // coords accordingly, to draw our sprite centred at the origin

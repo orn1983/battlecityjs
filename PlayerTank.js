@@ -64,7 +64,7 @@ PlayerTank.prototype.halfWidth = 20;
 PlayerTank.prototype.slideCounter = 0;
 
 //HD: Normal bullet speed. Will be changed if player gets a powerup.
-PlayerTank.prototype.bulletVelocity = 1;
+PlayerTank.prototype.bulletVelocity = 3;
 
 //HD: Normal bullet strength. Will be changed if player gets a powerup.
 PlayerTank.prototype.bulletStrength = 1;

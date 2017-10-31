@@ -92,7 +92,7 @@ Bullet.prototype.render = function (ctx) {
 //HD: Shouldn't bullet call its own sprite like tank does,
 //rather than referencing the g_sprites array?
     //g_sprites.bullet.drawCentredAt(
-    this.sprite.drawBulletAt(
+    this.sprite[this.direction].drawBulletAt(
         ctx, this.cx, this.cy, this.direction
     );
 

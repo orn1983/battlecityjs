@@ -184,7 +184,11 @@ function preloadDone() {
     //g_sprites.bullet = new animatedSprite(g_images.spritesheet, 323, 102, 4, 4, 1,1,1);
     
     // EAH: quick hack to get bullets to semi-work
-    g_sprites.bullet = new Sprite(g_images.spritesheet, 323, 102, 4, 4, 1,1);
+    g_sprites.bullet = {0: new Sprite(g_images.spritesheet, 323, 102, 4, 4, 1,1),
+                        3 : new Sprite(g_images.spritesheet, 330, 102, 4, 4, 1,1),
+                        2 : new Sprite(g_images.spritesheet, 339, 102, 4, 4, 1,1),
+                        1 : new Sprite(g_images.spritesheet, 346, 102, 4, 4, 1,1)
+                       }
     g_sprites.bullet.scale = 2;
 
     entityManager.init();
