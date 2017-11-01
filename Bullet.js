@@ -45,6 +45,10 @@ Bullet.prototype.direction = consts.DIRECTION_UP;
 Bullet.prototype.strength = 1;
 Bullet.prototype.player = true;
 
+// used for collision detection
+Bullet.prototype.halfHeight = 2;
+Bullet.prototype.halfWidth = 2;
+
 // Convert times from milliseconds to "nominal" time units.
 //Bullet.prototype.lifeSpan = 3000 / NOMINAL_UPDATE_INTERVAL;
 
@@ -63,10 +67,10 @@ Bullet.prototype.update = function (du) {
     //
     // Handle collisions
     //
-    var hitEntity = this.findHitEntity();
+    var hitEntity = this.findHitEntity(this.cx, this.cy);
     if (hitEntity) {
-        var canTakeHit = hitEntity.takeBulletHit;
-        if (canTakeHit) canTakeHit.call(hitEntity, this);
+        var canTakeHit = hitEntity.entity.takeBulletHit;
+        if (canTakeHit) canTakeHit.call(hitEntity.entity, this);
         return entityManager.KILL_ME_NOW;
     }
 

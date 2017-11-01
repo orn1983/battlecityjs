@@ -235,9 +235,17 @@ PlayerTank.prototype.maybeFireBullet = function () {
 };
 
 PlayerTank.prototype.takeBulletHit = function (bullet) {
+    
     //HD: Player got shot by enemy
-    if((this.isPlayer) && (!bullet.isPlayer))
+    if((this.isPlayer) && (!bullet.player))
         this.kill();
+    
+    //EAH: enabling friendly fire for now
+    if((this.isPlayer) && (bullet.player)) {
+        // just do a reset for now
+        this.reset();  
+    }
+        
 
     //HD: Enemy got shot by player. We'll have to do other things here later on,
     //such as incrementing the score for the player who owned the bullet,
@@ -251,7 +259,7 @@ PlayerTank.prototype.reset = function () {
     this.setPos(this.reset_cx, this.reset_cy);
     this.orientation = this.reset_orientation;
 
-    this.halt();
+    //this.halt();
 };
 
 PlayerTank.prototype.addSprite = function(image, sx, sy, width, height,
