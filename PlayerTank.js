@@ -27,6 +27,7 @@ function PlayerTank(descr) {
     this.setup(descr);
 
     this.rememberResets();
+
 };
 
 PlayerTank.prototype = new Entity();
@@ -140,6 +141,8 @@ PlayerTank.prototype.update = function (du) {
         }
         this.SlideCounter -= 1;
     }
+    
+    
     
     // EAH: currently possible to move diagonally!
     //Check for keypress, but don't move if you've already slid.

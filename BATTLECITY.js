@@ -31,7 +31,8 @@ function createInitialTanks() {
         // have one, I'm going to let entityManager call the tank's
         // addSprite() function when it pushes the tank into _playerTanks.
         spriteList: [],
-        playerSpriteOffset : 0
+        playerSpriteOffset : 0,
+        gamepad : gamepadManager.getGamepad()
     });
     // TODO if two players
     if (g_numPlayers === 2) {
@@ -59,7 +60,8 @@ function createPlayerTwoTank() {
         KEY_RIGHT : 39, // right arrow
         KEY_FIRE  : 17, // (right) control
         // sprite offset
-        playerSpriteOffset : 128
+        playerSpriteOffset : 128,
+        gamepad : gamepadManager.getGamepad()
     });
 }
 
@@ -70,6 +72,10 @@ function createPlayerTwoTank() {
 function gatherInputs() {
     // Nothing to do here!
     // The event handlers do everything we need for now.
+    
+    // updates gamepad inputs, if any
+    entityManager.handleGamepads();
+    
 }
 
 

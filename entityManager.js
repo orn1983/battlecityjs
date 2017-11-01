@@ -132,6 +132,17 @@ generatePlayerTank : function(descr) {
 
 },
 
+// updates gamepad inputs for each tank (if gamepad connected)
+handleGamepads : function() {
+    gamepadManager.updateGamepads();
+    for (var i = 0; i < this._playerTanks.length; i++) {
+        var tank = this._playerTanks[i];
+        if (tank.gamepad) {
+            gamepadManager.updateInputs(tank.gamepad, tank);
+        }
+    }
+},
+
 /*killNearestShip : function(xPos, yPos) {
     var theShip = this._findNearestShip(xPos, yPos).theShip;
     if (theShip) {
