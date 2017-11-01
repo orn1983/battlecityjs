@@ -195,7 +195,11 @@ PlayerTank.prototype.move = function(du, newX, newY)
 
 PlayerTank.prototype.maybeFireBullet = function () {
 
-    if (keys[this.KEY_FIRE]) {
+    //if (keys[this.KEY_FIRE]) {
+    // EAH: better to use eatKey here I think
+    //      even if you can fire more than one bullet at one, you
+    //      probably don't want to fire them all with one button push!
+    if (eatKey(this.KEY_FIRE)) {
 
         var turretX, turretY;
         // EAH: add offset so bullet doesn't collide with tank!

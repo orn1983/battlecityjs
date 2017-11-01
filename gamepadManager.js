@@ -16,6 +16,8 @@ Instructions:
                                or maybe it does?)
                                
 NB: If only one gamepad is connected it will get assigned to player 1
+NB2: gamepad overwrites keyboard inputs so keyboard will not work if
+     gamepad is connected!
                                
 */
 
@@ -111,13 +113,13 @@ updateInputs : function(gp, tank) {
 
 // returns a gamepad if connected
 getGamepad : function() {
-    console.log("getting gamepad");
-    console.log(this._gamepads[this._connected]);
+    //console.log("getting gamepad");
+    //console.log(this._gamepads[this._connected]);
     if (this._gamepads[this._connected]) {
         return this._gamepads[this._connected++];
         // increment so that next player gets next gamepad
     }
-    console.log("no gamepad connected");
+    //console.log("no gamepad connected");
     return false;
 },
 
