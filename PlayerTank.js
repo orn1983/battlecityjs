@@ -140,7 +140,7 @@ PlayerTank.prototype.update = function (du) {
                 break;
         }
         this.SlideCounter -= 1;
-
+    }
         
     //Check for keypress, but don't move if you've already slid.
     // EAH: only first key pressed is applied
