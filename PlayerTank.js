@@ -86,7 +86,7 @@ PlayerTank.prototype.frozenCounter = 0;
 PlayerTank.prototype.moveDistance = 2;
 
 //HD: Starting off facing up. Defined as a global in entityManager
-PlayerTank.prototype.orientation = entityManager.DIRECTION_UP;
+PlayerTank.prototype.orientation = consts.DIRECTION_UP;
 
 PlayerTank.prototype.numberOfLives = 14;
 
@@ -140,28 +140,28 @@ PlayerTank.prototype.update = function (du) {
                 break;
         }
         this.SlideCounter -= 1;
-    }
-    
-    
-    
-    // EAH: currently possible to move diagonally!
+
+        
     //Check for keypress, but don't move if you've already slid.
+    // EAH: only first key pressed is applied
+    //      to prevent diagonal movement:
+    //      "One key to rule them all..."
     if (keys[this.KEY_UP]) {
         this.orientation = consts.DIRECTION_UP;
         if(!sliding)
             this.move(du, this.cx, this.cy - this.moveDistance);
     }
-    if (keys[this.KEY_DOWN]) {
+    else if (keys[this.KEY_DOWN]) {
         this.orientation = consts.DIRECTION_DOWN;
         if(!sliding)
             this.move(du, this.cx, this.cy + this.moveDistance);
     }
-    if (keys[this.KEY_LEFT]) {
+    else if (keys[this.KEY_LEFT]) {
         this.orientation = consts.DIRECTION_LEFT;
         if(!sliding)
             this.move(du, this.cx - this.moveDistance, this.cy);
     }
-    if (keys[this.KEY_RIGHT]) {
+    else if (keys[this.KEY_RIGHT]) {
         this.orientation = consts.DIRECTION_RIGHT;
         if(!sliding)
           this.move(du, this.cx + this.moveDistance, this.cy);
@@ -227,7 +227,7 @@ PlayerTank.prototype.maybeFireBullet = function () {
         //HD: We send in "this" so that entityManager can calculate
         //whether the tank is allowed to fire again, if it tries to.
         //console.log(turretX, turretY, this.bulletVelocity,
-           // this.orientation, this.isPlayer, this.bulletStrength, this);
+        //    this.orientation, this.isPlayer, this.bulletStrength, this);
         entityManager.fireBullet(turretX, turretY, this.bulletVelocity,
             this.orientation, this.isPlayer, this.bulletStrength, this);
     }
