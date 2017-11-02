@@ -23,6 +23,11 @@ var g_ctx = g_canvas.getContext("2d");
 function createInitialTanks() {
     entityManager.generatePlayerTank({
         type:   "player1",
+        //HD: Adding a tanktype property with a const value. Will eventually
+        //drop the old type:"player1" above this comment, since I'm pretty sure
+        //they're used for basically the same thing, but I'm leaving it in for
+        //now so that it doesn't break anything with its absence.
+        tanktype: consts.TANK_PLAYER1,
         sprite: g_sprites.playerTank1,
         cx :    200,
         cy :    200,
@@ -45,13 +50,12 @@ function createPlayerTwoTank() {
     g_numPlayers++;
     entityManager.generatePlayerTank({
         type:   "player2",
+        //HD: We'll probably drop the "type" once tanktype is fully implemented.
+        tanktype: consts.TANK_PLAYER2,
         sprite: g_sprites.playerTank2,
         cx :    400,
         cy :    200,
-        //HD: If we use a spritemanager, we'd probably pull from that and
-        // write it directly into the spriteList below. Since we don't yet
-        // have one, I'm going to let entityManager call the tank's
-        // addSprite() function when it pushes the tank into _playerTanks.
+        //HD: Once the spriteManager is working, we can drop spriteList[]
         spriteList: [],
         // overwrite prototype definitions:
         KEY_UP    : 38, // up arrow, is there a'W'.charCodeAt(0) version?
@@ -72,10 +76,10 @@ function createPlayerTwoTank() {
 function gatherInputs() {
     // Nothing to do here!
     // The event handlers do everything we need for now.
-    
+
     // updates gamepad inputs, if any
     entityManager.handleGamepads();
-    
+
 }
 
 
@@ -130,7 +134,7 @@ function processDiagnostics() {
 
     if (eatKey(KEY_K)) entityManager.killNearestTank(
         g_mouseX, g_mouseY);
-        
+
     if (eatKey(KEY_2) && g_numPlayers === 1)
         createPlayerTwoTank();
 }
@@ -188,7 +192,7 @@ function preloadDone() {
     //HD: Just adding sample sprite initialization code for the bullet. It's still
     //broken, but at least now I can remember its coords in the spritesheet :-P
     //g_sprites.bullet = new animatedSprite(g_images.spritesheet, 323, 102, 4, 4, 1,1,1);
-    
+
     // EAH: quick hack to get bullets to semi-work
     g_sprites.bullet = {0: new Sprite(g_images.spritesheet, 323, 102, 4, 4, 1,1),
                         3 : new Sprite(g_images.spritesheet, 330, 102, 4, 4, 1,1),

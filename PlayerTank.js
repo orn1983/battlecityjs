@@ -11,14 +11,6 @@
 12345678901234567890123456789012345678901234567890123456789012345678901234567890
 */
 
-//HD:Starting work on the player tank. Differentiating it from enemy tanks
-//at the moment, part since some of their attributes (sprites,
-//powerups, AI behavior) seem sufficiently exclusive to warrant having
-//them as separate entity types, and part so we can at least get the player
-//character driving around the place before we do anything more complicated.
-//Player 2 could be the exact same code, except for different movement
-//key values, starting location, and sprite.
-//ALMOST DEFINITELY NOT WORKING AT THE MOMENT, BTW.
 
 // A generic contructor which accepts an arbitrary descriptor object
 function PlayerTank(descr) {
@@ -60,11 +52,14 @@ PlayerTank.prototype.cy = 200;
 PlayerTank.prototype.halfHeight = 20;
 PlayerTank.prototype.halfWidth = 20;
 
+PlayerTank.prototype.tanktype = consts.TANK_PLAYER1;
+
 //HD: This is set to a positive integer when the tank is on ice, and is used
 //to increment its movement. It is then decremented with each du
 PlayerTank.prototype.slideCounter = 0;
 
-//HD: Normal bullet speed. Will be changed if player gets a powerup.
+//Normal bullet speed. Will be changed if player gets a powerup, or if the
+//tank is the enemy time that shoots faster bullets.
 PlayerTank.prototype.bulletVelocity = 3;
 
 //HD: Normal bullet strength. Will be changed if player gets a powerup.
@@ -73,28 +68,30 @@ PlayerTank.prototype.bulletStrength = 1;
 //HD: Can only fire one shot at a time. Changed with powerup.
 PlayerTank.prototype.canFireTwice = false;
 
-//HD: Counter while tank is frozen. Will only apply to AI tanks (when a player
-//tank drives over a freeze-time powerup, it'll send a message up to the
-//entityManager, who will then send down a positive integer value for
-//frozenCounter to all tanks who are NOT player1 or player2).
-//When this reaches 0, the tank can move again.
+//Counter while tank is frozen. Only affects AI tanks when a player tank picks
+//up a "freeze-time" powerup: The entityManager then sets this to some positive
+//integer, and the tank needs to let it count down. When it reaches 0, the tank
+//can move again.
 PlayerTank.prototype.frozenCounter = 0;
 
-//HD: This is how far you move in a single step, either through a keypress
-//or by sliding on ice. (I picked the value simply because it's what part
-//used for the thrust value in Asteroids)
+//TODO: Implement higher speed when player picks up a powerup, plus permanent
+//lower and higher speeds when entityManager creates certain enemy types
 PlayerTank.prototype.moveDistance = 2;
 
-//HD: Starting off facing up. Defined as a global in entityManager
 PlayerTank.prototype.orientation = consts.DIRECTION_UP;
 
 PlayerTank.prototype.numberOfLives = 14;
 
-//HD: Used when creating bullets, to avoid friendly fire.
+//TODO: Use this as check to decide whether the tank's bullets will destroy
+//an enemy tank (player->enemy or enemy->player, maybe also enemy->enemy) or
+//temporarily paralyze it (player->player)
 PlayerTank.prototype.isPlayer = true;
 
-//HD: Commenting out for now - we likely don't need this
-//PlayerTank.prototype.numSubSteps = 1;
+//HD: Commenting this one out. Instead, we can check if the tanks is of type
+//tanktype.TANK_POWER_DROPSPOWERUP when we're deciding what sprite to get
+//and whether the tank should drop a powerup when killed.
+//PlayerTank.prototype.isPoweredUp = false;
+
 
 // HACKED-IN AUDIO (no preloading)
 PlayerTank.prototype.warpSound = new Audio(
@@ -141,7 +138,7 @@ PlayerTank.prototype.update = function (du) {
         }
         this.SlideCounter -= 1;
     }
-        
+
     //Check for keypress, but don't move if you've already slid.
     // EAH: only first key pressed is applied
     //      to prevent diagonal movement:
@@ -176,20 +173,11 @@ PlayerTank.prototype.update = function (du) {
 
 PlayerTank.prototype.move = function(du, newX, newY)
 {
-    //HD: Check if we're driving into anything. If not, move.
     var hitEntity = this.findHitEntity(newX, newY);
     if (!hitEntity)
     {
         this.cx = newX;
         this.cy = newY;
-        //HD: Old substep code. Commenting it out in case we need it for
-        //reference later
-        //var steps = this.numSubSteps;
-        //var dStep = du / steps;
-        //for (var i = 0; i < steps; ++i)
-        //{
-        //    this.computeSubStep(dStep);
-        //}
   }
 }
 
@@ -226,8 +214,6 @@ PlayerTank.prototype.maybeFireBullet = function () {
 
         //HD: We send in "this" so that entityManager can calculate
         //whether the tank is allowed to fire again, if it tries to.
-        //console.log(turretX, turretY, this.bulletVelocity,
-        //    this.orientation, this.isPlayer, this.bulletStrength, this);
         entityManager.fireBullet(turretX, turretY, this.bulletVelocity,
             this.orientation, this.isPlayer, this.bulletStrength, this);
     }
@@ -235,23 +221,25 @@ PlayerTank.prototype.maybeFireBullet = function () {
 };
 
 PlayerTank.prototype.takeBulletHit = function (bullet) {
-    
-    //HD: Player got shot by enemy
-    if((this.isPlayer) && (!bullet.player))
+
+    //Player got shot by enemy
+    if((this.isPlayer) && (!bullet.player)) {
         this.kill();
-    
+    }
+
     //EAH: enabling friendly fire for now
     if((this.isPlayer) && (bullet.player)) {
         // just do a reset for now
-        this.reset();  
+        this.reset();
     }
-        
 
-    //HD: Enemy got shot by player. We'll have to do other things here later on,
+
+    //Enemy got shot by player. We'll have to do other things here later on,
     //such as incrementing the score for the player who owned the bullet,
-    //and possibly simply lower the tank's health instead of killing it.
-    if((!this.isPlayer) && (bullet.isPlayer))
+    //and possibly lower the tank's health instead of killing it.
+    if((!this.isPlayer) && (bullet.isPlayer)) {
         this.kill();
+    }
 
     };
 
