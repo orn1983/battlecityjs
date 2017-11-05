@@ -69,8 +69,8 @@ fireBullet: function(cx, cy, vel, direction, player, strength, tank) {
         direction     : direction,
         strength     : strength,
         player          : player,
-        tank          : tank,
-        sprite      : g_sprites.bullet
+        tank          : tank
+        //sprite      : g_sprites.bullet
     }));
 },
 
@@ -89,13 +89,13 @@ generatePlayerTank : function(descr) {
 
       //HD NB: When we start creating different tanks, we can use properties of
       //descr to determine where spriteXOffset should start.
-      for(var i=0; i<8; i++)
+      /*for(var i=0; i<8; i++)
       {
             var spriteXOffset = i*16;
             var spriteYOffset = this._playerTanks[tankIndex].playerSpriteOffset;
             this._playerTanks[tankIndex].addSprite(g_images.spritesheet,
                 spriteXOffset, spriteYOffset, 16, 16, 1, 1);
-      }
+      }*/
 
 },
 

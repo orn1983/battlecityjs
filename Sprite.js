@@ -88,13 +88,13 @@ Sprite.prototype.drawTankAt = function (ctx, cx, cy) {
 
 
 // draws bullet
-Sprite.prototype.drawBulletAt = function (ctx, cx, cy, direction) {
+Sprite.prototype.drawBulletAt = function (ctx, cx, cy, direction, scale) {
     var w = this.width,
         h = this.height;
 
     ctx.save();
     ctx.translate(cx, cy);
-    ctx.scale(g_sprites.bullet.scale, g_sprites.bullet.scale);
+    ctx.scale(scale, scale);
 
     // drawImage expects "top-left" coords, so we offset our destination
     // coords accordingly, to draw our sprite centred at the origin
