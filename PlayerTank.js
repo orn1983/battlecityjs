@@ -101,22 +101,20 @@ PlayerTank.prototype.animationFrameCounter = 0;
 
 
 // HACKED-IN AUDIO (no preloading)
-PlayerTank.prototype.warpSound = new Audio(
-    "sounds/shipWarp.ogg");
-
-//HD NB: We're not using this function right now, but I'm adding it just to
-//show how the code would look
-//Playertank.prototype.playSound = function()
-//{
-//  this.warpSound.play();
-//}
+PlayerTank.prototype.soundIdle = "tankIdle";
+PlayerTank.prototype.soundMove = "tankMove";
 
 //HD: Using this as a "1-2" tick between two animation frames in .render()
 //PlayerTank.prototype.animationTicker = true;
 
+PlayerTank.prototype.isMoving = false;
 
 PlayerTank.prototype.update = function (du) {
     spatialManager.unregister(this);
+
+    // OA: Set movement state to false -- if move will be called, this will be set
+    // to true. At the end of the update loop, we will decide which audio to play
+    this.isMoving = false;
 
     if (this._isDeadNow)
         return entityManager.KILL_ME_NOW;
@@ -175,8 +173,16 @@ PlayerTank.prototype.update = function (du) {
     this.maybeFireBullet();
     
 
-    
     spatialManager.register(this);
+
+    // Play audio for tank
+    if (this.isMoving) {
+        g_SFX.stop(this.soundIdle);
+        g_SFX.play(this.soundMove);
+    } else {
+        g_SFX.stop(this.soundMove);
+        g_SFX.play(this.soundIdle);
+    }
 
 };
 
@@ -196,7 +202,8 @@ PlayerTank.prototype.move = function(du, newX, newY)
         this.animationFrame === 0 ? this.animationFrame = 1 
                                   : this.animationFrame = 0;
     }
-    
+
+    this.isMoving = true;
 }
 
 PlayerTank.prototype.maybeFireBullet = function () {

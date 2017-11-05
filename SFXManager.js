@@ -13,13 +13,24 @@ function SFXManager() {
     this.SFX = {
         "bulletFire": {
             "audio": new Audio("sounds/bullet_fire.wav"),
-            "interruptable": true},
+            "interruptable": true,
+            "repeating": false},
         "bulletShieldHit": {
             "audio": new Audio("sounds/bullet_shield_hit.wav"),
-            "interruptable": true},
+            "interruptable": true,
+            "repeating": false},
         "bulletWallHit": {
             "audio": new Audio("sounds/bullet_wall_hit.wav"),
-            "interruptable": true},
+            "interruptable": true,
+            "repeating": false},
+        "tankIdle": {
+            "audio": new Audio("sounds/tank_idle.wav"),
+            "interruptable": false,
+            "repeating": true},
+        "tankMove": {
+            "audio": new Audio("sounds/tank_move.wav"),
+            "interruptable": false,
+            "repeating": true}
     };
 
     this.configure = function() {
@@ -36,6 +47,13 @@ function SFXManager() {
             this.SFX[sound].audio.paused == true) {
             // Call stop in case the sound is already playing (if applicable)
             this.stop(sound);
+            if (this.SFX[sound].repeating === true) {
+                this.SFX[sound].audio.addEventListener("ended", function () {
+                    // OA: There is an audiable silence in between. TODO fix maybe?
+                    this.currentTime = 0;
+                    this.play();
+                }, false);
+            }
             this.SFX[sound].audio.play();
         }
     };
