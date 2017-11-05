@@ -19,7 +19,7 @@ function Bullet(descr) {
     this.setup(descr);
 
     // Make a noise when I am created (i.e. fired)
-    g_SFX.play(this.soundFire);
+    g_SFX.request(this.soundFire);
 
 /*
     // Diagnostics to check inheritance stuff

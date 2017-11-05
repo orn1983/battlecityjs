@@ -69,6 +69,7 @@ main._iterCore = function (dt) {
     update(dt);
     render(g_ctx);
     handleSFXtoggles();
+    playSounds();
 };
 
 main._isGameOver = false;

@@ -6,6 +6,10 @@ function handleSFXtoggles() {
         g_SFX.toggleSound();
 }
 
+function playSounds() {
+    g_SFX.processRequests();
+}
+
 function SFXManager() {
     this.soundsEnabled = true;
 
@@ -13,22 +17,27 @@ function SFXManager() {
         "bulletFire": {
             "audio": new Audio("sounds/bullet_fire.wav"),
             "interruptable": true,
+            "requested": false,
             "repeating": false},
         "bulletShieldHit": {
             "audio": new Audio("sounds/bullet_shield_hit.wav"),
             "interruptable": true,
+            "requested": false,
             "repeating": false},
         "bulletWallHit": {
             "audio": new Audio("sounds/bullet_wall_hit.wav"),
             "interruptable": true,
+            "requested": false,
             "repeating": false},
         "tankIdle": {
             "audio": new Audio("sounds/tank_idle.wav"),
             "interruptable": false,
+            "requested": false,
             "repeating": true},
         "tankMove": {
             "audio": new Audio("sounds/tank_move.wav"),
             "interruptable": false,
+            "requested": false,
             "repeating": true}
     };
 
@@ -36,6 +45,10 @@ function SFXManager() {
         this.SFX.bulletFire.audio.volume = 1;
         this.SFX.bulletShieldHit.audio.volume = 1;
         this.SFX.bulletWallHit.audio.volume = 1;
+    }
+
+    this.request = function(sound) {
+        this.SFX[sound].requested = true;
     }
 
     this.play = function(sound) {
@@ -57,18 +70,38 @@ function SFXManager() {
         }
     };
 
+    this.processRequests = function() {
+        for (var sound in this.SFX) {
+            if (this.SFX[sound].requested) {
+                if (sound !== "tankIdle" && sound !== "tankMove") {
+                    this.play(sound);
+                    this.SFX[sound].requested = false;
+                }
+                else {
+                    // Special case for tank movement as we only play one at a time,
+                    // even if we have two tanks requesting the sound
+                    if (sound === "tankIdle") {
+                        if (!this.SFX["tankMove"].requested) {
+                            this.stop("tankMove");
+                            this.play(sound);
+                        }
+                        this.SFX[sound].requested = false;
+                    }
+                    else {
+                        this.stop("tankIdle");
+                        this.play(sound);
+                        this.SFX[sound].requested = false;
+                    }
+                }
+            }
+        }
+    }
+
     this.stop = function (sound) {
         this.SFX[sound].audio.pause();
         this.SFX[sound].audio.currentTime = 0;
+        this.SFX[sound].requested = false;
     };
-
-    this.playMusic = function (_this) {
-        if (!_this)
-            _this = this;
-
-        if (!_this.soundsEnabled)
-            return;
-    }
 
     this.stopMusic = function () {
        this.SFX.delorean.audio.pause();
@@ -86,6 +119,5 @@ function SFXManager() {
     }
 
     this.configure();
-    this.playMusic();
 }
 

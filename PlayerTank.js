@@ -176,11 +176,9 @@ PlayerTank.prototype.update = function (du) {
 
     // Play audio for tank
     if (this.isMoving) {
-        g_SFX.stop(this.soundIdle);
-        g_SFX.play(this.soundMove);
+        g_SFX.request(this.soundMove);
     } else {
-        g_SFX.stop(this.soundMove);
-        g_SFX.play(this.soundIdle);
+        g_SFX.request(this.soundIdle);
     }
 
 };
