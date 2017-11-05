@@ -195,7 +195,7 @@ PlayerTank.prototype.move = function(du, newX, newY)
     }
 
     //var hitType = hitEntity.
-    console.log(hitEntity);
+    //console.log(hitEntity);
     /*if(hitEntity.type === consts.POWERUP)
     //Púlla frekar string start.
     {
