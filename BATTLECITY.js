@@ -53,8 +53,8 @@ function createPlayerTwoTank() {
         //HD: We'll probably drop the "type" once tanktype is fully implemented.
         tanktype: consts.TANK_PLAYER2,
         //sprite: g_sprites.playerTank2,
-        cx :    400,
-        cy :    200,
+        cx :    g_canvas.width/26 + g_canvas.width/13*8,
+        cy :    g_canvas.width/26 + g_canvas.width/13*12,
         //HD: Once the spriteManager is working, we can drop spriteList[]
         spriteList: [],
         // overwrite prototype definitions:
