@@ -156,10 +156,10 @@ var spriteManager = {
 
     spriteStructure : function(type, look){
         var sx = 256;  //Starting point for whole brick.
-        var sy = 0;
-        var width = 16;
-        var height = 16;
-        var mul = 16;
+        var sy = 64;
+        var width = 8;
+        var height = 8;
+        var mul = 8;
 
         switch(type)
         {
@@ -169,8 +169,10 @@ var spriteManager = {
                 sy += mul*1;
             break;
             case(consts.STRUCTURE_FLAG):
-                sx += mul*3;
-                sy += mul*2;
+                sx += mul*6;
+                sy -= mul*4;
+                width = 16;
+                height = 16;
             break;
         }
 
@@ -193,7 +195,7 @@ var spriteManager = {
             case(consts.STRUCTURE_ALL_GONE):
                 if(type == consts.STRUCTURE_FLAG)
                 {
-                    sx += mul*1;
+                    sx += mul*2;
                 }
                 else
                 {
@@ -210,10 +212,10 @@ var spriteManager = {
         //make the two animation frames be different constants: TERRAIN_WATER1
         //and TERRAIN_WATER2. I'm sticking with a single frame for now.
         var sx = 256;
-        var sy = 32; //x-and-y starting points for the single water frame.
-        var width = 16;
-        var height = 16;
-        var mul = 16;
+        var sy = 80; //x-and-y starting points for the single water frame.
+        var width = 8;
+        var height = 8;
+        var mul = 8;
 
         switch(type)
         {
@@ -221,12 +223,14 @@ var spriteManager = {
             break;
             case(consts.TERRAIN_TREES):
                 sx += mul*1;
+                sy -= mul*1;
             break;
             case(consts.TERRAIN_ICE):
                 sx += mul*2;
+                sy -= mul*1;
             break;
             case(consts.TERRAIN_BLANK):
-                sx += mul*5; //Not a typo; 3 and 4 are flag sprites.
+                sx += mul*3;
             break;
         }
 
@@ -239,7 +243,7 @@ var spriteManager = {
         var width = 16;
         var height = 16;
         var mul = 16;
-        
+
         switch(type)
         {
             case(consts.EFFECT_SPAWNFLASH):
