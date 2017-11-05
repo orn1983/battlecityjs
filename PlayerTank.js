@@ -307,8 +307,12 @@ PlayerTank.prototype.render = function (ctx, du) {
         this.animationFrame
     );
 
+	ctx.save();
+	ctx.translate(this.cx, this.cy)
+	ctx.scale(2,2);
+	ctx.translate(-this.cx, -this.cy)
     this.sprite.drawTankAt(ctx, this.cx, this.cy);
-
+    ctx.restore();
 
     /*
 

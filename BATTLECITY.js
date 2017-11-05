@@ -29,8 +29,8 @@ function createInitialTanks() {
         //now so that it doesn't break anything with its absence.
         tanktype: consts.TANK_PLAYER1,
         //sprite: g_sprites.playerTank1,
-        cx :    200,
-        cy :    200,
+        cx :    g_canvas.width/26 + g_canvas.width/13*4,
+        cy :    g_canvas.width/26 + g_canvas.width/13*12,
         //HD: If we use a spritemanager, we'd probably pull from that and
         // write it directly into the spriteList below. Since we don't yet
         // have one, I'm going to let entityManager call the tank's
@@ -251,7 +251,7 @@ function preloadDone() {
 
     entityManager.init();
     createInitialTanks();
-    map1();
+    createLevel(g_levels.stage_01);
 
     main.init();
 }

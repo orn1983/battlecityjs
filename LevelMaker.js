@@ -18,7 +18,7 @@ var g_gridStep = g_levelWidth/g_gridSize;
 function createLevel(array) {
     // just for testing
     for (var i = 0; i < g_gridSize; i++){
-        for(var j = 0; j < 13; j++){
+        for(var j = 0; j < g_gridSize; j++){
             switch(array[i][j])
                 {
                     case(0):
