@@ -41,8 +41,8 @@ Brick.prototype = new Entity();
 
 //AVG NB: Need these for calculations, but I'm just making up numbers.
 //Adjust them later based on tank size.
-Brick.prototype.halfHeight = 20;
-Brick.prototype.halfWidth = 20;
+Brick.prototype.halfHeight = g_canvas.height/g_gridSize/2;
+Brick.prototype.halfWidth = g_canvas.width/g_gridSize/2;
 
 Brick.prototype.update = function (du) {
     // TODO Update sprite if it has taken damage

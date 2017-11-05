@@ -49,8 +49,8 @@ PlayerTank.prototype.cy = 200;
 
 //HD NB: Need these for calculations, but I'm just making up numbers.
 //Adjust them later based on tank size.
-PlayerTank.prototype.halfHeight = g_canvas.height/g_gridSize-1;
-PlayerTank.prototype.halfWidth = g_canvas.width/g_gridSize-1;
+PlayerTank.prototype.halfHeight = g_canvas.height/g_gridSize;
+PlayerTank.prototype.halfWidth = g_canvas.width/g_gridSize;
 
 PlayerTank.prototype.tanktype = consts.TANK_PLAYER1;
 
