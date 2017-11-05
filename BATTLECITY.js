@@ -70,21 +70,21 @@ function createPlayerTwoTank() {
 }
 
 function createTerrain() {
-	// Just for testing right now
-	entityManager.generateTerrain({
-		cx      : 200
-		,cy     : 400
-		,type   : consts.TERRAIN_WATER
-	});
+    // Just for testing right now
+    entityManager.generateTerrain({
+        cx      : 200,
+        cy      : 400,
+        type    : consts.TERRAIN_WATER
+    });
 }
 
 function createBrick() {
-	// just for testing
-	entityManager.generateBrick({
-		cx      : 400
-		,cy     : 400
-		,type   : consts.STRUCTURE_BRICK
-	});
+    // just for testing
+    entityManager.generateBrick({
+        cx      : 200,
+        cy      : 300,
+        type   : consts.STRUCTURE_BRICK
+    });
 }
 
 // =============
@@ -201,7 +201,7 @@ var g_sprites = {};
 function preloadDone() {
     g_sprites.playerTank1  = new animatedSprite(g_images.spritesheet, 0, 0, 16, 16, 2, 1, 1);
     g_sprites.playerTank2  = new animatedSprite(g_images.spritesheet, 128, 0, 16, 16, 2, 1, 1);
-	
+    
     //g_sprites.ship2 = new Sprite(g_images.ship2);
     //g_sprites.rock  = new Sprite(g_images.rock);
 
@@ -222,9 +222,9 @@ function preloadDone() {
 
     entityManager.init();
     createInitialTanks();
-	createTerrain();
-	createBrick();
-	
+    createTerrain();
+    createBrick();
+    
 
     main.init();
 }

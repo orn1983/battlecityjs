@@ -34,7 +34,7 @@ Terrain.prototype.halfWidth = 20;
 
 
 Terrain.prototype.update = function (du) {
-	spatialManager.unregister(this);    
+    spatialManager.unregister(this);    
     spatialManager.register(this)
 };
 

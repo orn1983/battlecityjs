@@ -27,9 +27,9 @@ var entityManager = {
 
 // "PRIVATE" DATA
 
-_terrain  	 	: [],
-_bricks  	 	: [],
-_bullets 	    : [],
+_terrain           : [],
+_bricks           : [],
+_bullets         : [],
 _playerTanks    : [],
 
 //_bShowRocks : true,
@@ -63,28 +63,28 @@ init: function() {
 
 fireBullet: function(cx, cy, vel, direction, player, strength, tank) {
     this._bullets.push(new Bullet({
-        cx   		: cx,
-        cy			: cy,
-        vel  		: vel,
-		direction 	: direction,
-        strength 	: strength,
-		player 	 	: player,
-		tank 	 	: tank,
+        cx           : cx,
+        cy            : cy,
+        vel          : vel,
+        direction     : direction,
+        strength     : strength,
+        player          : player,
+        tank          : tank,
         sprite      : g_sprites.bullet
     }));
 },
 
 
 generateTerrain : function(descr) {
-	this._terrain.push(new Terrain(descr));
+    this._terrain.push(new Terrain(descr));
 },
 
 generateBrick : function(descr) {
-	this._bricks.push(new Brick(descr));
+    this._bricks.push(new Brick(descr));
 },
 
 generatePlayerTank : function(descr) {
-	this._playerTanks.push(new PlayerTank(descr));
+    this._playerTanks.push(new PlayerTank(descr));
     var tankIndex = this._playerTanks.length - 1;
 
       //HD NB: When we start creating different tanks, we can use properties of
@@ -154,7 +154,7 @@ render: function(ctx) {
         /* if (!this._bShowRocks &&
             aCategory == this._rocks)
             continue;
-		*/
+        */
         for (var i = 0; i < aCategory.length; ++i) {
 
             aCategory[i].render(ctx);

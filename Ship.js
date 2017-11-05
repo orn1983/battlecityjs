@@ -222,14 +222,14 @@ Ship.prototype.applyAccel = function (accelX, accelY, du) {
     // bounce
     if (g_useGravity) {
 
-	var minY = g_sprites.ship.height / 2;
-	var maxY = g_canvas.height - minY;
+    var minY = g_sprites.ship.height / 2;
+    var maxY = g_canvas.height - minY;
 
-	// Ignore the bounce if the ship is already in
-	// the "border zone" (to avoid trapping them there)
-	if (this.cy > maxY || this.cy < minY) {
-	    // do nothing
-	} else if (nextY > maxY || nextY < minY) {
+    // Ignore the bounce if the ship is already in
+    // the "border zone" (to avoid trapping them there)
+    if (this.cy > maxY || this.cy < minY) {
+        // do nothing
+    } else if (nextY > maxY || nextY < minY) {
             this.velY = oldVelY * -0.9;
             intervalVelY = this.velY;
         }
@@ -297,7 +297,7 @@ Ship.prototype.render = function (ctx) {
     // pass my scale into the sprite, for drawing
     this.sprite.scale = this._scale;
     this.sprite.drawCentredAt(
-	ctx, this.cx, this.cy, this.rotation
+    ctx, this.cx, this.cy, this.rotation
     );
     this.sprite.scale = origScale;
 };

@@ -241,40 +241,40 @@ var spriteManager = {
         var width = 16;
         var height = 16;
         var mul = 16;
-		
-		switch(type)
+        
+        switch(type)
         {
-			case(consts.EFFECT_SPAWNFLASH):
-				width = 16;
-				height = 16;
-				sx = sx + (mul*0) + (mul*frameNumber);
-			break;
-			case(consts.EFFECT_SMALLEXPLOSION):
-				width = 16;
-				height = 16;
-				sy = sy + (mul*2) + (mul*frameNumber);
-			break;
-			case(consts.EFFECT_LARGEEXPLOSION):
-				width = 32;
-				height = 32;
-				sx = sx + (mul*3) + (mul*2*frameNumber);
-				sy = sy + (mul*2);
-			break;
-			case(consts.EFFECT_INVULNERABLE):
-				width = 16;
-				height = 16;
-				sy = sy + (mul*3) + (mul*frameNumber);
-			break;
-			case(consts.EFFECT_POINTS):
-				width = 16;
-				height = 16;
-				//HD NOTE: Here, frameNumber isn't animation, but rather which
-				//points value (100..500) we've given. It looks a little weird, but
-				//is much cleaner than if we had special cases for all 5 values.
-				sx = sx + (mul*2) + (mul*frameNumber);
-				sy += mul*4;
-			break;
-		}
+            case(consts.EFFECT_SPAWNFLASH):
+                width = 16;
+                height = 16;
+                sx = sx + (mul*0) + (mul*frameNumber);
+            break;
+            case(consts.EFFECT_SMALLEXPLOSION):
+                width = 16;
+                height = 16;
+                sy = sy + (mul*2) + (mul*frameNumber);
+            break;
+            case(consts.EFFECT_LARGEEXPLOSION):
+                width = 32;
+                height = 32;
+                sx = sx + (mul*3) + (mul*2*frameNumber);
+                sy = sy + (mul*2);
+            break;
+            case(consts.EFFECT_INVULNERABLE):
+                width = 16;
+                height = 16;
+                sy = sy + (mul*3) + (mul*frameNumber);
+            break;
+            case(consts.EFFECT_POINTS):
+                width = 16;
+                height = 16;
+                //HD NOTE: Here, frameNumber isn't animation, but rather which
+                //points value (100..500) we've given. It looks a little weird, but
+                //is much cleaner than if we had special cases for all 5 values.
+                sx = sx + (mul*2) + (mul*frameNumber);
+                sy += mul*4;
+            break;
+        }
         return new Sprite(_spritesheet, sx, sy, width, height, 1, 1);
 
     },

@@ -41,9 +41,12 @@ function Sprite(image, sx, sy, width, height, numCols=1, numRows=1) {
 }
 
 Sprite.prototype.drawAt = function (ctx, x, y) {
+    // ctx.save();
+    // ctx.scale(this.scaleX, this.scaleY);
     ctx.drawImage(this.image,
                   this.sx, this.sy, this.width, this.height,
                   x, y, this.width, this.height);
+    // ctx.restore();
 };
 
 Sprite.prototype.drawCentredAt = function (ctx, cx, cy, orientation) {

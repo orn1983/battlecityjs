@@ -56,13 +56,13 @@ Bullet.prototype.update = function (du) {
 
     spatialManager.unregister(this);
 
-	// move bullet
-	switch (this.direction) {
-		case(consts.DIRECTION_UP)	 : this.cy -= this.vel * du; break;
-		case(consts.DIRECTION_DOWN)  : this.cy += this.vel * du; break;
-		case(consts.DIRECTION_RIGHT) : this.cx += this.vel * du; break;
-		case(consts.DIRECTION_LEFT)  : this.cx -= this.vel * du; break;
-	}
+    // move bullet
+    switch (this.direction) {
+        case(consts.DIRECTION_UP)     : this.cy -= this.vel * du; break;
+        case(consts.DIRECTION_DOWN)  : this.cy += this.vel * du; break;
+        case(consts.DIRECTION_RIGHT) : this.cx += this.vel * du; break;
+        case(consts.DIRECTION_LEFT)  : this.cx -= this.vel * du; break;
+    }
 
     //
     // Handle collisions
@@ -70,18 +70,18 @@ Bullet.prototype.update = function (du) {
     var hitEntity = this.findHitEntity(this.cx, this.cy);
     // EAH: check if hitEntity is ojbect because it can also be 'true'
     //      for outer border hits
-	
+    
     if (hitEntity && typeof hitEntity === 'object') {
         var canTakeHit = hitEntity.entity.takeBulletHit;
         if (canTakeHit){
-			canTakeHit.call(hitEntity.entity, this);
-			console.log(hitEntity.type)
-			return entityManager.KILL_ME_NOW;
-		}
+            canTakeHit.call(hitEntity.entity, this);
+            console.log(hitEntity.type)
+            return entityManager.KILL_ME_NOW;
+        }
     }
     else if (hitEntity) {
         // bullet hit outer border, just kill it
-		console.log(hitEntity)
+        console.log(hitEntity)
         return entityManager.KILL_ME_NOW;
     }
 

@@ -14,19 +14,19 @@ var util = {
 
 clampRange: function(value, lowBound, highBound) {
     if (value < lowBound) {
-	value = lowBound;
+    value = lowBound;
     } else if (value > highBound) {
-	value = highBound;
+    value = highBound;
     }
     return value;
 },
 
 wrapRange: function(value, lowBound, highBound) {
     while (value < lowBound) {
-	value += (highBound - lowBound);
+    value += (highBound - lowBound);
     }
     while (value > highBound) {
-	value -= (highBound - lowBound);
+    value -= (highBound - lowBound);
     }
     return value;
 },
@@ -63,12 +63,12 @@ distSq: function(x1, y1, x2, y2) {
 
 wrappedDistSq: function(x1, y1, x2, y2, xWrap, yWrap) {
     var dx = Math.abs(x2-x1),
-	dy = Math.abs(y2-y1);
+    dy = Math.abs(y2-y1);
     if (dx > xWrap/2) {
-	dx = xWrap - dx;
+    dx = xWrap - dx;
     };
     if (dy > yWrap/2) {
-	dy = yWrap - dy;
+    dy = yWrap - dy;
     }
     return this.square(dx) + this.square(dy);
 },

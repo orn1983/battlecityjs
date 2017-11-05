@@ -20,7 +20,13 @@ function Brick(descr) {
       
     // Use sprite manager when it works
     // this.sprite = spriteManager.spriteStructure(this.type, this.look);
-	this.sprite = new Sprite(g_images.spritesheet, 256, 0, 16, 16, 1, 1);
+    this.sprite = new Sprite(g_images.spritesheet, 256, 0, 16, 16, 1, 1);
+    // this.cx = this.x + this.sprite.width/2;
+    // this.cy = this.y + this.sprite.height/2;
+    // this.width = this.sprite.width;
+    // this.height = this.sprite.height;
+    // this.halfWidth = this.sprite.width/2;
+    // this.halfHeight = this.sprite.height/2;
     this.scale  = this.scale  || 1;
 
 /*
@@ -39,10 +45,10 @@ Brick.prototype.halfHeight = 20;
 Brick.prototype.halfWidth = 20;
 
 Brick.prototype.update = function (du) {
-	// TODO Update sprite if it has taken damage
-	// or destroy it if we use smaller objects
+    // TODO Update sprite if it has taken damage
+    // or destroy it if we use smaller objects
 
-	// If it has been destroyd partially, then we have to change spatialManager. Which makes me want to use smaller objects
+    // If it has been destroyd partially, then we have to change spatialManager. Which makes me want to use smaller objects
     spatialManager.unregister(this);
 
     if (this._isDeadNow)
@@ -54,19 +60,19 @@ Brick.prototype.update = function (du) {
 
 // Perhaps I need a high level data structure that handles which bricks get destroyd.
 Brick.prototype.takeBulletHit = function (bullet) {
-	// TODO implement in such a way that it destroys it partially
-	// OR should we just have many smaller brick objects?
-	
-	this.kill()
-	
-	// if(bullet.strength === 4){
-		// destroy 2 layers of bricks
-		// allow steel bricks to get destroyed
-	// }
-	// else{
-		// destroy 1 layer of bricks
-		// do not allow steel bricks to get destroyed
-	// }
+    // TODO implement in such a way that it destroys it partially
+    // OR should we just have many smaller brick objects?
+    
+    this.kill()
+    
+    // if(bullet.strength === 4){
+        // destroy 2 layers of bricks
+        // allow steel bricks to get destroyed
+    // }
+    // else{
+        // destroy 1 layer of bricks
+        // do not allow steel bricks to get destroyed
+    // }
 };
 
 
@@ -77,4 +83,7 @@ Brick.prototype.render = function (ctx) {
     this.sprite.drawCentredAt(
         ctx, this.cx, this.cy, this.rotation
     );
+    // this.sprite.drawAt(
+        // ctx, this.cx, this.cy
+    // );
 };
