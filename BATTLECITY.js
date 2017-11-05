@@ -251,7 +251,7 @@ function preloadDone() {
 
     entityManager.init();
     createInitialTanks();
-    map1();
+    createLevel(g_levels.stage_01);
 
     main.init();
 }
