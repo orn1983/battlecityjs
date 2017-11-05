@@ -150,9 +150,6 @@ function processDiagnostics() {
 
     if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
 
-    if (eatKey(KEY_K)) entityManager.killNearestTank(
-        g_mouseX, g_mouseY);
-
     if (eatKey(KEY_2) && g_numPlayers === 1)
         createPlayerTwoTank();
 }
