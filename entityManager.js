@@ -53,7 +53,7 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._bullets, this._playerTanks, this._terrain, this._bricks];
+    this._categories = [ this._terrain, this._bricks, this._bullets, this._playerTanks];
 },
 
 init: function() {
