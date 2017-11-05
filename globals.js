@@ -17,7 +17,7 @@ g_ctx.webkitImageSmoothingEnabled = false;
 g_ctx.mozImageSmoothingEnabled = false;
 g_ctx.imageSmoothingEnabled = false;
 // Grid is symmetric, so g_gridSize N means NxN
-var g_gridSize = 13;
+var g_gridSize = 26;
 
 // number of players, starts as 1
 var g_numPlayers = 1;

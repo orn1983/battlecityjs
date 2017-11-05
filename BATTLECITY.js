@@ -35,8 +35,8 @@ function createInitialTanks() {
         // write it directly into the spriteList below. Since we don't yet
         // have one, I'm going to let entityManager call the tank's
         // addSprite() function when it pushes the tank into _playerTanks.
-        //spriteList: [],
-        //playerSpriteOffset : 0,
+        spriteList: [],
+        playerSpriteOffset : 0,
         gamepad : gamepadManager.getGamepad()
     });
     // TODO if two players
@@ -56,7 +56,7 @@ function createPlayerTwoTank() {
         cx :    400,
         cy :    200,
         //HD: Once the spriteManager is working, we can drop spriteList[]
-        //spriteList: [],
+        spriteList: [],
         // overwrite prototype definitions:
         KEY_UP    : 38, // up arrow, is there a'W'.charCodeAt(0) version?
         KEY_DOWN  : 40, // down arrow
@@ -64,7 +64,7 @@ function createPlayerTwoTank() {
         KEY_RIGHT : 39, // right arrow
         KEY_FIRE  : 17, // (right) control
         // sprite offset
-        //playerSpriteOffset : 128,
+        playerSpriteOffset : 128,
         gamepad : gamepadManager.getGamepad()
     });
 }
@@ -83,8 +83,41 @@ function createBrick() {
     entityManager.generateBrick({
         cx      : 200,
         cy      : 300,
-        type   : consts.STRUCTURE_BRICK
+        type    : consts.STRUCTURE_BRICK,
+		look    : consts.STRUCTURE_WHOLE
     });
+}
+
+function map1() {
+	var level1 = [[0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5,5,5,5,5,5],
+	              [1,1,1,1,1,1,1,1,1,1,1,1,1,5,5,5,5,5,5,5,5,5,5,5,5,5],
+				  [2,2,2,2,2,2,2,2,2,2,2,2,2,5,5,5,5,5,5,5,5,5,5,5,5,5],
+				  [3,3,3,3,3,3,3,3,3,3,3,3,3,5,5,5,5,5,5,5,5,5,5,5,5,5],
+				  [4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5],
+				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
+				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
+				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
+				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
+				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
+				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
+				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
+				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
+				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
+				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
+				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
+				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
+				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
+				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
+				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
+				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
+				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
+				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
+				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
+				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
+				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
+				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
+				  ]
+	createLevel(level1)
 }
 
 // =============
@@ -195,8 +228,8 @@ function requestPreloads() {
 var g_sprites = {};
 
 function preloadDone() {
-    //g_sprites.playerTank1  = new animatedSprite(g_images.spritesheet, 0, 0, 16, 16, 2, 1, 1);
-    //g_sprites.playerTank2  = new animatedSprite(g_images.spritesheet, 128, 0, 16, 16, 2, 1, 1);
+    // g_sprites.playerTank1  = new animatedSprite(g_images.spritesheet, 0, 0, 16, 16, 2, 2, 2);
+    // g_sprites.playerTank2  = new animatedSprite(g_images.spritesheet, 128, 0, 16, 16, 2, 2, 2);
     
     //g_sprites.ship2 = new Sprite(g_images.ship2);
     //g_sprites.rock  = new Sprite(g_images.rock);
@@ -209,18 +242,16 @@ function preloadDone() {
     //g_sprites.bullet = new animatedSprite(g_images.spritesheet, 323, 102, 4, 4, 1,1,1);
 
     // EAH: quick hack to get bullets to semi-work
-    //g_sprites.bullet = {0: new Sprite(g_images.spritesheet, 323, 102, 4, 4, 1,1),
-    //                    3 : new Sprite(g_images.spritesheet, 330, 102, 4, 4, 1,1),
-    //                    2 : new Sprite(g_images.spritesheet, 339, 102, 4, 4, 1,1),
-    //                    1 : new Sprite(g_images.spritesheet, 346, 102, 4, 4, 1,1)
-    //                   }
-    //g_sprites.bullet.scale = 2;
+    g_sprites.bullet = {0: new Sprite(g_images.spritesheet, 323, 102, 4, 4, 1,1),
+                        3 : new Sprite(g_images.spritesheet, 330, 102, 4, 4, 1,1),
+                        2 : new Sprite(g_images.spritesheet, 339, 102, 4, 4, 1,1),
+                        1 : new Sprite(g_images.spritesheet, 346, 102, 4, 4, 1,1)
+                       }
+    g_sprites.bullet.scale = 2;
 
     entityManager.init();
     createInitialTanks();
-    createTerrain();
-    createBrick();
-    
+    map1();
 
     main.init();
 }

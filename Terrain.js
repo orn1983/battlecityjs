@@ -29,8 +29,8 @@ Terrain.prototype = new Entity();
 
 //AVG NB: Need these for calculations, but I'm just making up numbers.
 //Adjust them later based on tank size.
-Terrain.prototype.halfHeight = 20;
-Terrain.prototype.halfWidth = 20;
+Terrain.prototype.halfHeight = 8;
+Terrain.prototype.halfWidth = 8;
 
 
 Terrain.prototype.update = function (du) {
