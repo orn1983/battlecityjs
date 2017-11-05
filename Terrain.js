@@ -18,24 +18,24 @@ function Terrain(descr) {
     // Common inherited setup logic from Entity
     this.setup(descr);
       
-    // Default sprite and scale, if not otherwise specified
-    this.sprite = this.sprite;
+    // Use spriteManager when it works
+    // this.sprite = spriteManager.spriteTerrain(this.type);
+    this.sprite = new Sprite(g_images.spritesheet, 256, 32, 16, 16, 1, 1);
     this.scale  = this.scale  || 1;
-
-/*
-    // Diagnostics to check inheritance stuff
-    this._rockProperty = true;
-    console.dir(this);
-*/
 
 };
 
 Terrain.prototype = new Entity();
 
+//AVG NB: Need these for calculations, but I'm just making up numbers.
+//Adjust them later based on tank size.
+Terrain.prototype.halfHeight = 20;
+Terrain.prototype.halfWidth = 20;
+
 
 Terrain.prototype.update = function (du) {
-	//Terrain is static, and never needs to be updated
-	// DO NOTHING
+	spatialManager.unregister(this);    
+    spatialManager.register(this)
 };
 
 

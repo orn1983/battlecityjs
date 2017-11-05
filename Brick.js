@@ -17,12 +17,10 @@ function Brick(descr) {
 
     // Common inherited setup logic from Entity
     this.setup(descr);
-
-    this.randomisePosition();
-    this.randomiseVelocity();
       
-    // Default sprite and scale, if not otherwise specified
-    this.sprite = this.sprite || g_sprites.rock;
+    // Use sprite manager when it works
+    // this.sprite = spriteManager.spriteStructure(this.type, this.look);
+	this.sprite = new Sprite(g_images.spritesheet, 256, 0, 16, 16, 1, 1);
     this.scale  = this.scale  || 1;
 
 /*
@@ -35,6 +33,10 @@ function Brick(descr) {
 
 Brick.prototype = new Entity();
 
+//AVG NB: Need these for calculations, but I'm just making up numbers.
+//Adjust them later based on tank size.
+Brick.prototype.halfHeight = 20;
+Brick.prototype.halfWidth = 20;
 
 Brick.prototype.update = function (du) {
 	// TODO Update sprite if it has taken damage
@@ -54,14 +56,17 @@ Brick.prototype.update = function (du) {
 Brick.prototype.takeBulletHit = function (bullet) {
 	// TODO implement in such a way that it destroys it partially
 	// OR should we just have many smaller brick objects?
-	if(bullet.strength === 4){
+	
+	this.kill()
+	
+	// if(bullet.strength === 4){
 		// destroy 2 layers of bricks
 		// allow steel bricks to get destroyed
-	}
-	else{
+	// }
+	// else{
 		// destroy 1 layer of bricks
 		// do not allow steel bricks to get destroyed
-	}
+	// }
 };
 
 

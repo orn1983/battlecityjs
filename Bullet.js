@@ -70,13 +70,16 @@ Bullet.prototype.update = function (du) {
     var hitEntity = this.findHitEntity(this.cx, this.cy);
     // EAH: check if hitEntity is ojbect because it can also be 'true'
     //      for outer border hits
+	
     if (hitEntity && typeof hitEntity === 'object') {
         var canTakeHit = hitEntity.entity.takeBulletHit;
         if (canTakeHit) canTakeHit.call(hitEntity.entity, this);
+		console.log(hitEntity.type)
         return entityManager.KILL_ME_NOW;
     }
     else if (hitEntity) {
         // bullet hit outer border, just kill it
+		console.log(hitEntity.type)
         return entityManager.KILL_ME_NOW;
     }
 
