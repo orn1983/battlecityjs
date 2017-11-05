@@ -99,7 +99,6 @@ PlayerTank.prototype.animationFrame = 0;
 //counts number of updates called
 PlayerTank.prototype.animationFrameCounter = 0;
 
-
 // HACKED-IN AUDIO (no preloading)
 PlayerTank.prototype.soundIdle = "tankIdle";
 PlayerTank.prototype.soundMove = "tankMove";
@@ -171,7 +170,7 @@ PlayerTank.prototype.update = function (du) {
 
     //HD: Handle firing. (Remember that we can fire even if we can't move.)
     this.maybeFireBullet();
-    
+
 
     spatialManager.register(this);
 
@@ -194,12 +193,22 @@ PlayerTank.prototype.move = function(du, newX, newY)
         this.cx = newX;
         this.cy = newY;
     }
-    
+
+    //var hitType = hitEntity.
+    console.log(hitEntity);
+    /*if(hitEntity.type === consts.POWERUP)
+    //Púlla frekar string start.
+    {
+        hitEntity.getPickedUp(this);
+        this.cx = newX;
+        this.cy = newY;
+    }*/
+
     // update animation frame
     this.animationFrameCounter++;
     if (this.animationFrameCounter % 3 === 0) {
         // switch frame every 3rd update
-        this.animationFrame === 0 ? this.animationFrame = 1 
+        this.animationFrame === 0 ? this.animationFrame = 1
                                   : this.animationFrame = 0;
     }
 
@@ -289,20 +298,20 @@ PlayerTank.prototype.addSprite = function(image, sx, sy, width, height,
 };
 
 PlayerTank.prototype.render = function (ctx, du) {
-    
+
     // fetch correct sprite from spriteManager
     this.sprite = spriteManager.spriteTank(
-        this.tanktype, 
-        consts.TANK_POWER_NONE, 
-        this.orientation, 
+        this.tanktype,
+        consts.TANK_POWER_NONE,
+        this.orientation,
         this.animationFrame
     );
-    
+
     this.sprite.drawTankAt(ctx, this.cx, this.cy);
-    
-    
+
+
     /*
-    
+
     var spriteCount = 0;
 
     // HD: Unlike other direction-focused switch statements in PlayerTank, this

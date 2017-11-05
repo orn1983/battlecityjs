@@ -31,6 +31,7 @@ _terrain           : [],
 _bricks           : [],
 _bullets         : [],
 _playerTanks    : [],
+_powerups       : [],
 
 //_bShowRocks : true,
 
@@ -53,7 +54,9 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [ this._terrain, this._bricks, this._bullets, this._playerTanks];
+    this._categories = [ this._terrain, this._bricks, this._bullets,
+        this._playerTanks, this._powerups];
+
 },
 
 init: function() {
@@ -117,6 +120,12 @@ resetPlayerTanks: function() {
 
 
 
+generatePowerup : function(){
+    //TODO: Pick random type of Powerup
+    //this._powerups.push(new Powerup(descr));
+    this._powerups.push(new Powerup());
+},
+
 update: function(du) {
 
     for (var c = 0; c < this._categories.length; ++c) {
@@ -129,6 +138,16 @@ update: function(du) {
             var status = aCategory[i].update(du);
 
             if (status === this.KILL_ME_NOW) {
+
+                //Check if this was a powerup tank; if so, create a new
+                //powerup (maybe at some location the player can
+                //actually reach)
+                //N.B.: deferredSetup() creates this._categories, and
+                //this._categories[3] in that function is the tanks array
+                if( (c === 3) && (aCategory[i].tanktype == consts.POWERUP_TANK) ) {
+                    generatePowerup();
+
+                }
                 // remove the dead guy, and shuffle the others down to
                 // prevent a confusing gap from appearing in the array
                 aCategory.splice(i,1);
