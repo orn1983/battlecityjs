@@ -19,7 +19,7 @@ function Bullet(descr) {
     this.setup(descr);
 
     // Make a noise when I am created (i.e. fired)
-    this.fireSound.play();
+    g_SFX.play(this.soundFire);
 
 /*
     // Diagnostics to check inheritance stuff
@@ -32,10 +32,9 @@ function Bullet(descr) {
 Bullet.prototype = new Entity();
 
 // HACKED-IN AUDIO (no preloading)
-Bullet.prototype.fireSound = new Audio(
-    "sounds/bulletFire.ogg");
-Bullet.prototype.zappedSound = new Audio(
-    "sounds/bulletZapped.ogg");
+Bullet.prototype.soundFire = "bulletFire";
+Bullet.prototype.soundHitShield = "bulletShieldHit";
+Bullet.prototype.soundHitWall = "bulletWallhit";
 
 // Initial, inheritable, default values
 Bullet.prototype.cx = 200;
@@ -97,9 +96,6 @@ Bullet.prototype.getRadius = function () {
 // takes bullet argument
 Bullet.prototype.takeBulletHit = function (bullet) {
     this.kill();
-
-    // Make a noise when I am zapped by another bullet
-    this.zappedSound.play();
 };
 
 Bullet.prototype.render = function (ctx) {

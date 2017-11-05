@@ -180,7 +180,6 @@ function renderSimulation(ctx) {
 // =============
 // PRELOAD STUFF
 // =============
-
 var g_images = {};
 
 function requestPreloads() {
