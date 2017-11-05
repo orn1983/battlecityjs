@@ -28,7 +28,7 @@ function createInitialTanks() {
         //they're used for basically the same thing, but I'm leaving it in for
         //now so that it doesn't break anything with its absence.
         tanktype: consts.TANK_PLAYER1,
-        sprite: g_sprites.playerTank1,
+        //sprite: g_sprites.playerTank1,
         cx :    200,
         cy :    200,
         //HD: If we use a spritemanager, we'd probably pull from that and
@@ -52,7 +52,7 @@ function createPlayerTwoTank() {
         type:   "player2",
         //HD: We'll probably drop the "type" once tanktype is fully implemented.
         tanktype: consts.TANK_PLAYER2,
-        sprite: g_sprites.playerTank2,
+        //sprite: g_sprites.playerTank2,
         cx :    400,
         cy :    200,
         //HD: Once the spriteManager is working, we can drop spriteList[]

@@ -92,6 +92,13 @@ PlayerTank.prototype.isPlayer = true;
 //and whether the tank should drop a powerup when killed.
 //PlayerTank.prototype.isPoweredUp = false;
 
+//Determined which frame of the tank animation is "rendered"
+// (i.e. fetched from spriteManager): 0 or 1
+PlayerTank.prototype.animationFrame = 0;
+
+//counts number of updates called
+PlayerTank.prototype.animationFrameCounter = 0;
+
 
 // HACKED-IN AUDIO (no preloading)
 PlayerTank.prototype.warpSound = new Audio(
@@ -105,7 +112,7 @@ PlayerTank.prototype.warpSound = new Audio(
 //}
 
 //HD: Using this as a "1-2" tick between two animation frames in .render()
-PlayerTank.prototype.animationTicker = true;
+//PlayerTank.prototype.animationTicker = true;
 
 
 PlayerTank.prototype.update = function (du) {
@@ -166,7 +173,9 @@ PlayerTank.prototype.update = function (du) {
 
     //HD: Handle firing. (Remember that we can fire even if we can't move.)
     this.maybeFireBullet();
+    
 
+    
     spatialManager.register(this);
 
 };
@@ -178,7 +187,16 @@ PlayerTank.prototype.move = function(du, newX, newY)
     {
         this.cx = newX;
         this.cy = newY;
-  }
+    }
+    
+    // update animation frame
+    this.animationFrameCounter++;
+    if (this.animationFrameCounter % 3 === 0) {
+        // switch frame every 3rd update
+        this.animationFrame === 0 ? this.animationFrame = 1 
+                                  : this.animationFrame = 0;
+    }
+    
 }
 
 PlayerTank.prototype.maybeFireBullet = function () {
@@ -250,6 +268,8 @@ PlayerTank.prototype.reset = function () {
     //this.halt();
 };
 
+
+// EAH; don't need this function anymore?
 PlayerTank.prototype.addSprite = function(image, sx, sy, width, height,
     numCols=1, numRows=1)
 {
@@ -261,7 +281,21 @@ PlayerTank.prototype.addSprite = function(image, sx, sy, width, height,
         numCols, numRows));
 };
 
-PlayerTank.prototype.render = function (ctx) {
+PlayerTank.prototype.render = function (ctx, du) {
+    
+    // fetch correct sprite from spriteManager
+    this.sprite = spriteManager.spriteTank(
+        this.tanktype, 
+        consts.TANK_POWER_NONE, 
+        this.orientation, 
+        this.animationFrame
+    );
+    
+    this.sprite.drawTankAt(ctx, this.cx, this.cy);
+    
+    
+    /*
+    
     var spriteCount = 0;
 
     // HD: Unlike other direction-focused switch statements in PlayerTank, this
@@ -320,9 +354,6 @@ PlayerTank.prototype.render = function (ctx) {
     this.spriteList[spriteCount].drawTankAt(
       ctx, this.cx, this.cy
     );
-
-  /*  this.sprite.drawCentredAt(
-        ctx, this.cx, this.cy, this.orientation
-    );
     */
+
 };

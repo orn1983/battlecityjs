@@ -15,8 +15,6 @@ for the sprites they need to draw themselves.
 12345678901234567890123456789012345678901234567890123456789012345678901234567890
 */
 
-var _spritesheet = "images/spritesheet.png"
-
 var spriteManager = {
 
 // HD: TODO: MAYYYYYYBE move some preloading logic into the initialization of
@@ -24,7 +22,7 @@ var spriteManager = {
 // logic of what entities to load and in what order should be fully in the
 // hands of Battlecity.js.
 
-    // _spritesheet : "images/spritesheet.png",
+    // g_images.spritesheet : "images/spritesheet.png",
 
     spriteTank : function(type, power, direction, frameNumber) {
         //HD: Framenumber should always be 0 or 1 for tanks.
@@ -123,7 +121,7 @@ var spriteManager = {
         //HD: The "1,1" is for numCols and numRows, which the Sprite constructor
         //requires. Not sure we need them for this, but I don't see that they
         //do any harm.
-        return new Sprite(_spritesheet, sx, sy, width, height, 1, 1);
+        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
 
     },
 
@@ -151,7 +149,7 @@ var spriteManager = {
             break;
         }
 
-        return new Sprite(_spritesheet, sx, sy, width, height, 1, 1);
+        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
 
     },
 
@@ -204,7 +202,7 @@ var spriteManager = {
             break;
         }
 
-        return new Sprite(_spritesheet, sx, sy, width, height, 1, 1);
+        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
     },
 
     spriteTerrain : function(type){
@@ -232,7 +230,7 @@ var spriteManager = {
             break;
         }
 
-        return new Sprite(_spritesheet, sx, sy, width, height, 1, 1);
+        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
     },
 
     spriteEffect: function(type, frameNumber){
@@ -275,7 +273,7 @@ var spriteManager = {
                 sy += mul*4;
             break;
         }
-        return new Sprite(_spritesheet, sx, sy, width, height, 1, 1);
+        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
 
     },
 
@@ -309,7 +307,7 @@ var spriteManager = {
 
         }
 
-        return new Sprite(_spritesheet, sx, sy, width, height, 1, 1);
+        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
     },
 
 
