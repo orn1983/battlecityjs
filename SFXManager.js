@@ -8,7 +8,6 @@ function handleSFXtoggles() {
 
 function SFXManager() {
     this.soundsEnabled = true;
-    this.musicEnabled = true;
 
     this.SFX = {
         "bulletFire": {
@@ -78,6 +77,12 @@ function SFXManager() {
 
     this.toggleSound = function () {
         this.soundsEnabled = !this.soundsEnabled;
+        if (!this.soundsEnabled) {
+            for (var sound in this.SFX) {
+                this.stop(sound);
+            }
+        }
+
     }
 
     this.configure();
