@@ -74,13 +74,13 @@ Bullet.prototype.update = function (du) {
         var canTakeHit = hitEntity.entity.takeBulletHit;
         if (canTakeHit){
             canTakeHit.call(hitEntity.entity, this);
-            console.log(hitEntity.type)
+            //console.log(hitEntity.type)
             return entityManager.KILL_ME_NOW;
         }
     }
     else if (hitEntity) {
         // bullet hit outer border, just kill it
-        console.log(hitEntity)
+        //console.log(hitEntity)
         return entityManager.KILL_ME_NOW;
     }
 
