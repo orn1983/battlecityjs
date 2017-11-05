@@ -19,8 +19,8 @@ function Brick(descr) {
     this.setup(descr);
       
     // Use sprite manager when it works
-    // this.sprite = spriteManager.spriteStructure(this.type, this.look);
-    this.sprite = new Sprite(g_images.spritesheet, 256, 0, 16, 16, 1, 1);
+    this.sprite = spriteManager.spriteStructure(this.type, this.look);
+    // this.sprite = new Sprite(g_images.spritesheet, 256, 0, 16, 16, 1, 1);
     // this.cx = this.x + this.sprite.width/2;
     // this.cy = this.y + this.sprite.height/2;
     // this.width = this.sprite.width;
