@@ -68,6 +68,10 @@ PlayerTank.prototype.bulletStrength = 1;
 //HD: Can only fire one shot at a time. Changed with powerup.
 PlayerTank.prototype.canFireTwice = false;
 
+//counter for bullets alive that belong to tank
+//increments when bullet fired, decrements when bullet is destroyed
+PlayerTank.prototype.bulletsAlive = 0;
+
 //Counter while tank is frozen. Only affects AI tanks when a player tank picks
 //up a "freeze-time" powerup: The entityManager then sets this to some positive
 //integer, and the tank needs to let it count down. When it reaches 0, the tank
@@ -220,36 +224,39 @@ PlayerTank.prototype.maybeFireBullet = function () {
     //      even if you can fire more than one bullet at one, you
     //      probably don't want to fire them all with one button push!
     if (eatKey(this.KEY_FIRE)) {
+        //tank may only fire if no bullets alive 
+        //or only one bullet alive and canFireTwice is true
+        if (this.bulletsAlive === 0 || (this.bulletsAlive === 1 && this.canFireTwice)) {
+            var turretX, turretY;
+            // EAH: add offset so bullet doesn't collide with tank!
+            var alpha = 5;
 
-        var turretX, turretY;
-        // EAH: add offset so bullet doesn't collide with tank!
-        var alpha = 5;
+            switch(this.orientation) {
+                case(consts.DIRECTION_UP):
+                    turretX = this.cx;
+                    turretY = this.cy - this.halfHeight - alpha;
+                    break;
+                case(consts.DIRECTION_DOWN):
+                    turretX = this.cx;
+                    turretY = this.cy + this.halfHeight + alpha;
+                    break;
+                case(consts.DIRECTION_LEFT):
+                    turretX = this.cx - this.halfWidth - alpha;
+                    turretY = this.cy;
+                    break;
+                case(consts.DIRECTION_RIGHT):
+                    turretX = this.cx + this.halfWidth + alpha;
+                    turretY = this.cy;
+                    break;
+            }
 
-        switch(this.orientation) {
-            case(consts.DIRECTION_UP):
-                turretX = this.cx;
-                turretY = this.cy - this.halfHeight - alpha;
-                break;
-            case(consts.DIRECTION_DOWN):
-                turretX = this.cx;
-                turretY = this.cy + this.halfHeight + alpha;
-                break;
-            case(consts.DIRECTION_LEFT):
-                turretX = this.cx - this.halfWidth - alpha;
-                turretY = this.cy;
-                break;
-            case(consts.DIRECTION_RIGHT):
-                turretX = this.cx + this.halfWidth + alpha;
-                turretY = this.cy;
-                break;
-        }
-
-        //HD: We send in "this" so that entityManager can calculate
-        //whether the tank is allowed to fire again, if it tries to.
-        entityManager.fireBullet(turretX, turretY, this.bulletVelocity,
-            this.orientation, this.isPlayer, this.bulletStrength, this);
+            //HD: We send in "this" so that entityManager can calculate
+            //whether the tank is allowed to fire again, if it tries to.
+            this.bulletsAlive++;
+            entityManager.fireBullet(turretX, turretY, this.bulletVelocity,
+                this.orientation, this.isPlayer, this.bulletStrength, this);
+        }  
     }
-
 };
 
 PlayerTank.prototype.takeBulletHit = function (bullet) {
