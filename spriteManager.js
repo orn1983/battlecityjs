@@ -126,7 +126,7 @@ var spriteManager = {
     },
 
     spriteBullet : function(direction){
-        var sx = 323;
+        var sx = 322;
         var sy = 102;
         var width = 4;
         var height = 4;
