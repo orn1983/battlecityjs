@@ -77,14 +77,12 @@ Bullet.prototype.update = function (du) {
         var canTakeHit = hitEntity.entity.takeBulletHit;
         if (canTakeHit){
             canTakeHit.call(hitEntity.entity, this);
-            //console.log(hitEntity.type)
-            return entityManager.KILL_ME_NOW;
+            return this.killMeNow();
         }
     }
     else if (hitEntity) {
         // bullet hit outer border, just kill it
-        //console.log(hitEntity)
-        return entityManager.KILL_ME_NOW;
+        return this.killMeNow();
     }
 
     spatialManager.register(this);
@@ -95,9 +93,16 @@ Bullet.prototype.getRadius = function () {
     return 4;
 };
 
+// decrements bullet counter for tank before killing bullet
+Bullet.prototype.killMeNow = function () {
+    this.tank.bulletsAlive--;
+    return entityManager.KILL_ME_NOW;
+};
 
 // takes bullet argument
 Bullet.prototype.takeBulletHit = function (bullet) {
+    this.killMeNow();
+    
     this.kill();
 };
 

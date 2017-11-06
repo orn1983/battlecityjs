@@ -32,14 +32,42 @@ Terrain.prototype = new Entity();
 Terrain.prototype.halfHeight = g_canvas.height/g_gridSize/2;
 Terrain.prototype.halfWidth = g_canvas.width/g_gridSize/2;
 
+//Determined which frame of the water animation is "rendered"
+// (i.e. fetched from spriteManager): 0 or 1
+Terrain.prototype.animationFrame = 0;
+
+//counts number of updates called
+Terrain.prototype.animationFrameCounter = 0;
+
 
 Terrain.prototype.update = function (du) {
+    // check if terrain type if tree, if so then just return
+    if (this.type === consts.TERRAIN_TREES) {
+        return;
+    }
+ 
     spatialManager.unregister(this);    
-    spatialManager.register(this)
+    
+    // if water then update animationFrameCounter
+    if (this.type === consts.TERRAIN_WATER) {
+        this.animationFrameCounter++;
+        if (this.animationFrameCounter % 30 === 0) {
+            // switch frame every 30 update looks okay I guess?
+            this.animationFrame === 0 ? this.animationFrame = 1
+                                      : this.animationFrame = 0;
+        }
+    }
+    
+    spatialManager.register(this);
 };
 
 
 Terrain.prototype.render = function (ctx) {
+    // if terrain type is water cycle through sprites to create animation
+    if (this.type === consts.TERRAIN_WATER) {
+        this.sprite = spriteManager.spriteTerrain(this.type, this.animationFrame);
+    }
+    
     var origScale = this.sprite.scale;
     // pass my scale into the sprite, for drawing
     this.sprite.scale = this.scale;

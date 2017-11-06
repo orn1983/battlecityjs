@@ -27,11 +27,12 @@ var entityManager = {
 
 // "PRIVATE" DATA
 
-_terrain           : [],
-_bricks           : [],
-_bullets         : [],
+_terrain        : [],
+_bricks         : [],
+_bullets        : [],
 _playerTanks    : [],
 _powerups       : [],
+_trees          : [],
 
 //_bShowRocks : true,
 
@@ -55,7 +56,7 @@ KILL_ME_NOW : -1,
 //
 deferredSetup : function () {
     this._categories = [ this._terrain, this._bricks, this._bullets,
-        this._playerTanks, this._powerups];
+        this._playerTanks, this._trees, this._powerups];
 
 },
 
@@ -79,6 +80,12 @@ fireBullet: function(cx, cy, vel, direction, player, strength, tank) {
 
 
 generateTerrain : function(descr) {
+    // if terrain type is trees then add to a seperate
+    // _trees array because trees need to be rendered last
+    if (descr.type === consts.TERRAIN_TREES) {
+        this._trees.push(new Terrain(descr));
+        return;
+    }
     this._terrain.push(new Terrain(descr));
 },
 
