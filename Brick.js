@@ -18,29 +18,23 @@ function Brick(descr) {
     // Common inherited setup logic from Entity
     this.setup(descr);
       
-    // Use sprite manager when it works
     this.sprite = spriteManager.spriteStructure(this.type, this.look);
     this.scale  = this.scale  || 1;
 	
-	// down, up
+	// These boolean values determine if brick has been destroyed from the left or right side respectfully
 	this.horizontal = [true, true];
-	// left, right
+	// These boolean values determine if brick has been destroyed from the bottom or top side respectfully
 	this.vertical   = [true, true];
 
 };
 
 Brick.prototype = new Entity();
 
-//AVG NB: Need these for calculations, but I'm just making up numbers.
-//Adjust them later based on tank size.
+// Attributes used in the spatialManager to determine collision.
 Brick.prototype.halfHeight = g_canvas.height/g_gridSize/2;
 Brick.prototype.halfWidth = g_canvas.width/g_gridSize/2;
 
 Brick.prototype.update = function (du) {
-    // TODO Update sprite if it has taken damage
-    // or destroy it if we use smaller objects
-
-    // If it has been destroyd partially, then we have to change spatialManager. Which makes me want to use smaller objects
     spatialManager.unregister(this);
 
     if (this._isDeadNow)
@@ -50,26 +44,23 @@ Brick.prototype.update = function (du) {
 
 };
 
-// Perhaps I need a high level data structure that handles which bricks get destroyd.
+// Use:   brick.takeBulletHit
+// After: If bullet strength is 4, it destroys the brick
+//        otherwise it partially destroyes a brick
 Brick.prototype.takeBulletHit = function (bullet) {
-    // TODO implement in such a way that it destroys it partially
-    // OR should we just have many smaller brick objects?
     
     if(bullet.strength === 4){
         this.kill();
     }
     else{
-        // destroy 1 layer of bricks
-        // do not allow steel bricks to get destroyed
 		if(this.type == consts.STRUCTURE_STEEL){ return;}
 		this.updateStructure(bullet.direction)
 		this.updateSprite();
-		console.log(bullet.direction);
-		console.log(this.vertical);
-		console.log(this.horizontal);
     }
 };
 
+// We update the structure if it has been hit by a bullet
+// Hit direction is the direction of which the brick is hit from
 Brick.prototype.updateStructure = function(hitDirection){
 	if(hitDirection === consts.DIRECTION_UP){
 		if(this.vertical[0] === true)	this.vertical[0] = false;
@@ -92,6 +83,7 @@ Brick.prototype.updateStructure = function(hitDirection){
 		this.kill();
 }
 
+// update the sprite based on new structural values in this.horizontal & this.vertical
 Brick.prototype.updateSprite = function(){
 	// take care of last 4 cases later.
 	if(this.horizontal.toString() === [true, false].toString())
