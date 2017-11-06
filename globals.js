@@ -22,6 +22,11 @@ var g_gridSize = 26;
 // number of players, starts as 1
 var g_numPlayers = 1;
 
+// stores "index" of current level, ranges from 0 to 34
+var g_currentLevel = 0;
+
+var g_sortedLevelKeys = Object.keys(g_levels).sort();
+
 // The "nominal interval" is the one that all of our time-based units are
 // calibrated to e.g. a velocity unit is "pixels per nominal interval"
 //

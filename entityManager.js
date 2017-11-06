@@ -133,6 +133,21 @@ generatePowerup : function(){
     this._powerups.push(new Powerup());
 },
 
+// destroys level completely, i.e. unregisters everything from 
+// spatial manager and empties all private arrays
+destroyLevel : function() {
+    spatialManager.clear();
+    
+    // EAH: for some reason array = [] doesn't work (???)
+    // so using array.length = 0 to clear
+    this._terrain.length = 0;
+    this._bricks.length = 0;
+    this._bullets.length = 0;
+    this._playerTanks.length = 0;
+    this._powerups.length = 0;
+    this._trees.length = 0;
+},
+
 update: function(du) {
 
     for (var c = 0; c < this._categories.length; ++c) {

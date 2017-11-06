@@ -40,7 +40,7 @@ function createInitialTanks() {
         gamepad : gamepadManager.getGamepad()
     });
     // TODO if two players
-    if (g_numPlayers === 2) {
+    if (g_numPlayers >= 2) {
         createPlayerTwoTank();
     }
 }
@@ -174,6 +174,10 @@ var KEY_K = keyCode('K');
 
 var KEY_2 = keyCode('2'); // for spawning player 2
 
+var KEY_9 = keyCode('9'); // previous level
+var KEY_0 = keyCode('0'); // next level
+
+
 function processDiagnostics() {
 
     if (eatKey(KEY_MIXED))
@@ -185,6 +189,32 @@ function processDiagnostics() {
 
     if (eatKey(KEY_2) && g_numPlayers === 1)
         createPlayerTwoTank();
+    
+    if (eatKey(KEY_9))
+        prevLevel();
+    if (eatKey(KEY_0))
+        nextLevel();
+}
+
+// EAH: No idea where to put these functions so just stuffing them here for now!
+function prevLevel() {
+    //only do something if not already on first level
+    if (g_currentLevel > 0) {
+        g_currentLevel--;
+        entityManager.destroyLevel();
+        createInitialTanks();
+        createLevel(g_levels[g_sortedLevelKeys[g_currentLevel]]);
+    }
+}
+
+function nextLevel() {
+    //only do something if not already on last level
+    if (g_currentLevel < 34) {
+        g_currentLevel++;
+        entityManager.destroyLevel();
+        createInitialTanks();
+        createLevel(g_levels[g_sortedLevelKeys[g_currentLevel]]);
+    }    
 }
 
 
@@ -251,7 +281,8 @@ function preloadDone() {
 
     entityManager.init();
     createInitialTanks();
-    createLevel(g_levels.stage_04);
+    createLevel(g_levels[g_sortedLevelKeys[g_currentLevel]]);
+    //createLevel(g_levels.stage_01);
 
     main.init();
 }
