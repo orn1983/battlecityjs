@@ -186,10 +186,10 @@ var spriteManager = {
             case(consts.STRUCTURE_TOP_GONE):
                 sx += mul*2;
             break;
-            case(consts.STRUCTURE_BOTTOM_GONE):
+            case(consts.STRUCTURE_RIGHT_GONE):
                 sx += mul*3;
             break;
-            case(consts.STRUCTURE_RIGHT_GONE):
+            case(consts.STRUCTURE_BOTTOM_GONE):
                 sx += mul*4;
             break;
             case(consts.STRUCTURE_ALL_GONE):

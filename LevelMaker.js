@@ -14,7 +14,7 @@ var g_gridMultiplier = 26;
 var g_first_step = g_level_start_x + g_levelWidth/g_gridSize/2;
 var g_gridStep = g_levelWidth/g_gridSize;
 
-//level is 26 X 26 small bricks
+//level is 26 X 26 small bricks 
 function createLevel(array) {
     // just for testing
     for (var i = 0; i < g_gridSize; i++){

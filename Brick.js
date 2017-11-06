@@ -20,20 +20,12 @@ function Brick(descr) {
       
     // Use sprite manager when it works
     this.sprite = spriteManager.spriteStructure(this.type, this.look);
-    // this.sprite = new Sprite(g_images.spritesheet, 256, 0, 16, 16, 1, 1);
-    // this.cx = this.x + this.sprite.width/2;
-    // this.cy = this.y + this.sprite.height/2;
-    // this.width = this.sprite.width;
-    // this.height = this.sprite.height;
-    // this.halfWidth = this.sprite.width/2;
-    // this.halfHeight = this.sprite.height/2;
     this.scale  = this.scale  || 1;
-
-/*
-    // Diagnostics to check inheritance stuff
-    this._rockProperty = true;
-    console.dir(this);
-*/
+	
+	// down, up
+	this.horizontal = [true, true];
+	// left, right
+	this.vertical   = [true, true];
 
 };
 
@@ -63,16 +55,53 @@ Brick.prototype.takeBulletHit = function (bullet) {
     // TODO implement in such a way that it destroys it partially
     // OR should we just have many smaller brick objects?
     
-    this.kill()
-    
-    // if(bullet.strength === 4){
-        // destroy 2 layers of bricks
-        // allow steel bricks to get destroyed
-    // }
-    // else{
+    if(bullet.strength === 4){
+        this.kill();
+    }
+    else{
         // destroy 1 layer of bricks
         // do not allow steel bricks to get destroyed
-    // }
+		if(this.type == consts.STRUCTURE_STEEL){ return;}
+		this.updateStructure(bullet.direction)
+		this.updateSprite();
+		console.log(bullet.direction);
+		console.log(this.vertical);
+		console.log(this.horizontal);
+    }
+};
+
+Brick.prototype.updateStructure = function(hitDirection){
+	if(hitDirection === consts.DIRECTION_UP){
+		if(this.vertical[0] === true)	this.vertical[0] = false;
+		else this.kill()
+	}
+	else if(hitDirection === consts.DIRECTION_DOWN){
+		if(this.vertical[1] === true)	this.vertical[1] = false;
+		else this.kill()
+	}
+	else if(hitDirection === consts.DIRECTION_LEFT){
+		if(this.horizontal[1] === true)	this.horizontal[1] = false;
+		else this.kill()
+	}
+	else if(hitDirection === consts.DIRECTION_RIGHT){
+		if(this.horizontal[0] === true)	this.horizontal[0] = false;
+		else this.kill()
+	}
+	
+	if(this.vertical.toString() === [false, false].toString() || this.horizontal.toString() === [false, false].toString())
+		this.kill();
+}
+
+Brick.prototype.updateSprite = function(){
+	// take care of last 4 cases later.
+	if(this.horizontal.toString() === [true, false].toString())
+		this.sprite = spriteManager.spriteStructure(this.type, consts.STRUCTURE_RIGHT_GONE);
+	else if(this.horizontal.toString() === [false, true].toString())
+		this.sprite = spriteManager.spriteStructure(this.type, consts.STRUCTURE_LEFT_GONE);
+	else if(this.vertical.toString() === [true, false].toString())
+		this.sprite = spriteManager.spriteStructure(this.type, consts.STRUCTURE_TOP_GONE);
+	else if(this.vertical.toString() === [false, true].toString())
+		this.sprite = spriteManager.spriteStructure(this.type, consts.STRUCTURE_BOTTOM_GONE);
 };
 
 
@@ -83,7 +112,4 @@ Brick.prototype.render = function (ctx) {
     this.sprite.drawCentredAt(
         ctx, this.cx, this.cy, this.rotation
     );
-    // this.sprite.drawAt(
-        // ctx, this.cx, this.cy
-    // );
 };
