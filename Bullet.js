@@ -75,9 +75,7 @@ Bullet.prototype.update = function (du) {
 	if (hitEntities.length > 0) {
 		for (var i=0; i<hitEntities.length; i++){
 			var hitEntity = hitEntities[i];
-			console.log(hitEntity)
 			var canTakeHit = hitEntity.entity.takeBulletHit;
-			console.log(canTakeHit)
 			if (canTakeHit){
 				hitSomething = true
 				canTakeHit.call(hitEntity.entity, this);
