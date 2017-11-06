@@ -96,6 +96,26 @@ Brick.prototype.updateSprite = function(){
 		this.sprite = spriteManager.spriteStructure(this.type, consts.STRUCTURE_BOTTOM_GONE);
 };
 
+// ctx, x, y, w, h, style
+Brick.prototype.placeBlackSpot = function(ctx){
+	if(this.horizontal.toString() === [true, false].toString()){
+		if(this.vertical.toString() === [true, false].toString()){
+			util.fillBox(ctx, this.cx-this.halfWidth, this.cy-this.halfHeight-1, this.halfWidth, this.halfHeight+1, "#000");
+		}
+		if(this.vertical.toString() === [false, true].toString()){
+			util.fillBox(ctx, this.cx-this.halfWidth, this.cy, this.halfWidth, this.halfHeight+1, "#000");
+		}
+	}
+	else if(this.horizontal.toString() === [false, true].toString()){
+		if(this.vertical.toString() === [true, false].toString()){
+			util.fillBox(ctx, this.cx-1, this.cy-this.halfHeight-1, this.halfWidth+1, this.halfHeight+1, "#000");
+		}
+		if(this.vertical.toString() === [false, true].toString()){
+			util.fillBox(ctx, this.cx-1, this.cy, this.halfWidth+2, this.halfHeight+1, "#000");
+		}
+	}
+};
+
 
 Brick.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;
@@ -104,4 +124,5 @@ Brick.prototype.render = function (ctx) {
     this.sprite.drawCentredAt(
         ctx, this.cx, this.cy, this.rotation
     );
+	this.placeBlackSpot(ctx)
 };
