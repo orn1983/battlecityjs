@@ -34,8 +34,13 @@ Terrain.prototype.halfWidth = g_canvas.width/g_gridSize/2;
 
 
 Terrain.prototype.update = function (du) {
+    // check if terrain type if tree, if so then just return
+    if (this.type === consts.TERRAIN_TREES) {
+        return;
+    }
+    
     spatialManager.unregister(this);    
-    spatialManager.register(this)
+    spatialManager.register(this);
 };
 
 
