@@ -83,7 +83,7 @@ findEntityInRange: function(x1, y1, x2, y2) {
 // Returns emtpy list if no entities in range
 // else it returns a list of entities in range
 findEntitiesInRange: function(x1, y1, x2, y2) {
-	entities = []
+	var entities = []
     for (var ID in this._entities) {
         var entity = this._entities[ID];
         var ex1 = entity.posX - entity.halfWidth;
@@ -92,10 +92,10 @@ findEntitiesInRange: function(x1, y1, x2, y2) {
         var ey2 = entity.posY + entity.halfHeight;
 
         if (x1 < ex2 && x2 > ex1 && y1 < ey2 && y2 > ey1) {
-            entities.append(entitiy);
+            entities.push(entity);
         }
     }
-	return entities;
+	
     
     // check for outer border of playfield
     if (x1 < 0 || x2 > g_canvas.width || y1 < 0 || y2 > g_canvas.height)
@@ -104,7 +104,7 @@ findEntitiesInRange: function(x1, y1, x2, y2) {
         return true;
     
     // no collision
-    return false;
+    return entities;
 },
 
 // clears spatial manager e.g. when changing levels

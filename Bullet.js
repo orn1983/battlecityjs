@@ -66,21 +66,26 @@ Bullet.prototype.update = function (du) {
         case(consts.DIRECTION_LEFT)  : this.cx -= this.vel * du; break;
     }
 
-    //
+	
+	//
     // Handle collisions
     //
-    var hitEntity = this.findHitEntity(this.cx, this.cy);
-    // EAH: check if hitEntity is ojbect because it can also be 'true'
-    //      for outer border hits
-    
-    if (hitEntity && typeof hitEntity === 'object') {
-        var canTakeHit = hitEntity.entity.takeBulletHit;
-        if (canTakeHit){
-            canTakeHit.call(hitEntity.entity, this);
-            return this.killMeNow();
-        }
+    var hitEntities = this.findHitEntities(this.cx, this.cy);
+	var hitSomething = false;
+	if (hitEntities.length > 0) {
+		for (var i=0; i<hitEntities.length; i++){
+			var hitEntity = hitEntities[i];
+			console.log(hitEntity)
+			var canTakeHit = hitEntity.entity.takeBulletHit;
+			console.log(canTakeHit)
+			if (canTakeHit){
+				hitSomething = true
+				canTakeHit.call(hitEntity.entity, this);
+			}
+		}
+		if(hitSomething)	return this.killMeNow();
     }
-    else if (hitEntity) {
+    else if (hitEntities && hitEntities.length !== 0) {
         // bullet hit outer border, just kill it
         return this.killMeNow();
     }
