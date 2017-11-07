@@ -114,6 +114,10 @@ PlayerTank.prototype.isMoving = false;
 
 PlayerTank.prototype.update = function (du) {
     spatialManager.unregister(this);
+    
+    // store old value of isMoving to detect if tank
+    // has stopped (used for slide effect on ice)
+    var oldIsMoving = this.isMoving;
 
     // OA: Set movement state to false -- if move will be called, this will be set
     // to true. At the end of the update loop, we will decide which audio to play
@@ -121,13 +125,13 @@ PlayerTank.prototype.update = function (du) {
 
     if (this._isDeadNow)
         return entityManager.KILL_ME_NOW;
+   
+    //var isOnIce = spatialManager.isOnIce(this.cx, this.cy);
     
-    var isOnIce = spatialManager.isOnIce(this.cx, this.cy);
-    
-    var sliding = false;
+    /*var sliding = false;
     if(this.slideCounter > 0)
         sliding = true;
-
+    
     if(sliding) {
         //HD NB: It's possible we may have to check first for a keypress,
         //to see if the orientation has changed. Let's try this version for now,
@@ -147,40 +151,69 @@ PlayerTank.prototype.update = function (du) {
                 break;
         }
         this.SlideCounter -= 1;
-    }
+    }*/
 
     //Check for keypress, but don't move if you've already slid.
     // EAH: only first key pressed is applied
     //      to prevent diagonal movement:
     //      "One key to rule them all..."
+    // EAH: removing the if(!sliding) checks because if tank moves
+    //      then there is not slide effect anyway
     if (keys[this.KEY_UP]) {
         this.orientation = consts.DIRECTION_UP;
 		this.lockToNearestGrid();
-        if(!sliding)
-            this.move(du, this.cx, this.cy - this.moveDistance);
+        this.move(du, this.cx, this.cy - this.moveDistance);
     }
     else if (keys[this.KEY_DOWN]) {
         this.orientation = consts.DIRECTION_DOWN;
 		this.lockToNearestGrid();
-        if(!sliding)
-            this.move(du, this.cx, this.cy + this.moveDistance);
+        this.move(du, this.cx, this.cy + this.moveDistance);
     }
     else if (keys[this.KEY_LEFT]) {
         this.orientation = consts.DIRECTION_LEFT;
 		this.lockToNearestGrid();
-        if(!sliding)
-            this.move(du, this.cx - this.moveDistance, this.cy);
+        this.move(du, this.cx - this.moveDistance, this.cy);
     }
     else if (keys[this.KEY_RIGHT]) {
         this.orientation = consts.DIRECTION_RIGHT;
 		this.lockToNearestGrid();
-        if(!sliding)
-          this.move(du, this.cx + this.moveDistance, this.cy);
+        this.move(du, this.cx + this.moveDistance, this.cy);
     }
 
     //HD: Handle firing. (Remember that we can fire even if we can't move.)
     this.maybeFireBullet();
-
+    
+    // if tank was moving but isn't moving now and is on ice...
+    if (oldIsMoving && !this.isMoving && spatialManager.isOnIce(this.cx, this.cy)) {
+        // EAH: value of 20 looks okay I guess?
+        this.slideCounter = 20;
+    }
+    
+    // remove slide effect if not on ice or if tank moved
+    if (!spatialManager.isOnIce(this.cx, this.cy) || this.isMoving) {
+        this.slideCounter = 0;
+    }
+    
+    //EAH: currently you can get a speed boost if you initiate a slide
+    //in one direction and then move in that same direction
+    //...and I kinda like it that way :)
+    if (this.slideCounter > 0) {
+        switch(this.orientation) {
+            case(consts.DIRECTION_UP):
+                this.slide(du, this.cx, this.cy - this.moveDistance);
+                break;
+            case(consts.DIRECTION_DOWN):
+                this.slide(du, this.cx, this.cy + this.moveDistance);
+                break;
+            case(consts.DIRECTION_LEFT):
+                this.slide(du, this.cx - this.moveDistance, this.cy);
+                break;
+            case(consts.DIRECTION_RIGHT):
+                this.slide(du, this.cx + this.moveDistance, this.cy);
+                break;
+        }
+        this.slideCounter -= 1;
+    }
 
     spatialManager.register(this);
 
@@ -193,8 +226,18 @@ PlayerTank.prototype.update = function (du) {
 
 };
 
+PlayerTank.prototype.slide = function(du, newX, newY) {
+    var hitEntity = this.findHitEntity(newX, newY);
+    if (!hitEntity)
+    {
+        this.cx = newX;
+        this.cy = newY;
+    }    
+};
+
 PlayerTank.prototype.move = function(du, newX, newY)
 {
+    
     var hitEntity = this.findHitEntity(newX, newY);
     if (!hitEntity)
     {
