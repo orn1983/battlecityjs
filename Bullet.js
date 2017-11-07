@@ -67,21 +67,21 @@ Bullet.prototype.update = function (du) {
     }
 
 	
-	//
+    //
     // Handle collisions
     //
     var hitEntities = this.findHitEntities(this.cx, this.cy);
-	var hitSomething = false;
-	if (hitEntities.length > 0) {
-		for (var i=0; i<hitEntities.length; i++){
-			var hitEntity = hitEntities[i];
-			var canTakeHit = hitEntity.entity.takeBulletHit;
-			if (canTakeHit){
-				hitSomething = true
-				canTakeHit.call(hitEntity.entity, this);
-			}
-		}
-		if(hitSomething)	return this.killMeNow();
+    var hitSomething = false;
+    if (hitEntities.length > 0) {
+        for (var i=0; i<hitEntities.length; i++){
+            var hitEntity = hitEntities[i];
+            var canTakeHit = hitEntity.entity.takeBulletHit;
+            if (canTakeHit) {
+                hitSomething = true
+                canTakeHit.call(hitEntity.entity, this);
+            }
+        }
+    if(hitSomething)	return this.killMeNow();
     }
     else if (hitEntities && hitEntities.length !== 0) {
         // bullet hit outer border, just kill it
