@@ -60,7 +60,7 @@ PlayerTank.prototype.slideCounter = 0;
 
 //Normal bullet speed. Will be changed if player gets a powerup, or if the
 //tank is the enemy time that shoots faster bullets.
-PlayerTank.prototype.bulletVelocity = 3;
+PlayerTank.prototype.bulletVelocity = 6;
 
 //HD: Normal bullet strength. Will be changed if player gets a powerup.
 PlayerTank.prototype.bulletStrength = 1;
