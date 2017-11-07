@@ -62,6 +62,9 @@ Bullet.prototype.scale = 2;
 Bullet.prototype.update = function (du) {
 
     spatialManager.unregister(this);
+    
+    if (this._isDeadNow)
+        return entityManager.KILL_ME_NOW;
 
     // move bullet
     switch (this.direction) {
