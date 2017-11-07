@@ -194,9 +194,6 @@ PlayerTank.prototype.update = function (du) {
         this.slideCounter = 0;
     }
     
-    //EAH: currently you can get a speed boost if you initiate a slide
-    //in one direction and then move in that same direction
-    //...and I kinda like it that way :)
     if (this.slideCounter > 0) {
         switch(this.orientation) {
             case(consts.DIRECTION_UP):
