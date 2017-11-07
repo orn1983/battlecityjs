@@ -319,6 +319,78 @@ var spriteManager = {
 
         return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
     },
+    
+    spritePlayerIcon : function(player) {
+        var sx = 377;
+        var sy = 136;
+        var width = 16;
+        var height = 16;
+        
+        if (player === 2) {
+            sy = 160;
+        }
+        
+        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
+    },
+    
+    spriteFlagIcon : function() {
+        var sx = 376;
+        var sy = 184;
+        var width = 16;
+        var height = 24;
+        
+        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
+    },
+    
+    spriteEnemyIcon : function() {
+        var sx = 320;
+        var sy = 192;
+        var width = 8;
+        var height = 8;
+        
+        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);        
+    },
+    
+    spritePause : function() {
+        var sx = 289;
+        var sy = 176;
+        var width = 39;
+        var height = 7;
+        
+        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);                
+    },
+    
+    spriteGameOver : function() {
+        var sx = 289;
+        var sy = 184;
+        var width = 31;
+        var height = 15;
+        
+        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);               
+    },
+    
+    spriteStage : function() {
+        var sx = 328;
+        var sy = 176;
+        var width = 40;
+        var height = 8;
+        
+        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);                       
+    },
+    
+    spriteNumber : function(number) {
+        var sx = 328;
+        var sy = 184;
+        var width = 8;
+        var height = 8;
+        mul = 8;
+        
+        sx += (number % 5) * mul;
 
+        if (number > 4) {
+            sy += mul;
+        }
 
+        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);                   
+    },
 }
