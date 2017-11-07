@@ -117,7 +117,7 @@ PlayerTank.prototype.update = function (du) {
     
     // store old value of isMoving to detect if tank
     // has stopped (used for slide effect on ice)
-    var oldIsMoving = this.isMoving;
+    var wasMoving = this.isMoving;
 
     // OA: Set movement state to false -- if move will be called, this will be set
     // to true. At the end of the update loop, we will decide which audio to play
@@ -184,7 +184,7 @@ PlayerTank.prototype.update = function (du) {
     this.maybeFireBullet();
     
     // if tank was moving but isn't moving now and is on ice...
-    if (oldIsMoving && !this.isMoving && spatialManager.isOnIce(this.cx, this.cy)) {
+    if (wasMoving && !this.isMoving && spatialManager.isOnIce(this.cx, this.cy)) {
         // EAH: value of 20 looks okay I guess?
         this.slideCounter = 20;
     }
