@@ -76,7 +76,7 @@ Entity.prototype.findHitEntity = function (newX, newY) {
 };
 
 Entity.prototype.findHitEntities = function (newX, newY) {
-	var x1 = newX - this.halfWidth;
+    var x1 = newX - this.halfWidth;
     var x2 = newX + this.halfWidth;
     var y1 = newY - this.halfHeight;
     var y2 = newY + this.halfHeight;
