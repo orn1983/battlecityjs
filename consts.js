@@ -47,10 +47,11 @@ var consts = {
     //flag when it has been destroyed.
 
     //HD NOTE: Water is the only terrain that's constantly animated
-    TERRAIN_WATER   : 0,
-    TERRAIN_TREES   : 1,
-    TERRAIN_ICE     : 2,
-    TERRAIN_BLANK   : 3,
+    //EAH: changing these values to correspond to those used in LevelMaker
+    TERRAIN_WATER   : 2,
+    TERRAIN_TREES   : 3,
+    TERRAIN_ICE     : 4,
+    TERRAIN_BLANK   : 5,
 
     POWERUP_HELMET  : 0,
     POWERUP_TIMER   : 1,

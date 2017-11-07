@@ -41,8 +41,8 @@ Terrain.prototype.animationFrameCounter = 0;
 
 
 Terrain.prototype.update = function (du) {
-    // check if terrain type if tree, if so then just return
-    if (this.type === consts.TERRAIN_TREES) {
+    // check if terrain type is tree or ice, if so then just return
+    if (this.type === consts.TERRAIN_TREES || this.type === consts.TERRAIN_ICE) {
         return;
     }
  

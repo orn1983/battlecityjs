@@ -121,7 +121,9 @@ PlayerTank.prototype.update = function (du) {
 
     if (this._isDeadNow)
         return entityManager.KILL_ME_NOW;
-
+    
+    var isOnIce = spatialManager.isOnIce(this.cx, this.cy);
+    
     var sliding = false;
     if(this.slideCounter > 0)
         sliding = true;

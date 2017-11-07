@@ -114,6 +114,18 @@ clear: function() {
     this._nextSpatialID = 1;
 },
 
+// uses grid lookup to detect if (x,y) is on ice
+// maybe belongs in levelManager if we implement it...
+isOnIce: function(x, y) {
+    var j = Math.floor(x / g_canvas.width * g_gridSize); 
+    var i = Math.floor(y / g_canvas.height * g_gridSize); 
+
+    if (g_levels[g_sortedLevelKeys[g_currentLevel]][i][j] === consts.TERRAIN_ICE) {
+        return true;
+    }
+    return false;
+},
+
 // old function from Pat
 /*findEntityInRange: function(posX, posY, radius) {
     var canvasW = g_canvas.width,
