@@ -153,21 +153,25 @@ PlayerTank.prototype.update = function (du) {
     //      "One key to rule them all..."
     if (keys[this.KEY_UP]) {
         this.orientation = consts.DIRECTION_UP;
+		this.lockToNearestGrid();
         if(!sliding)
             this.move(du, this.cx, this.cy - this.moveDistance);
     }
     else if (keys[this.KEY_DOWN]) {
         this.orientation = consts.DIRECTION_DOWN;
+		this.lockToNearestGrid();
         if(!sliding)
             this.move(du, this.cx, this.cy + this.moveDistance);
     }
     else if (keys[this.KEY_LEFT]) {
         this.orientation = consts.DIRECTION_LEFT;
+		this.lockToNearestGrid();
         if(!sliding)
             this.move(du, this.cx - this.moveDistance, this.cy);
     }
     else if (keys[this.KEY_RIGHT]) {
         this.orientation = consts.DIRECTION_RIGHT;
+		this.lockToNearestGrid();
         if(!sliding)
           this.move(du, this.cx + this.moveDistance, this.cy);
     }
@@ -215,6 +219,28 @@ PlayerTank.prototype.move = function(du, newX, newY)
     }
 
     this.isMoving = true;
+}
+
+// use direction to determine wether we lock to X-grid og Y-grid
+PlayerTank.prototype.lockToNearestGrid = function(){
+	if(this.orientation === consts.DIRECTION_UP || this.orientation == consts.DIRECTION_DOWN){
+		// lock to nearest x coordinates on the grid
+		var gridStep = g_canvas.width/g_gridSize;
+		var mod = this.cx % gridStep;
+		if(mod >= gridStep/2)
+			this.cx = this.cx-mod+gridStep;
+		else
+			this.cx = this.cx-mod;
+	}
+	if(this.orientation === consts.DIRECTION_RIGHT || this.orientation == consts.DIRECTION_LEFT){
+		// lock to nearest y coordinates on the grid
+		var gridStep = g_canvas.height/g_gridSize;
+		var mod = this.cy % gridStep;
+		if(mod >= gridStep/2)
+			this.cy = this.cy-mod+gridStep;
+		else
+			this.cy = this.cy-mod;
+	}
 }
 
 PlayerTank.prototype.maybeFireBullet = function () {
