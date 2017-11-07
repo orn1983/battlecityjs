@@ -33,8 +33,13 @@ Bullet.prototype = new Entity();
 
 // HACKED-IN AUDIO (no preloading)
 Bullet.prototype.soundFire = "bulletFire";
+// OA: Maybe the following sounds should be owned by the entities being
+// hit rather than the bullets. The bullets are the aggressors, so it
+// also kind of makes sense that they own the sounds.
 Bullet.prototype.soundHitShield = "bulletShieldHit";
-Bullet.prototype.soundHitWall = "bulletWallhit";
+Bullet.prototype.soundHitSteel = "bulletSteelHit";
+Bullet.prototype.soundHitBrick = "bulletBrickHit";
+Bullet.prototype.soundDestroyPlayer = "destroyPlayer";
 
 // Initial, inheritable, default values
 Bullet.prototype.cx = 200;
@@ -85,6 +90,7 @@ Bullet.prototype.update = function (du) {
     }
     else if (hitEntities && hitEntities.length !== 0) {
         // bullet hit outer border, just kill it
+        g_SFX.request(this.soundHitSteel);
         return this.killMeNow();
     }
 

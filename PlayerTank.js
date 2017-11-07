@@ -290,12 +290,14 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
     //Player got shot by enemy
     if((this.isPlayer) && (!bullet.player)) {
         this.kill();
+        g_SFX.request(bullet.soundDestroyPlayer);
     }
 
     //EAH: enabling friendly fire for now
     if((this.isPlayer) && (bullet.player)) {
         // just do a reset for now
         this.reset();
+        g_SFX.request(bullet.soundDestroyPlayer);
     }
 
 

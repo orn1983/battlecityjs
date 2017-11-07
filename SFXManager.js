@@ -24,8 +24,18 @@ function SFXManager() {
             "interruptable": true,
             "requested": false,
             "repeating": false},
-        "bulletWallHit": {
-            "audio": new Audio("sounds/bullet_wall_hit.wav"),
+        "bulletSteelHit": {
+            "audio": new Audio("sounds/bullet_steel_hit.wav"),
+            "interruptable": true,
+            "requested": false,
+            "repeating": false},
+        "bulletBrickHit": {
+            "audio": new Audio("sounds/bullet_brick_hit.wav"),
+            "interruptable": true,
+            "requested": false,
+            "repeating": false},
+        "destroyPlayer": {
+            "audio": new Audio("sounds/destroy_player.wav"),
             "interruptable": true,
             "requested": false,
             "repeating": false},
@@ -44,7 +54,11 @@ function SFXManager() {
     this.configure = function() {
         this.SFX.bulletFire.audio.volume = 1;
         this.SFX.bulletShieldHit.audio.volume = 1;
-        this.SFX.bulletWallHit.audio.volume = 1;
+        this.SFX.bulletSteelHit.audio.volume = 1;
+        this.SFX.bulletBrickHit.audio.volume = 1;
+        this.SFX.destroyPlayer.audio.volume = 1;
+        this.SFX.tankIdle.audio.volume = 1;
+        this.SFX.tankMove.audio.volume = 1;
     }
 
     this.request = function(sound) {
