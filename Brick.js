@@ -96,11 +96,11 @@ Brick.prototype.updateSprite = function(){
 		this.sprite = spriteManager.spriteStructure(this.type, consts.STRUCTURE_BOTTOM_GONE);
 };
 
-// ctx, x, y, w, h, style
+// magic numbers can be tweeked
 Brick.prototype.placeBlackSpot = function(ctx){
 	if(this.horizontal.toString() === [true, false].toString()){
 		if(this.vertical.toString() === [true, false].toString()){
-			util.fillBox(ctx, Math.floor(this.cx-this.halfWidth)+1, this.cy-this.halfHeight-1, this.halfWidth+2, this.halfHeight+1, "#000");
+			util.fillBox(ctx, Math.floor(this.cx-this.halfWidth), this.cy-this.halfHeight-1, this.halfWidth+2, this.halfHeight+1, "#000");
 		}
 		if(this.vertical.toString() === [false, true].toString()){
 			util.fillBox(ctx, Math.floor(this.cx-this.halfWidth)+1, this.cy, this.halfWidth+2, this.halfHeight+1, "#000");
