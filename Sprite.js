@@ -75,7 +75,7 @@ Sprite.prototype.drawTankAt = function (ctx, cx, cy) {
 
     ctx.save();
     ctx.translate(cx, cy);
-    ctx.scale(this.scaleX, this.scaleY);
+    //ctx.scale(this.scaleX, this.scaleY);
 
     // drawImage expects "top-left" coords, so we offset our destination
     // coords accordingly, to draw our sprite centred at the origin

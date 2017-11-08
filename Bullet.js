@@ -50,8 +50,9 @@ Bullet.prototype.strength = 1;
 Bullet.prototype.player = true;
 
 // used for collision detection
-Bullet.prototype.halfHeight = 2;
-Bullet.prototype.halfWidth = 2;
+// sprites are 4x4 pixels
+Bullet.prototype.halfHeight = 4 * g_spriteScale / 2;
+Bullet.prototype.halfWidth = 4 * g_spriteScale / 2;
 
 // Convert times from milliseconds to "nominal" time units.
 //Bullet.prototype.lifeSpan = 3000 / NOMINAL_UPDATE_INTERVAL;

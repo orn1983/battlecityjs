@@ -149,7 +149,8 @@ render: function(ctx) {
     
     for (var ID in this._entities) {
         var e = this._entities[ID];
-        util.strokeCircle(ctx, e.posX, e.posY, e.radius);
+        util.strokeBox(ctx, e.posX-e.halfWidth, e.posY-e.halfHeight , 2*e.halfWidth, 2*e.halfHeight);
+        //util.strokeCircle(ctx, e.posX, e.posY, e.radius);
     }
     ctx.strokeStyle = oldStyle;
 }
