@@ -53,9 +53,6 @@ Bullet.prototype.player = true;
 Bullet.prototype.halfHeight = 2;
 Bullet.prototype.halfWidth = 2;
 
-// scale used when rendering bullet
-Bullet.prototype.scale = 2;
-
 // Convert times from milliseconds to "nominal" time units.
 //Bullet.prototype.lifeSpan = 3000 / NOMINAL_UPDATE_INTERVAL;
 
@@ -122,7 +119,7 @@ Bullet.prototype.render = function (ctx) {
 
     // fetch sprite from spriteManager
     this.sprite = spriteManager.spriteBullet(this.direction);
-    this.sprite.drawBulletAt(ctx, this.cx, this.cy, this.direction, this.scale);
+    this.sprite.drawBulletAt(ctx, this.cx, this.cy, this.direction, g_spriteScale);
     
     
 //HD: Shouldn't bullet call its own sprite like tank does,

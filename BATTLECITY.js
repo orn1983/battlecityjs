@@ -91,46 +91,11 @@ function createBrick() {
     });
 }
 
-function map1() {
-	var level1 = [[0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5,5,5,5,5,5],
-	              [1,1,1,1,1,1,1,1,1,1,1,1,1,5,5,5,5,5,5,5,5,5,5,5,5,5],
-				  [2,2,2,2,2,2,2,2,2,2,2,2,2,5,5,5,5,5,5,5,5,5,5,5,5,5],
-				  [3,3,3,3,3,3,3,3,3,3,3,3,3,5,5,5,5,5,5,5,5,5,5,5,5,5],
-				  [4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5],
-				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
-				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
-				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
-				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
-				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
-				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
-				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
-				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
-				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
-				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
-				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
-				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
-				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
-				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
-				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
-				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
-				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
-				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
-				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
-				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
-				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
-				  [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
-				  ]
-	createLevel(level1)
-}
-
 // =============
 // GATHER INPUTS
 // =============
 
 function gatherInputs() {
-    // Nothing to do here!
-    // The event handlers do everything we need for now.
-
     // updates gamepad inputs, if any
     entityManager.handleGamepads();
 
@@ -156,9 +121,6 @@ function updateSimulation(du) {
     processDiagnostics();
 
     entityManager.update(du);
-
-    // Prevent perpetual firing!
-    eatKey(PlayerTank.prototype.KEY_FIRE);
 }
 
 // GAME-SPECIFIC DIAGNOSTICS
@@ -286,7 +248,6 @@ function drawLevelNumber(number) {
 // GAME-SPECIFIC RENDERING
 
 function renderSimulation(ctx) {
-
     entityManager.render(ctx);
 
     if (g_renderSpatialDebug) spatialManager.render(ctx);
@@ -303,7 +264,6 @@ var g_images = {};
 function requestPreloads() {
 
     var requiredImages = {
-        // TODO: change sprite!
         spritesheet    : "images/spritesheet.png"
     };
 
@@ -313,31 +273,9 @@ function requestPreloads() {
 var g_sprites = {};
 
 function preloadDone() {
-    // g_sprites.playerTank1  = new animatedSprite(g_images.spritesheet, 0, 0, 16, 16, 2, 2, 2);
-    // g_sprites.playerTank2  = new animatedSprite(g_images.spritesheet, 128, 0, 16, 16, 2, 2, 2);
-    
-    //g_sprites.ship2 = new Sprite(g_images.ship2);
-    //g_sprites.rock  = new Sprite(g_images.rock);
-
-    //g_sprites.bullet = new Sprite(g_images.playerTank1);
-    //g_sprites.bullet.scale = 0.25;
-
-    //HD: Just adding sample sprite initialization code for the bullet. It's still
-    //broken, but at least now I can remember its coords in the spritesheet :-P
-    //g_sprites.bullet = new animatedSprite(g_images.spritesheet, 323, 102, 4, 4, 1,1,1);
-
-    // EAH: quick hack to get bullets to semi-work
-    g_sprites.bullet = {0: new Sprite(g_images.spritesheet, 323, 102, 4, 4, 1,1),
-                        3 : new Sprite(g_images.spritesheet, 330, 102, 4, 4, 1,1),
-                        2 : new Sprite(g_images.spritesheet, 339, 102, 4, 4, 1,1),
-                        1 : new Sprite(g_images.spritesheet, 346, 102, 4, 4, 1,1)
-                       }
-    g_sprites.bullet.scale = 2;
-
     entityManager.init();
     createInitialTanks();
     createLevel(g_levels[g_sortedLevelKeys[g_currentLevel]]);
-    //createLevel(g_levels.stage_01);
 
     main.init();
 }

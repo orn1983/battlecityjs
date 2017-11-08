@@ -27,6 +27,10 @@ var g_currentLevel = 0;
 
 var g_sortedLevelKeys = Object.keys(g_levels).sort();
 
+// used to scale sprites from spritesheet to our canvas
+// original playfield was 208px w/h, our is 600px w/h
+var g_spriteScale = 600 / 208;
+
 // The "nominal interval" is the one that all of our time-based units are
 // calibrated to e.g. a velocity unit is "pixels per nominal interval"
 //
