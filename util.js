@@ -84,6 +84,13 @@ clearCanvas: function (ctx) {
     ctx.fillStyle = prevfillStyle;
 },
 
+clearBackgroundCanvas: function (ctx) {
+    var prevfillStyle = ctx.fillStyle;
+    ctx.fillStyle = "rgb(99, 99, 99)";
+    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.fillStyle = prevfillStyle;
+},
+
 strokeCircle: function (ctx, x, y, r) {
     ctx.beginPath();
     ctx.arc(x, y, r, 0, Math.PI * 2);

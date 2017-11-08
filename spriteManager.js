@@ -324,7 +324,7 @@ var spriteManager = {
         var sx = 377;
         var sy = 136;
         var width = 16;
-        var height = 16;
+        var height = 7;
         
         if (player === 2) {
             sy = 160;
@@ -333,11 +333,20 @@ var spriteManager = {
         return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
     },
     
+    spritePlayerTankIcon : function() {
+        var sx = 377;
+        var sy = 144;
+        var width = 7;
+        var height = 8;
+        
+        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);        
+    },
+    
     spriteFlagIcon : function() {
         var sx = 376;
         var sy = 184;
         var width = 16;
-        var height = 24;
+        var height = 15;
         
         return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
     },
@@ -379,11 +388,11 @@ var spriteManager = {
     },
     
     spriteNumber : function(number) {
-        var sx = 328;
+        var sx = 329;
         var sy = 184;
-        var width = 8;
-        var height = 8;
-        mul = 8;
+        var width = 7;
+        var height = 7;
+        var mul = 8;
         
         sx += (number % 5) * mul;
 

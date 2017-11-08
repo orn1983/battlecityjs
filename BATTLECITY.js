@@ -10,6 +10,9 @@
 var g_canvas = document.getElementById("myCanvas");
 var g_ctx = g_canvas.getContext("2d");
 
+var g_backgroundCanvas = document.getElementById("backgroundCanvas");
+var g_backgroundCtx = g_backgroundCanvas.getContext("2d");
+
 /*
 0        1         2         3         4         5         6         7         8
 12345678901234567890123456789012345678901234567890123456789012345678901234567890
@@ -47,7 +50,7 @@ function createInitialTanks() {
 
 // creates tank for player 2
 function createPlayerTwoTank() {
-    g_numPlayers++;
+    g_numPlayers = 2;
     entityManager.generatePlayerTank({
         type:   "player2",
         //HD: We'll probably drop the "type" once tanktype is fully implemented.
@@ -217,6 +220,56 @@ function nextLevel() {
     }    
 }
 
+// EAH: more stuff that has no home
+// Don't want to spend more time on this code atm in case we
+// end up throwing it all away, but at least it can be used
+// as proof-of-concept
+function drawInfo() {
+    
+    // used for both player 1 and player 2
+    var playerTankIcon = spriteManager.spritePlayerTankIcon();
+    
+    // draw player 1 icon
+    var p1icon = spriteManager.spritePlayerIcon(1);
+    // using drawBulletAt for now because it takes a "scale" argument
+    p1icon.drawBulletAt(g_backgroundCtx, 685, 390, consts.DIRECTION_UP, 3);
+    
+    playerTankIcon.drawBulletAt(g_backgroundCtx, 670, 422, consts.DIRECTION_UP, 3);
+    
+    // just putting 2 here as starting value for now
+    p1lives = spriteManager.spriteNumber(entityManager.getPlayerLives(1));
+    p1lives.drawBulletAt(g_backgroundCtx, 695, 422, consts.DIRECTION_UP, 3);
+    
+    if (g_numPlayers === 2) {
+        // draw player 2 icon
+        var p2icon = spriteManager.spritePlayerIcon(2);
+        p2icon.drawBulletAt(g_backgroundCtx, 685, 470, consts.DIRECTION_UP, 3);  
+
+        playerTankIcon.drawBulletAt(g_backgroundCtx, 670, 502, consts.DIRECTION_UP, 3);
+        
+        p2lives = spriteManager.spriteNumber(entityManager.getPlayerLives(2));
+        p2lives.drawBulletAt(g_backgroundCtx, 695, 502, consts.DIRECTION_UP, 3);        
+    }
+    
+    // draw flag icon
+    var flagIcon = spriteManager.spriteFlagIcon();
+    flagIcon.drawBulletAt(g_backgroundCtx, 685, 555, consts.DIRECTION_UP, 3);
+    
+    drawLevelNumber(g_currentLevel + 1);
+}
+
+function drawLevelNumber(number) {
+    var firstDigit = Math.floor(number / 10);
+    var secondDigit = number % 10;
+    
+    if (firstDigit > 0) {
+        var firstDigitIcon = spriteManager.spriteNumber(firstDigit);
+        firstDigitIcon.drawBulletAt(g_backgroundCtx, 670, 595, consts.DIRECTION_UP, 3);
+    }
+    
+    var secondDigitIcon = spriteManager.spriteNumber(secondDigit);
+    secondDigitIcon.drawBulletAt(g_backgroundCtx, 695, 595, consts.DIRECTION_UP, 3);
+}
 
 // =================
 // RENDER SIMULATION
@@ -237,6 +290,8 @@ function renderSimulation(ctx) {
     entityManager.render(ctx);
 
     if (g_renderSpatialDebug) spatialManager.render(ctx);
+    
+    drawInfo();
 }
 
 

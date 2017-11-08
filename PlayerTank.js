@@ -84,7 +84,7 @@ PlayerTank.prototype.moveDistance = 2;
 
 PlayerTank.prototype.orientation = consts.DIRECTION_UP;
 
-PlayerTank.prototype.numberOfLives = 14;
+PlayerTank.prototype.numberOfLives = 2;
 
 //TODO: Use this as check to decide whether the tank's bullets will destroy
 //an enemy tank (player->enemy or enemy->player, maybe also enemy->enemy) or

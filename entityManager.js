@@ -148,6 +148,11 @@ destroyLevel : function() {
     this._trees.length = 0;
 },
 
+// getter for player lives to draw on background canvas
+getPlayerLives : function(playerNumber) {
+    return this._playerTanks[playerNumber-1].numberOfLives;
+},
+
 update: function(du) {
 
     for (var c = 0; c < this._categories.length; ++c) {
