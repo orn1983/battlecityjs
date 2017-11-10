@@ -114,7 +114,7 @@ PlayerTank.prototype.isMoving = false;
 
 PlayerTank.prototype.update = function (du) {
     spatialManager.unregister(this);
-    
+
     // store old value of isMoving to detect if tank
     // has stopped (used for slide effect on ice)
     var wasMoving = this.isMoving;
@@ -125,13 +125,13 @@ PlayerTank.prototype.update = function (du) {
 
     if (this._isDeadNow)
         return entityManager.KILL_ME_NOW;
-   
+
     //var isOnIce = spatialManager.isOnIce(this.cx, this.cy);
-    
+
     /*var sliding = false;
     if(this.slideCounter > 0)
         sliding = true;
-    
+
     if(sliding) {
         //HD NB: It's possible we may have to check first for a keypress,
         //to see if the orientation has changed. Let's try this version for now,
@@ -182,18 +182,18 @@ PlayerTank.prototype.update = function (du) {
 
     //HD: Handle firing. (Remember that we can fire even if we can't move.)
     this.maybeFireBullet();
-    
+
     // if tank was moving but isn't moving now and is on ice...
     if (wasMoving && !this.isMoving && spatialManager.isOnIce(this.cx, this.cy)) {
         // EAH: value of 20 looks okay I guess?
         this.slideCounter = 20;
     }
-    
+
     // remove slide effect if not on ice or if tank moved
     if (!spatialManager.isOnIce(this.cx, this.cy) || this.isMoving) {
         this.slideCounter = 0;
     }
-    
+
     if (this.slideCounter > 0) {
         switch(this.orientation) {
             case(consts.DIRECTION_UP):
@@ -229,12 +229,12 @@ PlayerTank.prototype.slide = function(du, newX, newY) {
     {
         this.cx = newX;
         this.cy = newY;
-    }    
+    }
 };
 
 PlayerTank.prototype.move = function(du, newX, newY)
 {
-    
+
     var hitEntity = this.findHitEntity(newX, newY);
     if (!hitEntity)
     {
@@ -261,7 +261,7 @@ PlayerTank.prototype.move = function(du, newX, newY)
     }
 
     this.isMoving = true;
-}
+};
 
 // use direction to determine wether we lock to X-grid og Y-grid
 PlayerTank.prototype.lockToNearestGrid = function(){
@@ -283,7 +283,7 @@ PlayerTank.prototype.lockToNearestGrid = function(){
 		else
 			this.cy = this.cy-mod;
 	}
-}
+};
 
 PlayerTank.prototype.maybeFireBullet = function () {
 
@@ -292,7 +292,7 @@ PlayerTank.prototype.maybeFireBullet = function () {
     //      even if you can fire more than one bullet at one, you
     //      probably don't want to fire them all with one button push!
     if (eatKey(this.KEY_FIRE)) {
-        //tank may only fire if no bullets alive 
+        //tank may only fire if no bullets alive
         //or only one bullet alive and canFireTwice is true
         if (this.bulletsAlive === 0 || (this.bulletsAlive === 1 && this.canFireTwice)) {
             var turretX, turretY;
@@ -323,7 +323,7 @@ PlayerTank.prototype.maybeFireBullet = function () {
             this.bulletsAlive++;
             entityManager.fireBullet(turretX, turretY, this.bulletVelocity,
                 this.orientation, this.isPlayer, this.bulletStrength, this);
-        }  
+        }
     }
 };
 
