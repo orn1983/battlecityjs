@@ -166,9 +166,13 @@ function gatherInputs() {
 
 function updateSimulation(du) {
 
-    processDiagnostics();
-
-    entityManager.update(du);
+    if (g_gameStarted) {
+        processDiagnostics();
+        entityManager.update(du);        
+    }
+    else {
+        mainMenu.update();
+    }
 }
 
 // GAME-SPECIFIC DIAGNOSTICS
@@ -296,11 +300,16 @@ function drawLevelNumber(number) {
 // GAME-SPECIFIC RENDERING
 
 function renderSimulation(ctx) {
-    entityManager.render(ctx);
+    if (g_gameStarted) {
+        entityManager.render(ctx);
 
-    if (g_renderSpatialDebug) spatialManager.render(ctx);
-
-    drawInfo();
+        if (g_renderSpatialDebug) spatialManager.render(ctx);
+        
+        drawInfo();        
+    }
+    else {
+        mainMenu.render(g_backgroundCtx);
+    }
 }
 
 
@@ -321,10 +330,15 @@ function requestPreloads() {
 var g_sprites = {};
 
 function preloadDone() {
-    entityManager.init();
-    createInitialTanks();
-    createLevel(g_levels[g_sortedLevelKeys[g_currentLevel]]);
-
+    if (g_gameStarted) {
+        entityManager.init();
+        createInitialTanks();
+        createLevel(g_levels[g_sortedLevelKeys[g_currentLevel]]);        
+    }
+    else {
+        mainMenu.init();
+        
+    }
     main.init();
 }
 

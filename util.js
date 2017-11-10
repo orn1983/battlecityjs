@@ -84,9 +84,10 @@ clearCanvas: function (ctx) {
     ctx.fillStyle = prevfillStyle;
 },
 
-clearBackgroundCanvas: function (ctx) {
+clearBackgroundCanvas: function (ctx, color) {
     var prevfillStyle = ctx.fillStyle;
-    ctx.fillStyle = "rgb(99, 99, 99)";
+    var fillColor = color || "rgb(99, 99, 99)"
+    ctx.fillStyle = fillColor;
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.fillStyle = prevfillStyle;
 },

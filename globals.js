@@ -27,6 +27,12 @@ var g_currentLevel = 0;
 
 var g_sortedLevelKeys = Object.keys(g_levels).sort();
 
+var g_friendlyFire = false;
+
+var g_enemiesEnabled = true;
+
+var g_gameStarted = true;
+
 // used to scale sprites from spritesheet to our canvas
 // original playfield was 208px w/h, our is 600px w/h
 var g_spriteScale = 600 / 208;
