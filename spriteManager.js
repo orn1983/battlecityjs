@@ -43,20 +43,20 @@ var spriteManager = {
                 sy = 128;
             break;
             case(consts.TANK_ENEMY_BASIC):
-                sx = 64+mul*0;
-                sy = 128;
+                sx = 128;
+                sy = 64+mul*0;
             break;
             case(consts.TANK_ENEMY_FAST):
-                sx = 64+mul*1;
-                sy = 128;
+                sx = 128;
+                sy = 64+mul*1;
             break;
             case(consts.TANK_ENEMY_POWER):
-                sx = 64+mul*2;
-                sy = 128;
+                sx = 128;
+                sy = 64+mul*2;
             break;
             case(consts.TANK_ENEMY_ARMOR):
-                sx = 64+mul*3;
-                sy = 128;
+                sx = 128;
+                sy = 64+mul*3;
             break;
         }
 
@@ -319,87 +319,87 @@ var spriteManager = {
 
         return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
     },
-    
+
     spritePlayerIcon : function(player) {
         var sx = 377;
         var sy = 136;
         var width = 16;
         var height = 7;
-        
+
         if (player === 2) {
             sy = 160;
         }
-        
+
         return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
     },
-    
+
     spritePlayerTankIcon : function() {
         var sx = 377;
         var sy = 144;
         var width = 7;
         var height = 8;
-        
-        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);        
+
+        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
     },
-    
+
     spriteFlagIcon : function() {
         var sx = 376;
         var sy = 184;
         var width = 16;
         var height = 15;
-        
+
         return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
     },
-    
+
     spriteEnemyIcon : function() {
         var sx = 320;
         var sy = 192;
         var width = 8;
         var height = 8;
-        
-        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);        
+
+        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
     },
-    
+
     spritePause : function() {
         var sx = 289;
         var sy = 176;
         var width = 39;
         var height = 7;
-        
-        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);                
+
+        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
     },
-    
+
     spriteGameOver : function() {
         var sx = 289;
         var sy = 184;
         var width = 31;
         var height = 15;
-        
-        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);               
+
+        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
     },
-    
+
     spriteStage : function() {
         var sx = 328;
         var sy = 176;
         var width = 40;
         var height = 8;
-        
-        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);                       
+
+        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
     },
-    
+
     spriteNumber : function(number) {
         var sx = 329;
         var sy = 184;
         var width = 7;
         var height = 7;
         var mul = 8;
-        
+
         sx += (number % 5) * mul;
 
         if (number > 4) {
             sy += mul;
         }
 
-        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);                   
+        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
     },
 }

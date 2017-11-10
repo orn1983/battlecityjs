@@ -42,6 +42,12 @@ function createInitialTanks() {
         playerSpriteOffset : 0,
         gamepad : gamepadManager.getGamepad()
     });
+
+    //createEnemyTank(1);
+    //createEnemyTank(2);
+    //createEnemyTank(3);
+
+
     // TODO if two players
     if (g_numPlayers >= 2) {
         createPlayerTwoTank();
@@ -69,6 +75,48 @@ function createPlayerTwoTank() {
         // sprite offset
         playerSpriteOffset : 128,
         gamepad : gamepadManager.getGamepad()
+    });
+}
+
+function createEnemyTank(start) {
+//HD: Temporary function used to create enemy tanks at given starting locations
+    var thiscX, thiscY;
+    var thisTankType = consts.TANK_ENEMY_BASIC;
+    var movementSpeed = 2;
+    var bulletSpeed = 6;
+    switch(start){
+        case 1: //upper left corner, basic tank (half speed, half bullet speed)
+            thiscX = g_canvas.width/26;
+            thiscY = g_canvas.width/26;
+            thisTankType = consts.TANK_ENEMY_BASIC;
+            movementSpeed = 1;
+            bulletSpeed = 3;
+        break;
+        case 2: //upper middle, fast tank (double speed, normal bullet speed)
+            thiscX = g_canvas.width/26 + g_canvas.width/13*6;
+            thiscY = g_canvas.width/26;
+            thisTankType = consts.TANK_ENEMY_FAST;
+            movementSpeed = 3;
+            bulletSpeed = 2;
+        break;
+        case 3: //upper right corner, power tank (normal speed, fast bullet speed)
+            thiscX = g_canvas.width/26 + g_canvas.width/13*12;
+            thiscY = g_canvas.width/26;
+            thisTankType = consts.TANK_ENEMY_ARMOR;
+            movementSpeed = 2;
+            bulletSpeed = 3;
+        break;
+    }
+
+
+    entityManager.generateEnemyTank({
+        //cx :    g_canvas.width/26 + g_canvas.width/13*8,
+        //cy :    g_canvas.width/26 + g_canvas.width/13*12,
+        cx : thiscX,
+        cy :  thiscY,
+        tanktype : thisTankType,
+        moveDistance : movementSpeed,
+        bulletVelocity : bulletSpeed
     });
 }
 
@@ -154,7 +202,7 @@ function processDiagnostics() {
 
     if (eatKey(KEY_2) && g_numPlayers === 1)
         createPlayerTwoTank();
-    
+
     if (eatKey(KEY_9))
         prevLevel();
     if (eatKey(KEY_0))
@@ -179,7 +227,7 @@ function nextLevel() {
         entityManager.destroyLevel();
         createInitialTanks();
         createLevel(g_levels[g_sortedLevelKeys[g_currentLevel]]);
-    }    
+    }
 }
 
 // EAH: more stuff that has no home
@@ -187,48 +235,48 @@ function nextLevel() {
 // end up throwing it all away, but at least it can be used
 // as proof-of-concept
 function drawInfo() {
-    
+
     // used for both player 1 and player 2
     var playerTankIcon = spriteManager.spritePlayerTankIcon();
-    
+
     // draw player 1 icon
     var p1icon = spriteManager.spritePlayerIcon(1);
     // using drawBulletAt for now because it takes a "scale" argument
     p1icon.drawBulletAt(g_backgroundCtx, 685, 390, consts.DIRECTION_UP, 3);
-    
+
     playerTankIcon.drawBulletAt(g_backgroundCtx, 670, 422, consts.DIRECTION_UP, 3);
-    
+
     // just putting 2 here as starting value for now
     p1lives = spriteManager.spriteNumber(entityManager.getPlayerLives(1));
     p1lives.drawBulletAt(g_backgroundCtx, 695, 422, consts.DIRECTION_UP, 3);
-    
+
     if (g_numPlayers === 2) {
         // draw player 2 icon
         var p2icon = spriteManager.spritePlayerIcon(2);
-        p2icon.drawBulletAt(g_backgroundCtx, 685, 470, consts.DIRECTION_UP, 3);  
+        p2icon.drawBulletAt(g_backgroundCtx, 685, 470, consts.DIRECTION_UP, 3);
 
         playerTankIcon.drawBulletAt(g_backgroundCtx, 670, 502, consts.DIRECTION_UP, 3);
-        
+
         p2lives = spriteManager.spriteNumber(entityManager.getPlayerLives(2));
-        p2lives.drawBulletAt(g_backgroundCtx, 695, 502, consts.DIRECTION_UP, 3);        
+        p2lives.drawBulletAt(g_backgroundCtx, 695, 502, consts.DIRECTION_UP, 3);
     }
-    
+
     // draw flag icon
     var flagIcon = spriteManager.spriteFlagIcon();
     flagIcon.drawBulletAt(g_backgroundCtx, 685, 555, consts.DIRECTION_UP, 3);
-    
+
     drawLevelNumber(g_currentLevel + 1);
 }
 
 function drawLevelNumber(number) {
     var firstDigit = Math.floor(number / 10);
     var secondDigit = number % 10;
-    
+
     if (firstDigit > 0) {
         var firstDigitIcon = spriteManager.spriteNumber(firstDigit);
         firstDigitIcon.drawBulletAt(g_backgroundCtx, 670, 595, consts.DIRECTION_UP, 3);
     }
-    
+
     var secondDigitIcon = spriteManager.spriteNumber(secondDigit);
     secondDigitIcon.drawBulletAt(g_backgroundCtx, 695, 595, consts.DIRECTION_UP, 3);
 }
@@ -251,7 +299,7 @@ function renderSimulation(ctx) {
     entityManager.render(ctx);
 
     if (g_renderSpatialDebug) spatialManager.render(ctx);
-    
+
     drawInfo();
 }
 

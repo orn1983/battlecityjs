@@ -31,6 +31,7 @@ _terrain        : [],
 _bricks         : [],
 _bullets        : [],
 _playerTanks    : [],
+_enemyTanks     : [],
 _powerups       : [],
 _trees          : [],
 
@@ -56,7 +57,7 @@ KILL_ME_NOW : -1,
 //
 deferredSetup : function () {
     this._categories = [ this._terrain, this._bricks, this._bullets,
-        this._playerTanks, this._trees, this._powerups];
+        this._playerTanks, this._enemyTanks, this._trees, this._powerups];
 
 },
 
@@ -109,6 +110,12 @@ generatePlayerTank : function(descr) {
 
 },
 
+generateEnemyTank : function(descr) {
+    this._enemyTanks.push(new EnemyTank(descr));
+    var tankIndex = this._enemyTanks.length - 1;
+},
+
+
 // updates gamepad inputs for each tank (if gamepad connected)
 handleGamepads : function() {
     gamepadManager.updateGamepads();
@@ -133,11 +140,11 @@ generatePowerup : function(){
     this._powerups.push(new Powerup());
 },
 
-// destroys level completely, i.e. unregisters everything from 
+// destroys level completely, i.e. unregisters everything from
 // spatial manager and empties all private arrays
 destroyLevel : function() {
     spatialManager.clear();
-    
+
     // EAH: for some reason array = [] doesn't work (???)
     // so using array.length = 0 to clear
     this._terrain.length = 0;
@@ -151,6 +158,8 @@ destroyLevel : function() {
 // getter for player lives to draw on background canvas
 getPlayerLives : function(playerNumber) {
     return this._playerTanks[playerNumber-1].numberOfLives;
+    //HD NB: Throws an error when enemy tank kills player: the player tank
+    //is "undefined"
 },
 
 update: function(du) {
@@ -184,8 +193,6 @@ update: function(du) {
             }
         }
     }
-
-    //if (this._rocks.length === 0) this._generateRocks();
 
 },
 
