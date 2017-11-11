@@ -13,9 +13,14 @@ Evil, ugly (but "necessary") globals, which everyone can use.
 
 var g_canvas = document.getElementById("myCanvas");
 var g_ctx = g_canvas.getContext("2d");
+var g_backgroundCanvas = document.getElementById("backgroundCanvas");
+var g_backgroundCtx = g_backgroundCanvas.getContext("2d");
 g_ctx.webkitImageSmoothingEnabled = false;
 g_ctx.mozImageSmoothingEnabled = false;
 g_ctx.imageSmoothingEnabled = false;
+g_backgroundCtx.webkitImageSmoothingEnabled = false;
+g_backgroundCtx.mozImageSmoothingEnabled = false;
+g_backgroundCtx.imageSmoothingEnabled = false;
 // Grid is symmetric, so g_gridSize N means NxN
 var g_gridSize = 26;
 
