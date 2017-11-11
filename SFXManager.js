@@ -11,6 +11,7 @@ function playSounds() {
 }
 
 function SFXManager() {
+    this.volume = 0.5;
     this.soundsEnabled = true;
 
     this.SFX = {
@@ -52,13 +53,13 @@ function SFXManager() {
     };
 
     this.configure = function() {
-        this.SFX.bulletFire.audio.volume = 1;
-        this.SFX.bulletShieldHit.audio.volume = 1;
-        this.SFX.bulletSteelHit.audio.volume = 1;
-        this.SFX.bulletBrickHit.audio.volume = 1;
-        this.SFX.destroyPlayer.audio.volume = 1;
-        this.SFX.tankIdle.audio.volume = 1;
-        this.SFX.tankMove.audio.volume = 1;
+        this.SFX.bulletFire.audio.volume = this.volume;
+        this.SFX.bulletShieldHit.audio.volume = this.volume;
+        this.SFX.bulletSteelHit.audio.volume = this.volume;
+        this.SFX.bulletBrickHit.audio.volume = this.volume;
+        this.SFX.destroyPlayer.audio.volume = this.volume;
+        this.SFX.tankIdle.audio.volume = this.volume;
+        this.SFX.tankMove.audio.volume = this.volume;
     }
 
     this.request = function(sound) {
