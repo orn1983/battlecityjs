@@ -64,6 +64,7 @@ var consts = {
     EFFECT_SMALLEXPLOSION   : 35,
     EFFECT_LARGEEXPLOSION   : 36,
     EFFECT_INVULNERABLE     : 37,
-    EFFECT_POINTS          : 38
+    EFFECT_POINTS           : 38,
 
+    BULLET                  : 39
 };
