@@ -215,8 +215,6 @@ EnemyTank.prototype.move = function(du, newX, newY)
 
     var hitEntity = this.findHitEntity(newX, newY);
 
-console.log(hitEntity);
-
     if (!hitEntity)
     {
         this.cx = newX;
@@ -226,7 +224,7 @@ console.log(hitEntity);
     else if( hitEntity.entity.type !== consts.STRUCTURE_FLAG ){
         this.changeDirection();
     }
-    
+
 
     // update animation frame
     this.animationFrameCounter++;
