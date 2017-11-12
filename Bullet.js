@@ -85,6 +85,7 @@ Bullet.prototype.update = function (du) {
             if (canTakeHit) {
                 hitSomething = true
                 canTakeHit.call(hitEntity.entity, this);
+                entityManager.generateEffect(consts.EFFECT_SMALLEXPLOSION, this.cx, this.cy);
             }
         }
     if(hitSomething)	return this.killMeNow();
