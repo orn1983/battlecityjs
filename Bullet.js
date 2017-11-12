@@ -19,7 +19,8 @@ function Bullet(descr) {
     this.setup(descr);
 
     // Make a noise when I am created (i.e. fired)
-    g_SFX.request(this.soundFire);
+    if (this.player)
+        g_SFX.request(this.soundFire);
 
 /*
     // Diagnostics to check inheritance stuff
@@ -40,6 +41,7 @@ Bullet.prototype.soundHitShield = "bulletShieldHit";
 Bullet.prototype.soundHitSteel = "bulletSteelHit";
 Bullet.prototype.soundHitBrick = "bulletBrickHit";
 Bullet.prototype.soundDestroyPlayer = "destroyPlayer";
+Bullet.prototype.soundDestroyEnemy = "destroyEnemy";
 
 // Initial, inheritable, default values
 Bullet.prototype.cx = 200;
@@ -72,7 +74,6 @@ Bullet.prototype.update = function (du) {
         case(consts.DIRECTION_LEFT)  : this.cx -= this.vel * du; break;
     }
 
-	
     //
     // Handle collisions
     //
@@ -93,13 +94,6 @@ Bullet.prototype.update = function (du) {
             entityManager.generateEffect(consts.EFFECT_SMALLEXPLOSION, this.cx, this.cy);
         return this.killMeNow();
     }
-    // else if (hitEntities && hitEntities.length !== 0) {
-        // bullet hit outer border, just kill it
-        // entityManager.generateEffect(consts.EFFECT_SMALLEXPLOSION, this.cx, this.cy);
-        // g_SFX.request(this.soundHitSteel);
-        // return this.killMeNow();
-    // }
-
     spatialManager.register(this);
 
 };

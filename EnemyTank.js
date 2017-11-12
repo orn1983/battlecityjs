@@ -116,10 +116,6 @@ EnemyTank.prototype.animationFramePowerup = 0;
 //For powerup tanks only.
 EnemyTank.prototype.animationFramePowerupCounter = 0;
 
-// HACKED-IN AUDIO (no preloading)
-EnemyTank.prototype.soundIdle = "tankIdle";
-EnemyTank.prototype.soundMove = "tankMove";
-
 EnemyTank.prototype.isMoving = false;
 
 //HD: Using this to check when the tank should turn
@@ -191,13 +187,6 @@ EnemyTank.prototype.update = function (du) {
     }
 
     spatialManager.register(this);
-
-    // Play audio for tank
-    if (this.isMoving) {
-        g_SFX.request(this.soundMove);
-    } else {
-        g_SFX.request(this.soundIdle);
-    }
 
 };
 
@@ -384,8 +373,7 @@ EnemyTank.prototype.takeBulletHit = function (bullet) {
             gameState.addScore(bullet.tank, this.tanktype);
             entityManager.generatePowerup();
             this.kill();
-            g_SFX.request(bullet.soundDestroyPlayer);
-            //HD: Do we also use "soundDestroyPlayer" for enemy tank deaths?
+            g_SFX.request(bullet.soundDestroyEnemy);
         }
     }
 
