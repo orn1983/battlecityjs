@@ -52,8 +52,6 @@ PlayerTank.prototype.cy = 200;
 PlayerTank.prototype.halfHeight = g_canvas.height/g_gridSize-3;
 PlayerTank.prototype.halfWidth = g_canvas.width/g_gridSize-3;
 
-PlayerTank.prototype.tanktype = consts.TANK_PLAYER1;
-
 //HD: This is set to a positive integer when the tank is on ice, and is used
 //to increment its movement. It is then decremented with each du
 PlayerTank.prototype.slideCounter = 0;
