@@ -161,7 +161,7 @@ resetPlayerTanks : function() {
 	for (i = 0; i < this._playerTanks.length ; i++){
 		this._playerTanks[i].reset();
 	}
-}
+},
 
 // getter for player lives to draw on background canvas
 getPlayerLives : function(playerNumber) {
