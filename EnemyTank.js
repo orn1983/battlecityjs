@@ -53,7 +53,7 @@ TANK_ENEMY_POWER    : 5,
 TANK_ENEMY_ARMOR    : 6,
 */
 
-EnemyTank.prototype.tanktype = consts.TANK_ENEMY_BASIC;
+EnemyTank.prototype.type = consts.TANK_ENEMY_BASIC;
 
 //HD: This is the default for most tanks. For those that drop powerups,
 //it'll be consts.TANK_POWER_DROPSPOWERUP
@@ -335,6 +335,9 @@ EnemyTank.prototype.lockToNearestGrid = function(){
 
 EnemyTank.prototype.maybeFireBullet = function () {
 
+//TODO: Code a counter so that the enemy tank fires at a fixed rate,
+//not super-fast (especially against a wall)
+
         if (this.bulletsAlive === 0 ) {
             var turretX, turretY;
             // EAH: add offset so bullet doesn't collide with tank!
@@ -418,24 +421,10 @@ EnemyTank.prototype.render = function (ctx, du) {
         powerlevelSprite = consts.TANK_POWER_NONE;
     }
 
-    /*    if( this.blinkRed ) {
-            //We want the red sprite for this du, then the gray one next.
-            this.blinkRed = !this.blinkRed;
-        }
-        else {
-            //We want the gray sprite for this du, then the red one next.
-            powerlevelSprite = consts.TANK_POWER_NONE;
-            this.blinkRed = !this.blinkRed;
-        }
-    }*/
 
-    //console.log(powerlevelSprite);
         // fetch correct sprite from spriteManager
         this.sprite = spriteManager.spriteTank(
-            //consts.TANK_ENEMY_POWER,
             this.tanktype,
-            //consts.TANK_POWER_DROPSPOWERUP,
-            //consts.TANK_POWER_NONE,
             powerlevelSprite,
             this.orientation,
             this.animationFrame

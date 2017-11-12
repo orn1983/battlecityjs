@@ -52,8 +52,6 @@ PlayerTank.prototype.cy = 200;
 PlayerTank.prototype.halfHeight = g_canvas.height/g_gridSize-3;
 PlayerTank.prototype.halfWidth = g_canvas.width/g_gridSize-3;
 
-PlayerTank.prototype.tanktype = consts.TANK_PLAYER1;
-
 //HD: This is set to a positive integer when the tank is on ice, and is used
 //to increment its movement. It is then decremented with each du
 PlayerTank.prototype.slideCounter = 0;
@@ -331,7 +329,7 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
 
     //Player got shot by enemy
     if((this.isPlayer) && (!bullet.player)) {
-        this.kill();
+        this.reset();
         g_SFX.request(bullet.soundDestroyPlayer);
     }
 
@@ -341,7 +339,8 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
         this.reset();
         g_SFX.request(bullet.soundDestroyPlayer);
     }
-
+    
+    this._numberOfLives--;
 
     //Enemy got shot by player. We'll have to do other things here later on,
     //such as incrementing the score for the player who owned the bullet,
@@ -376,7 +375,7 @@ PlayerTank.prototype.render = function (ctx, du) {
 
     // fetch correct sprite from spriteManager
     this.sprite = spriteManager.spriteTank(
-        this.tanktype,
+        this.type,
         consts.TANK_POWER_NONE,
         this.orientation,
         this.animationFrame
