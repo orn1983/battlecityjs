@@ -53,16 +53,19 @@ Brick.prototype.takeBulletHit = function (bullet) {
 
     if(bullet.strength === 4){
         this.kill();
-        g_SFX.request(bullet.soundHitBrick);
+        if (bullet.player)
+            g_SFX.request(bullet.soundHitBrick);
     }
     else {
         if(this.type == consts.STRUCTURE_STEEL) {
-            g_SFX.request(bullet.soundHitSteel);
+            if (bullet.player)
+                g_SFX.request(bullet.soundHitSteel);
             return;
         }
         this.updateStructure(bullet.direction)
         this.updateSprite();
-        g_SFX.request(bullet.soundHitBrick);
+        if (bullet.player)
+            g_SFX.request(bullet.soundHitBrick);
     }
 };
 

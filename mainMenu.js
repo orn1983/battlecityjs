@@ -23,8 +23,10 @@ close : function() {
     g_gameStarted = true;
     g_canvas.style.display = "";  
     entityManager.init();
-    createInitialTanks();
-    createLevel(g_levels[g_sortedLevelKeys[g_currentLevel]]);
+    gameState.init();
+    createBorder();
+    gameState.createLevel();  
+
 },
 
 switchToLevelSelect : function() {
@@ -63,7 +65,7 @@ update : function() {
         }
         else if (this.levelSelect) {
             // enter pressed in level select, close menu and start game
-            g_currentLevel = this.selectedItem;
+            gameState._currentLevel = this.selectedItem;
             this.close();
         }
     }

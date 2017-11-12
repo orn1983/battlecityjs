@@ -50,6 +50,10 @@ resetCurrentLevelScore : function() {
 	this._currentLevelScore.p2_power = 0;
 	this._currentLevelScore.p2_armor = 0;
 },
+
+init : function() {
+    createInitialTanks();
+},
     
     // EAH: No idea where to put these functions so just stuffing them here for now!
 prevLevel : function() {
