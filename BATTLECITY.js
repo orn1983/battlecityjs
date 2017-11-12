@@ -148,24 +148,6 @@ function createBorder() {
 	});
 }
 
-function createTerrain() {
-    // Just for testing right now
-    entityManager.generateTerrain({
-        cx      : 200,
-        cy      : 400,
-        type    : consts.TERRAIN_WATER
-    });
-}
-
-function createBrick() {
-    // just for testing
-    entityManager.generateBrick({
-        cx      : 200,
-        cy      : 300,
-        type    : consts.STRUCTURE_BRICK,
-		look    : consts.STRUCTURE_WHOLE
-    });
-}
 
 // =============
 // GATHER INPUTS
@@ -290,7 +272,7 @@ var g_sprites = {};
 function preloadDone() {
     if (g_gameStarted) {
         entityManager.init();
-        createInitialTanks();
+        gameState.init();
 		createBorder();
         gameState.createLevel();        
     }

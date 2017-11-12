@@ -110,7 +110,8 @@ isOnIce: function(x, y) {
     var j = Math.floor(x / g_canvas.width * g_gridSize); 
     var i = Math.floor(y / g_canvas.height * g_gridSize); 
 
-    if (g_levels[g_sortedLevelKeys[gameState._currentLevel]][i][j] === consts.TERRAIN_ICE) {
+    if (g_levels[g_sortedLevelKeys[gameState._currentLevel]][i][j] === 4) {
+        // 4 is ice!!!
         return true;
     }
     return false;
