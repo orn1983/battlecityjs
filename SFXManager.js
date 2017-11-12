@@ -58,14 +58,8 @@ function SFXManager() {
     };
 
     this.configure = function() {
-        this.SFX.bulletFire.audio.volume = this.volume;
-        this.SFX.bulletShieldHit.audio.volume = this.volume;
-        this.SFX.bulletSteelHit.audio.volume = this.volume;
-        this.SFX.bulletBrickHit.audio.volume = this.volume;
-        this.SFX.destroyPlayer.audio.volume = this.volume;
-        this.SFX.destroyEnemy.audio.volume = this.volume;
-        this.SFX.tankIdle.audio.volume = this.volume;
-        this.SFX.tankMove.audio.volume = this.volume;
+        for (var sound in this.SFX)
+            this.SFX[sound].audio.volume = this.volume;
     }
 
     this.request = function(sound) {
