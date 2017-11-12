@@ -331,7 +331,7 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
 
     //Player got shot by enemy
     if((this.isPlayer) && (!bullet.player)) {
-        this.kill();
+        this.reset();
         g_SFX.request(bullet.soundDestroyPlayer);
     }
 
@@ -341,7 +341,8 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
         this.reset();
         g_SFX.request(bullet.soundDestroyPlayer);
     }
-
+    
+    this._numberOfLives--;
 
     //Enemy got shot by player. We'll have to do other things here later on,
     //such as incrementing the score for the player who owned the bullet,
