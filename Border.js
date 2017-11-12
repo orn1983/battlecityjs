@@ -36,11 +36,9 @@ Border.prototype.update = function (du) {
 
 };
 
-// Use:   brick.takeBulletHit
-// After: If bullet strength is 4, it destroys the brick
-//        otherwise it partially destroyes a brick
 Border.prototype.takeBulletHit = function (bullet) {
-    
+    if (bullet.player)
+        g_SFX.request(bullet.soundHitSteel);
 };
 
 // We update the structure if it has been hit by a bullet

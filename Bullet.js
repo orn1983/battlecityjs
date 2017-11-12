@@ -50,6 +50,7 @@ Bullet.prototype.vel = 0;
 Bullet.prototype.direction = consts.DIRECTION_UP;
 Bullet.prototype.strength = 1;
 Bullet.prototype.player = true;
+Bullet.prototype.type = consts.BULLET;
 
 // used for collision detection
 // sprites are 4x4 pixels

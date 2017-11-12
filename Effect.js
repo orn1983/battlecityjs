@@ -58,8 +58,12 @@ Effect.prototype.update = function (du) {
                 this.animationCycles++;
                 this.animationFrame = 0;
 
-                if (this.animationCycles >= this.metaData[this.type].numCycles)
+                if (this.animationCycles >= this.metaData[this.type].numCycles) {
+                    if (this.callWhenDone) {
+                        this.callWhenDone()
+                    }
                     return entityManager.KILL_ME_NOW;
+                }
             }
         }
     }
