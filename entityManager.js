@@ -37,7 +37,7 @@ _enemyTanksInPlay : [],
 _powerups         : [],
 _trees            : [],
 _effects          : [],
-_walls            : [],
+_border            : [],
 
 // "PRIVATE" METHODS
 
@@ -60,7 +60,7 @@ KILL_ME_NOW : -1,
 deferredSetup : function () {
     this._categories = [ this._terrain, this._bricks, this._statue, this._bullets,
         this._playerTanks, this._enemyTanks, this._trees, this._powerups,
-        this._effects, this._walls];
+        this._effects, this._border];
 },
 
 init: function() {
@@ -81,8 +81,8 @@ fireBullet: function(cx, cy, vel, direction, player, strength, tank) {
     }));
 },
 
-generateWall : function(descr) {
-	this._terrain.push(new Wall(descr));
+generateBorder : function(descr) {
+	this._terrain.push(new Border(descr));
 },
 
 

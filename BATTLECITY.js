@@ -118,32 +118,32 @@ function createEnemyTank(start) {
     });
 }
 
-function createWall() {
-	entityManager.generateWall({
+function createBorder() {
+	entityManager.generateBorder({
 		cx     : g_canvas.width/2,
-		cy     : -1,
+		cy     : -5,
 		halfWidth : g_canvas.width/2,
-		halfHeight : 1,
+		halfHeight : 5,
 	});
 	
-	entityManager.generateWall({
+	entityManager.generateBorder({
 		cx     : g_canvas.width/2,
-		cy     : g_canvas.height+1,
+		cy     : g_canvas.height+5,
 		halfWidth : g_canvas.width/2,
-		halfHeight : 1,
+		halfHeight : 5,
 	});
 	
-	entityManager.generateWall({
-		cx     : -1,
+	entityManager.generateBorder({
+		cx     : -5,
 		cy     : g_canvas.height/2,
-		halfWidth : 1,
+		halfWidth : 5,
 		halfHeight : g_canvas.height/2,
 	});
 	
-	entityManager.generateWall({
-		cx     : g_canvas.width+1,
+	entityManager.generateBorder({
+		cx     : g_canvas.width+5,
 		cy     : g_canvas.height/2,
-		halfWidth : 1,
+		halfWidth : 5,
 		halfHeight : g_canvas.height/2,
 	});
 }
@@ -291,7 +291,7 @@ function preloadDone() {
     if (g_gameStarted) {
         entityManager.init();
         createInitialTanks();
-		createWall();
+		createBorder();
         gameState.createLevel();        
     }
     else {

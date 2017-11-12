@@ -13,20 +13,20 @@
 
 
 // A generic contructor which accepts an arbitrary descriptor object
-function Wall(descr) {
+function Border(descr) {
 
     // Common inherited setup logic from Entity
     this.setup(descr);
 
 };
 
-Wall.prototype = new Entity();
+Border.prototype = new Entity();
 
-Wall.prototype.type = consts.BORDER
+Border.prototype.type = consts.BORDER
 
 // Attributes used in the spatialManager to determine collision.
 
-Wall.prototype.update = function (du) {
+Border.prototype.update = function (du) {
     spatialManager.unregister(this);
 
     if (this._isDeadNow)
@@ -39,7 +39,7 @@ Wall.prototype.update = function (du) {
 // Use:   brick.takeBulletHit
 // After: If bullet strength is 4, it destroys the brick
 //        otherwise it partially destroyes a brick
-Wall.prototype.takeBulletHit = function (bullet) {
+Border.prototype.takeBulletHit = function (bullet) {
     
 };
 
@@ -47,6 +47,6 @@ Wall.prototype.takeBulletHit = function (bullet) {
 // Hit direction is the direction of which the brick is hit from
 
 
-Wall.prototype.render = function (ctx) {
+Border.prototype.render = function (ctx) {
 
 };
