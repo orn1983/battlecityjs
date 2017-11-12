@@ -25,12 +25,11 @@ var g_backgroundCtx = g_backgroundCanvas.getContext("2d");
 
 function createInitialTanks() {
     entityManager.generatePlayerTank({
-        type:   "player1",
         //HD: Adding a tanktype property with a const value. Will eventually
         //drop the old type:"player1" above this comment, since I'm pretty sure
         //they're used for basically the same thing, but I'm leaving it in for
         //now so that it doesn't break anything with its absence.
-        tanktype: consts.TANK_PLAYER1,
+        type: consts.TANK_PLAYER1,
         //sprite: g_sprites.playerTank1,
         cx :    g_canvas.width/26 + g_canvas.width/13*4,
         cy :    g_canvas.width/26 + g_canvas.width/13*12,
@@ -58,9 +57,8 @@ function createInitialTanks() {
 function createPlayerTwoTank() {
     g_numPlayers = 2;
     entityManager.generatePlayerTank({
-        type:   "player2",
         //HD: We'll probably drop the "type" once tanktype is fully implemented.
-        tanktype: consts.TANK_PLAYER2,
+        type: consts.TANK_PLAYER2,
         //sprite: g_sprites.playerTank2,
         cx :    g_canvas.width/26 + g_canvas.width/13*8,
         cy :    g_canvas.width/26 + g_canvas.width/13*12,
