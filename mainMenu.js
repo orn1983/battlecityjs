@@ -38,6 +38,10 @@ switchToLevelSelect : function() {
 },
 
 update : function() {
+    
+    
+    setInterval(gamepadManager.updateMenuInputs(), 3000);
+    
     if (eatKey(13) || eatKey(keyCode(' '))) {
         // enter key, go to level select menu
         if (!this.levelSelect) {
