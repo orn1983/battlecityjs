@@ -150,10 +150,16 @@ destroyLevel : function() {
     this._terrain.length = 0;
     this._bricks.length = 0;
     this._bullets.length = 0;
-    this._playerTanks.length = 0;
+    this.resetPlayerTanks();
     this._powerups.length = 0;
     this._trees.length = 0;
 },
+
+resetPlayerTanks : function() {
+	for (i = 0; i < this._playerTanks.length ; i++){
+		this._playerTanks[i].reset();
+	}
+}
 
 // getter for player lives to draw on background canvas
 getPlayerLives : function(playerNumber) {
