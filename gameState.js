@@ -55,8 +55,9 @@ prevLevel : function() {
     if (this._currentLevel > 0) {
         this._currentLevel--;
         entityManager.destroyLevel();
-        createInitialTanks();
+        //createInitialTanks();
         this.createLevel(g_levels[g_sortedLevelKeys[this._currentLevel]]);
+        entityManager.initLevel();
     }
 },
 
@@ -65,8 +66,9 @@ nextLevel : function() {
     if (this._currentLevel < 34) {
         this._currentLevel++;
         entityManager.destroyLevel();
-        createInitialTanks();
+        //createInitialTanks();
         this.createLevel(g_levels[g_sortedLevelKeys[this._currentLevel]]);
+        entityManager.initLevel();        
     }
 },
 
@@ -129,10 +131,10 @@ saveFortress : function(bricks) {
     // y > 530
     
     // empty fortress array
-    this.fortress = [];
+    this.fortress.length = 0;
     
     for (var i = 0; i < bricks.length; i++) {
-        if (bricks[i].cx >= g_canvas.width/g_gridSize*12 && bricks[i].cx <= g_canvas.width/g_gridSize*15 && bricks[i].cy >= g_canvas.width/g_gridSize*24) {
+        if (bricks[i].cx >= g_canvas.width/g_gridSize*11 && bricks[i].cx <= g_canvas.width/g_gridSize*15 && bricks[i].cy >= g_canvas.width/g_gridSize*22) {
             this.fortress.push(bricks[i]);
         }
     }
@@ -140,11 +142,7 @@ saveFortress : function(bricks) {
 
 restoreFortress : function(bricks) {
     // destroy default fortress
-    for (var i = 0; i < bricks.length; i++) {
-        if (bricks[i].cx > 255 && bricks[i].cx < 350 && bricks[i].cy > 530) {
-            bricks.splice(i,1);
-        }
-    }
+    entityManager.removeFortress();
    
     // restore saved fortress
     for (var i = 0; i < this.fortress.length; i++) {

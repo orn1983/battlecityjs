@@ -102,8 +102,6 @@ findEntitiesInRange: function(x1, y1, x2, y2) {
 // clears spatial manager e.g. when changing levels
 clear: function() {
     this._entities.length = 0;
-    // also reset spatialID's but not really needed
-    this._nextSpatialID = 1;
 },
 
 // uses grid lookup to detect if (x,y) is on ice

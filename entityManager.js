@@ -154,6 +154,20 @@ generateEffect :  function(effect_type, x, y) {
     this._effects.push(new Effect({type: effect_type, cx: x, cy: y}));
 },
 
+
+initLevel : function() {
+    gameState.restoreFortress(this._bricks);
+},
+
+removeFortress : function() {
+    for (var i = 0; i < this._bricks.length; i++) {
+        if (this._bricks[i].cx >= g_canvas.width/g_gridSize*11 && this._bricks[i].cx <= g_canvas.width/g_gridSize*15 && this._bricks[i].cy >= g_canvas.width/g_gridSize*22) {
+            this._bricks.splice(i,1);
+            i--;
+        }    
+    }
+},
+
 // destroys level completely, i.e. unregisters everything from
 // spatial manager and empties all private arrays
 destroyLevel : function() {
