@@ -141,7 +141,7 @@ generatePowerup : function(){
 },
 
 generateEffect :  function(effect_type, x, y) {
-    this._effects.push(new Effect({effect_type: effect_type, cx: x, cy: y}));
+    this._effects.push(new Effect({type: effect_type, cx: x, cy: y}));
 },
 
 // destroys level completely, i.e. unregisters everything from
