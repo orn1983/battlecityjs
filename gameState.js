@@ -8,6 +8,8 @@
 
 var gameState = {
     
+    fortress : [],
+    
     // EAH: No idea where to put these functions so just stuffing them here for now!
 prevLevel : function() {
     //only do something if not already on first level
@@ -55,7 +57,7 @@ drawInfo : function() {
         p2icon.drawBulletAt(g_backgroundCtx, 685, 470, consts.DIRECTION_UP, 3);
 
         playerTankIcon.drawBulletAt(g_backgroundCtx, 670, 502, consts.DIRECTION_UP, 3);
-+
+
         p2lives = spriteManager.spriteNumber(entityManager.getPlayerLives(2));
         p2lives.drawBulletAt(g_backgroundCtx, 695, 502, consts.DIRECTION_UP, 3);
     }
@@ -64,7 +66,7 @@ drawInfo : function() {
     var flagIcon = spriteManager.spriteFlagIcon();
     flagIcon.drawBulletAt(g_backgroundCtx, 685, 555, consts.DIRECTION_UP, 3);
 
-    drawLevelNumber(g_currentLevel + 1);
+    this.drawLevelNumber(g_currentLevel + 1);
 },
 
 drawLevelNumber : function(number) {
@@ -83,28 +85,32 @@ drawLevelNumber : function(number) {
 
 // saves the state of the "fortress" around he statue
 saveFortress : function(bricks) {
-    // indicies of fortress bricks:
-    // row 23 columns 11 12 13 14
-    // row 24 columns 11       14
-    // row 25 columns 11       14
-    
+    // coords of fortress bricks:
     // 255 < x < 350
     // y > 530
-    var fortress = [];
+    
+    // empty fortress array
+    this.fortress.length = 0;
+    
     for (var i = 0; i < bricks.length; i++) {
         if (bricks[i].cx > 255 && bricks[i].cx < 350 && bricks[i].cy > 530) {
-            // blabla
+            this.fortress.push(bricks[i]);
         }
     }
-    fortress.push(bricks[][]);
-
 },
 
-restoreFortress : function() {
+restoreFortress : function(bricks) {
     // destroy default fortress
-    
+    for (var i = 0; i < bricks.length; i++) {
+        if (bricks[i].cx > 255 && bricks[i].cx < 350 && bricks[i].cy > 530) {
+            bricks.splice(i,1);
+        }
+    }
+   
     // restore saved fortress
-
+    for (var i = 0; i < this.fortress.length; i++) {
+        bricks.push(this.fortress[i]);
+    }
 },
 
 
