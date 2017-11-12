@@ -67,6 +67,7 @@ prevLevel : function() {
         //createInitialTanks();
         this.createLevel(g_levels[g_sortedLevelKeys[this._currentLevel]]);
         entityManager.initLevel();
+		this._spawnPosition = 0;
     }
 },
 
@@ -77,7 +78,8 @@ nextLevel : function() {
         entityManager.destroyLevel();
         //createInitialTanks();
         this.createLevel(g_levels[g_sortedLevelKeys[this._currentLevel]]);
-        entityManager.initLevel();        
+        entityManager.initLevel();
+		this._spawnPosition = 0;
     }
 },
 
@@ -240,7 +242,11 @@ update : function(du) {
 	this._freezeTimer -= du;
 	
 	// see if level is over, then start next level
-	var nr = entityManager.getNumberOfEnemyTanks;
+	if(entityManager.getNumberOfEnemyTanks() === 0){
+		// make sure destroy level also kills all enemies in current level.
+		this.nextLevel()
+	}
+	var nr = entityManager.getNumberOfEnemyTanks();
 	
 	
 	// spawn another enemy if we should
