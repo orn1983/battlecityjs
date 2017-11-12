@@ -57,7 +57,7 @@ prevLevel : function() {
         this._currentLevel--;
         entityManager.destroyLevel();
         createInitialTanks();
-        this.createLevel(g_levels[g_sortedLevelKeys[g_currentLevel]]);
+        this.createLevel(g_levels[g_sortedLevelKeys[this._currentLevel]]);
     }
 },
 
@@ -67,7 +67,7 @@ nextLevel : function() {
         this._currentLevel++;
         entityManager.destroyLevel();
         createInitialTanks();
-        this.createLevel(g_levels[g_sortedLevelKeys[g_currentLevel]]);
+        this.createLevel(g_levels[g_sortedLevelKeys[this._currentLevel]]);
     }
 },
 
