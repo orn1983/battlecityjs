@@ -45,23 +45,15 @@ Statue.prototype.update = function (du) {
 
 };
 
-// Use:   brick.takeBulletHit
-// After: If bullet strength is 4, it destroys the brick
-//        otherwise it partially destroyes a brick
 Statue.prototype.takeBulletHit = function (bullet) {
     
     // update sprite
     this.sprite = spriteManager.spriteStructure(consts.STRUCTURE_FLAG, consts.STRUCTURE_ALL_GONE);
     
     // game over
-    main.gameOver();
+    setTimeout(function () { main.gameOver(); } , 1000);
 };
 
 Statue.prototype.render = function (ctx) {
-	//ctx.save();
-	//ctx.translate(this.cx, this.cy)
-	//ctx.scale(g_spriteScale, g_spriteScale);
-	//ctx.translate(-this.cx, -this.cy)
     this.sprite.drawBulletAt(ctx, this.cx, this.cy, this.direction, g_spriteScale);
-    //ctx.restore();
 };
