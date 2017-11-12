@@ -260,7 +260,7 @@ var spriteManager = {
             case(consts.EFFECT_SMALLEXPLOSION):
                 width = 16;
                 height = 16;
-                sy = sy + (mul*2) + (mul*frameNumber);
+                sx = sx + (mul*2) + (mul*frameNumber);
             break;
             case(consts.EFFECT_LARGEEXPLOSION):
                 width = 32;
