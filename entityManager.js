@@ -172,7 +172,7 @@ getPlayerLives : function(playerNumber) {
 
 getNumberOfEnemyTanks : function(){
 	return this._enemyTanks + this._enemyTanksInPlay;
-}
+},
 
 update: function(du) {
 
