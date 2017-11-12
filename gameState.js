@@ -16,7 +16,8 @@ var gameState = {
 	_ARMOR_SCORE   : 400,
 	_POWERUP_SCORE : 500,
 	
-	_spawnTimer    : 5000 / NOMINAL_UPDATE_INTERVAL;
+	_spawnTimer    : 5000 / NOMINAL_UPDATE_INTERVAL,
+	_freezeTimer   : 0,
 
 	// this will count how many tanks of each type each player kills,
 	// This information can then be used for counting scores after each level
@@ -35,6 +36,8 @@ var gameState = {
 
 	_player1Points : 0,
 	_player2Points : 0,
+	
+	_spawnPosition : 0,
     
     fortress : [],
 	
@@ -217,14 +220,38 @@ createLevel : function() {
     entityManager.generateStatue();
 }, 
 
+resetSpawnTimer : function() {
+	this._spawnTimer = 7000 / NOMINAL_UPDATE_INTERVAL;
+},
+
+setFreezeTimer : function () {
+	this._freezeTimer = 15000 / NOMINAL_UPDATE_INTERVAL;
+},
+
+getFreezeTimer : function () {
+	return this._freezeTimer;
+},
+
 update : function(du) {
-    this._spawnTimer -= du;
+    // update spawn timer
+	this._spawnTimer -= du;
 	
+	// update freezeTimer
+	this._freezeTimer -= du;
+	
+	// see if level is over, then start next level
+	var nr = entityManager.getNumberOfEnemyTanks;
+	
+	
+	// spawn another enemy if we should
+	if(this._spawnTimer < 0 && entityManager._enemyTanksInPlay.length < 4){
+		entityManager.spawnEnemyTank(this._spawnPosition);
+		this._spawnPosition = (this._spawnPosition + 1)%3;
+		this.resetSpawnTimer();
+	}
 	//Todo: give new life for each 20.000 points you earn.
 },
 
-resetSpawnTimer : function() {
-	this._spawnTimer = 5000 / NOMINAL_UPDATE_INTERVAL;
-}
+
     
 }
