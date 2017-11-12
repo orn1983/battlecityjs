@@ -186,7 +186,7 @@ addScore : function(player, type) {
 		}
 	}
 	
-	else if(type >== consts.POWERUP_HELMET && type <== consts.POWERUP_TANK){
+	else if(type >= consts.POWERUP_HELMET && type <= consts.POWERUP_TANK){
 		if (player === consts.TANK_PLAYER1){
 			this._player1Points += this._POWERUP_SCORE;
 		}
