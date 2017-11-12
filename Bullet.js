@@ -102,12 +102,12 @@ Bullet.prototype.update = function (du) {
         }
         return this.killMeNow();
     }
-    else if (hitEntities && hitEntities.length !== 0) {
+    // else if (hitEntities && hitEntities.length !== 0) {
         // bullet hit outer border, just kill it
-        entityManager.generateEffect(consts.EFFECT_SMALLEXPLOSION, this.cx, this.cy);
-        g_SFX.request(this.soundHitSteel);
-        return this.killMeNow();
-    }
+        // entityManager.generateEffect(consts.EFFECT_SMALLEXPLOSION, this.cx, this.cy);
+        // g_SFX.request(this.soundHitSteel);
+        // return this.killMeNow();
+    // }
 
     spatialManager.register(this);
 

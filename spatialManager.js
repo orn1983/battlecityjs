@@ -95,14 +95,6 @@ findEntitiesInRange: function(x1, y1, x2, y2) {
             entities.push(entity);
         }
     }
-	
-    
-    // check for outer border of playfield
-    if (x1 < 0 || x2 > g_canvas.width || y1 < 0 || y2 > g_canvas.height)
-        // EAH: needs to be modified to return a specific value for e.g.
-        //      bullet hits (maybe?)
-        return true;
-    
     // no collision
     return entities;
 },

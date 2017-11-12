@@ -118,6 +118,36 @@ function createEnemyTank(start) {
     });
 }
 
+function createWall() {
+	entityManager.generateWall({
+		cx     : g_canvas.width/2,
+		cy     : -1,
+		halfWidth : g_canvas.width/2,
+		halfHeight : 1,
+	});
+	
+	entityManager.generateWall({
+		cx     : g_canvas.width/2,
+		cy     : g_canvas.height+1,
+		halfWidth : g_canvas.width/2,
+		halfHeight : 1,
+	});
+	
+	entityManager.generateWall({
+		cx     : -1,
+		cy     : g_canvas.height/2,
+		halfWidth : 1,
+		halfHeight : g_canvas.height/2,
+	});
+	
+	entityManager.generateWall({
+		cx     : g_canvas.width+1,
+		cy     : g_canvas.height/2,
+		halfWidth : 1,
+		halfHeight : g_canvas.height/2,
+	});
+}
+
 function createTerrain() {
     // Just for testing right now
     entityManager.generateTerrain({
@@ -261,6 +291,7 @@ function preloadDone() {
     if (g_gameStarted) {
         entityManager.init();
         createInitialTanks();
+		createWall();
         gameState.createLevel();        
     }
     else {
