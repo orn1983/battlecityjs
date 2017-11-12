@@ -29,9 +29,10 @@ Effect.prototype.vel = 2;
 
 Effect.prototype.animationFrame = 0;
 Effect.prototype.animationFrameCounter = 0;
+Effect.prototype.animationCycles = 0;
 
 Effect.prototype.metaData = [];
-Effect.prototype.metaData[consts.EFFECT_SPAWNFLASH] =  {numFrames: 4, cycleSpeed: 3, numCycles: 2};
+Effect.prototype.metaData[consts.EFFECT_SPAWNFLASH] =  {numFrames: 4, cycleSpeed: 6, numCycles: 2};
 Effect.prototype.metaData[consts.EFFECT_SMALLEXPLOSION] = {numFrames: 3, cycleSpeed: 3, numCycles: 1};
 Effect.prototype.metaData[consts.EFFECT_LARGEEXPLOSION] = {numFrames: 2, cycleSpeed: 3, numCycles: 1};
 Effect.prototype.metaData[consts.EFFECT_INVULNERABLE] = {numFrames: 2, cycleSpeed: 2, numCycles: 0};
@@ -52,8 +53,14 @@ Effect.prototype.update = function (du) {
         this.animationFrameCounter++;
         if (this.animationFrameCounter % this.metaData[this.type].cycleSpeed === 0) {
             this.animationFrame++;
-            if (this.animationFrame >= this.metaData[this.type].numFrames)
-                return entityManager.KILL_ME_NOW;
+            if (this.animationFrame >= this.metaData[this.type].numFrames) {
+                // Start new cycle and reset to frame 0
+                this.animationCycles++;
+                this.animationFrame = 0;
+
+                if (this.animationCycles >= this.metaData[this.type].numCycles)
+                    return entityManager.KILL_ME_NOW;
+            }
         }
     }
 };
