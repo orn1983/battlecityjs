@@ -35,8 +35,7 @@ _enemyTanks       : [],
 _enemyTanksInPlay : [],
 _powerups         : [],
 _trees            : [],
-
-//_bShowRocks : true,
+_effects          : [],
 
 // "PRIVATE" METHODS
 
@@ -58,8 +57,8 @@ KILL_ME_NOW : -1,
 //
 deferredSetup : function () {
     this._categories = [ this._terrain, this._bricks, this._bullets,
-        this._playerTanks, this._enemyTanks, this._trees, this._powerups];
-
+        this._playerTanks, this._enemyTanks, this._trees, this._powerups,
+        this._effects];
 },
 
 init: function() {
@@ -141,6 +140,10 @@ generatePowerup : function(){
     this._powerups.push(new Powerup());
 },
 
+generateEffect :  function(effect_type, x, y) {
+    this._effects.push(new Effect({type: effect_type, cx: x, cy: y}));
+},
+
 // destroys level completely, i.e. unregisters everything from
 // spatial manager and empties all private arrays
 destroyLevel : function() {
@@ -216,10 +219,6 @@ render: function(ctx) {
 
         var aCategory = this._categories[c];
 
-        /* if (!this._bShowRocks &&
-            aCategory == this._rocks)
-            continue;
-        */
         for (var i = 0; i < aCategory.length; ++i) {
 
             aCategory[i].render(ctx);
