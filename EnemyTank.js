@@ -59,6 +59,10 @@ EnemyTank.prototype.tanktype = consts.TANK_ENEMY_BASIC;
 //it'll be consts.TANK_POWER_DROPSPOWERUP
 EnemyTank.prototype.powerLevel = consts.TANK_POWER_NONE;
 
+//Used only for tanks that drop powerups: They need to switch between two
+//different colors of sprites, blinking from red to grey.
+EnemyTank.prototype.blinkRed = false;
+
 //HD: This is set to a positive integer when the tank is on ice, and is used
 //to increment its movement. It is then decremented with each du
 EnemyTank.prototype.slideCounter = 0;
@@ -87,9 +91,11 @@ EnemyTank.prototype.frozenCounter = 0;
 //lower and higher speeds when entityManager creates certain enemy types
 EnemyTank.prototype.moveDistance = 2;
 
-EnemyTank.prototype.orientation = consts.DIRECTION_UP;
+EnemyTank.prototype.orientation = consts.DIRECTION_DOWN;
 
 EnemyTank.prototype.numberOfLives = 1;
+
+EnemyTank.prototype.pointsValue = 100;
 
 EnemyTank.prototype.isPlayer = false;
 
@@ -99,6 +105,13 @@ EnemyTank.prototype.animationFrame = 0;
 
 //counts number of updates called
 EnemyTank.prototype.animationFrameCounter = 0;
+
+//For powerup tanks only. Determines whether to pick the red or the gray
+//frame for the "blinking" effect.
+EnemyTank.prototype.animationFramePowerup = 0;
+
+//For powerup tanks only.
+EnemyTank.prototype.animationFramePowerupCounter = 0;
 
 // HACKED-IN AUDIO (no preloading)
 EnemyTank.prototype.soundIdle = "tankIdle";
@@ -196,6 +209,7 @@ EnemyTank.prototype.slide = function(du, newX, newY) {
 
 EnemyTank.prototype.move = function(du, newX, newY)
 {
+
     var hitEntity = this.findHitEntity(newX, newY);
     if (!hitEntity)
     {
@@ -211,16 +225,6 @@ EnemyTank.prototype.move = function(du, newX, newY)
         this.changeDirection(aimedAtFlag);
     }
 
-    //var hitType = hitEntity.
-    //console.log(hitEntity);
-    /*if(hitEntity.type === consts.POWERUP)
-    //Púlla frekar string start.
-    {
-        hitEntity.getPickedUp(this);
-        this.cx = newX;
-        this.cy = newY;
-    }*/
-
     // update animation frame
     this.animationFrameCounter++;
     if (this.animationFrameCounter % 3 === 0) {
@@ -229,10 +233,21 @@ EnemyTank.prototype.move = function(du, newX, newY)
                                   : this.animationFrame = 0;
     }
 
+    if(this.powerLevel === consts.TANK_POWER_DROPSPOWERUP)
+    {
+
+        this.animationFramePowerupCounter++;
+        if (this.animationFrameCounter % 6 === 0) {
+            // switch red-grey frame every 3rd update
+            this.animationFramePowerup === 0 ? this.animationFramePowerup = 1
+                                      : this.animationFramePowerup = 0
+        }
+        //console.log(this.animationFrameCounter);
+    }
     this.isMoving = true;
 };
 
-EnemyTank.prototype.changeDirection = function(aimedAtFlag){
+EnemyTank.prototype.changeDirection = function(aimedAtFlag) {
     //HD: If a tank is aimed at a flag, it'll stay where it is and keep firing.
     //Otherwise, it will change direction to something other than its current
     //one. We want the tanks to slightly head toward the flag, so the odds
@@ -355,19 +370,23 @@ EnemyTank.prototype.takeBulletHit = function (bullet) {
 
     //Enemy got shot by player
     if((!this.isPlayer) && (bullet.player)) {
-        this.kill();
-        g_SFX.request(bullet.soundDestroyPlayer);
-        //HD: #1: Do we also use "soundDestroyPlayer" for enemy tank deaths?
-        //HD #2: Also, do we need to send some value up to a manager so that the
-        // player who shot this tank gets points for it? (btw, different enemy)
-        // tank types will give you different points.
-        //HD #3: Remember to let the powerup manager create a new powerup
-        // if this.powerLevel === consts.TANK_POWER_DROPSPOWERUP.
 
+        //TODO: Check if the tank actually dies or if it just lowers its life
+        //(in the case of the armor tank)
+        if(this.numberOfLives>1)
+        {
+            this.numberOfLives -= 1;
+        }
+        else {
+            gamestate.addScore(bullet.tank, this.tanktype);
+            entityManager.generatePowerup();
+            this.kill();
+            g_SFX.request(bullet.soundDestroyPlayer);
+            //HD: Do we also use "soundDestroyPlayer" for enemy tank deaths?
+        }
     }
 
-
-    };
+};
 
 EnemyTank.prototype.reset = function () {
     this.setPos(this.reset_cx, this.reset_cy);
@@ -390,22 +409,43 @@ EnemyTank.prototype.addSprite = function(image, sx, sy, width, height,
 };
 
 EnemyTank.prototype.render = function (ctx, du) {
-    
-    // fetch correct sprite from spriteManager
-    this.sprite = spriteManager.spriteTank(
-        //consts.TANK_ENEMY_POWER,
-        this.tanktype,
-        //consts.TANK_POWER_DROPSPOWERUP,
-        //consts.TANK_POWER_NONE,
-        this.powerLevel,
-        this.orientation,
-        this.animationFrame
-    );
+
+    var powerlevelSprite = this.powerLevel;
+    if( (this.powerLevel === consts.TANK_POWER_DROPSPOWERUP)
+        && (this.animationFramePowerup === 0) )
+    {
+
+        powerlevelSprite = consts.TANK_POWER_NONE;
+    }
+
+    /*    if( this.blinkRed ) {
+            //We want the red sprite for this du, then the gray one next.
+            this.blinkRed = !this.blinkRed;
+        }
+        else {
+            //We want the gray sprite for this du, then the red one next.
+            powerlevelSprite = consts.TANK_POWER_NONE;
+            this.blinkRed = !this.blinkRed;
+        }
+    }*/
+
+    //console.log(powerlevelSprite);
+        // fetch correct sprite from spriteManager
+        this.sprite = spriteManager.spriteTank(
+            //consts.TANK_ENEMY_POWER,
+            this.tanktype,
+            //consts.TANK_POWER_DROPSPOWERUP,
+            //consts.TANK_POWER_NONE,
+            powerlevelSprite,
+            this.orientation,
+            this.animationFrame
+        );
+
 
 	ctx.save();
-	ctx.translate(this.cx, this.cy)
+	ctx.translate(this.cx, this.cy);
 	ctx.scale(g_spriteScale, g_spriteScale);
-	ctx.translate(-this.cx, -this.cy)
+	ctx.translate(-this.cx, -this.cy);
     this.sprite.drawTankAt(ctx, this.cx, this.cy);
     ctx.restore();
 
