@@ -31,13 +31,12 @@ var gameState = {
 		p2_armor : 0,
 	},
 
-	// skýra þetta kannski eitthvað annað
 	_player1Points : 0,
 	_player2Points : 0,
     
     fortress : [],
 	
-// sets current level score to zero when 
+// sets current level score to zero. use before beginning new level.
 resetCurrentLevelScore : function() {
 	this._currentLevelScore.p1_basic = 0;
 	this._currentLevelScore.p1_fast  = 0;
@@ -130,10 +129,10 @@ saveFortress : function(bricks) {
     // y > 530
     
     // empty fortress array
-    this.fortress.length = 0;
+    this.fortress = [];
     
     for (var i = 0; i < bricks.length; i++) {
-        if (bricks[i].cx > 255 && bricks[i].cx < 350 && bricks[i].cy > 530) {
+        if (bricks[i].cx >= g_canvas.width/g_gridSize*12 && bricks[i].cx <= g_canvas.width/g_gridSize*15 && bricks[i].cy >= g_canvas.width/g_gridSize*24) {
             this.fortress.push(bricks[i]);
         }
     }
