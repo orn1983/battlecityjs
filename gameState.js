@@ -53,21 +53,21 @@ resetCurrentLevelScore : function() {
     // EAH: No idea where to put these functions so just stuffing them here for now!
 prevLevel : function() {
     //only do something if not already on first level
-    if (g_currentLevel > 0) {
-        g_currentLevel--;
+    if (this._currentLevel > 0) {
+        this._currentLevel--;
         entityManager.destroyLevel();
         createInitialTanks();
-        createLevel(g_levels[g_sortedLevelKeys[g_currentLevel]]);
+        this.createLevel(g_levels[g_sortedLevelKeys[g_currentLevel]]);
     }
 },
 
 nextLevel : function() {
     //only do something if not already on last level
-    if (g_currentLevel < 34) {
-        g_currentLevel++;
+    if (this._currentLevel < 34) {
+        this._currentLevel++;
         entityManager.destroyLevel();
         createInitialTanks();
-        createLevel(g_levels[g_sortedLevelKeys[g_currentLevel]]);
+        this.createLevel(g_levels[g_sortedLevelKeys[g_currentLevel]]);
     }
 },
 
@@ -106,7 +106,7 @@ drawInfo : function() {
     var flagIcon = spriteManager.spriteFlagIcon();
     flagIcon.drawBulletAt(g_backgroundCtx, 685, 555, consts.DIRECTION_UP, 3);
 
-    this.drawLevelNumber(g_currentLevel + 1);
+    this.drawLevelNumber(this._currentLevel + 1);
 },
 
 drawLevelNumber : function(number) {
@@ -208,6 +208,10 @@ addScore : function(player, type) {
 		}
     }
 },
-    
+
+createLevel : function() {
+    createLevel(g_levels[g_sortedLevelKeys[this._currentLevel]]);
+    entityManager.generateStatue();
+}, 
     
 }

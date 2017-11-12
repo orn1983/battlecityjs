@@ -29,6 +29,7 @@ var entityManager = {
 
 _terrain          : [],
 _bricks           : [],
+_statue           : [],
 _bullets          : [],
 _playerTanks      : [],
 _enemyTanks       : [],
@@ -56,7 +57,7 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [ this._terrain, this._bricks, this._bullets,
+    this._categories = [ this._terrain, this._bricks, this._statue, this._bullets,
         this._playerTanks, this._enemyTanks, this._trees, this._powerups,
         this._effects];
 },
@@ -108,6 +109,10 @@ generatePlayerTank : function(descr) {
                 spriteXOffset, spriteYOffset, 16, 16, 1, 1);
       }*/
 
+},
+
+generateStatue : function(descr) {
+    this._statue.push(new Statue(descr));
 },
 
 generateEnemyTank : function(descr) {

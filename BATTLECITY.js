@@ -261,7 +261,7 @@ function preloadDone() {
     if (g_gameStarted) {
         entityManager.init();
         createInitialTanks();
-        createLevel(g_levels[g_sortedLevelKeys[g_currentLevel]]);        
+        gameState.createLevel();        
     }
     else {
         mainMenu.init();

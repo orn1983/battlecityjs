@@ -28,7 +28,7 @@ var g_gridSize = 26;
 var g_numPlayers = 1;
 
 // stores "index" of current level, ranges from 0 to 34
-var g_currentLevel = 0;
+//var g_currentLevel = 0; not used anymore
 
 var g_sortedLevelKeys = Object.keys(g_levels).sort();
 
