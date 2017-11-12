@@ -52,14 +52,8 @@ Powerup.prototype.update = function (du) {
 
 
 Powerup.prototype.getPickedUp = function (tank) {
-
-//    switch(this.type){
-
-//    }
-
-    this.kill()
-
-
+    entityManager.activatePowerup(tank, this.poweruptype);
+    this.kill();
 };
 
 

@@ -89,10 +89,7 @@ PlayerTank.prototype.numberOfLives = 2;
 //temporarily paralyze it (player->player)
 PlayerTank.prototype.isPlayer = true;
 
-//HD: Commenting this one out. Instead, we can check if the tanks is of type
-//tanktype.TANK_POWER_DROPSPOWERUP when we're deciding what sprite to get
-//and whether the tank should drop a powerup when killed.
-//PlayerTank.prototype.isPoweredUp = false;
+PlayerTank.prototype.starLevel = consts.TANK_POWER_NONE;
 
 //Determined which frame of the tank animation is "rendered"
 // (i.e. fetched from spriteManager): 0 or 1
@@ -121,46 +118,13 @@ PlayerTank.prototype.update = function (du) {
     // has stopped (used for slide effect on ice)
     var wasMoving = this.isMoving;
 
-    // OA: Set movement state to false -- if move will be called, this will be set
+    // Set movement state to false -- if move will be called, this will be set
     // to true. At the end of the update loop, we will decide which audio to play
     this.isMoving = false;
 
     if (this._isDeadNow)
         return entityManager.KILL_ME_NOW;
 
-    //var isOnIce = spatialManager.isOnIce(this.cx, this.cy);
-
-    /*var sliding = false;
-    if(this.slideCounter > 0)
-        sliding = true;
-
-    if(sliding) {
-        //HD NB: It's possible we may have to check first for a keypress,
-        //to see if the orientation has changed. Let's try this version for now,
-        //since it makes for simpler code.
-        switch(this.orientation) {
-            case(consts.DIRECTION_UP):
-                this.move(du, this.cx, this.cy - this.moveDistance);
-                break;
-            case(consts.DIRECTION_DOWN):
-                this.move(du, this.cx, this.cy + this.moveDistance);
-                break;
-            case(consts.DIRECTION_LEFT):
-                this.move(du, this.cx - this.moveDistance, this.cy);
-                break;
-            case(consts.DIRECTION_RIGHT):
-                this.move(du, this.cx + this.moveDistance, this.cy);
-                break;
-        }
-        this.SlideCounter -= 1;
-    }*/
-
-    //Check for keypress, but don't move if you've already slid.
-    // EAH: only first key pressed is applied
-    //      to prevent diagonal movement:
-    //      "One key to rule them all..."
-    // EAH: removing the if(!sliding) checks because if tank moves
-    //      then there is not slide effect anyway
     if (keys[this.KEY_UP]) {
         this.orientation = consts.DIRECTION_UP;
 		this.lockToNearestGrid();
@@ -244,16 +208,6 @@ PlayerTank.prototype.move = function(du, newX, newY)
         this.cy = newY;
     }
 
-    //var hitType = hitEntity.
-    //console.log(hitEntity);
-    /*if(hitEntity.type === consts.POWERUP)
-    //Púlla frekar string start.
-    {
-        hitEntity.getPickedUp(this);
-        this.cx = newX;
-        this.cy = newY;
-    }*/
-
     // update animation frame
     this.animationFrameCounter++;
     if (this.animationFrameCounter % 3 === 0) {
@@ -289,10 +243,6 @@ PlayerTank.prototype.lockToNearestGrid = function(){
 
 PlayerTank.prototype.maybeFireBullet = function () {
 
-    //if (keys[this.KEY_FIRE]) {
-    // EAH: better to use eatKey here I think
-    //      even if you can fire more than one bullet at one, you
-    //      probably don't want to fire them all with one button push!
     if (eatKey(this.KEY_FIRE)) {
         this.bulletDelayCounter++;
         //tank may only fire if no bullets alive
@@ -321,7 +271,7 @@ PlayerTank.prototype.maybeFireBullet = function () {
                     break;
             }
 
-            //HD: We send in "this" so that entityManager can calculate
+            //We send in "this" so that entityManager can calculate
             //whether the tank is allowed to fire again, if it tries to.
             this.bulletsAlive++;
             entityManager.fireBullet(turretX, turretY, this.bulletVelocity,
@@ -363,6 +313,33 @@ PlayerTank.prototype.reset = function () {
     //this.halt();
 };
 
+PlayerTank.prototype.addStar = function() {
+
+    switch(this.starLevel){
+        case(consts.TANK_POWER_NONE):
+            //Fired bullets are as fast as Power Tanks' bullets
+            this.starLevel = consts.TANK_POWER_1STAR;
+            this.bulletVelocity *= 2;
+        break;
+        case(consts.TANK_POWER_1STAR):
+            //Two bullets can be fired on the screen at a time.
+            this.starLevel = consts.TANK_POWER_2STARS;
+            this.canFireTwice = true;
+        break;
+        case(consts.TANK_POWER_2STARS):
+            //Fired bullets can destroy steel walls and are twice as effective
+            //against brick walls.
+            this.starLevel = consts.TANK_POWER_3STARS;
+            this.bulletStrength = 2;
+        break;
+        case(consts.TANK_POWER_3STARS):
+            //Nothing happens.
+        break;
+    }
+
+
+};
+
 
 // EAH; don't need this function anymore?
 PlayerTank.prototype.addSprite = function(image, sx, sy, width, height,
@@ -381,7 +358,7 @@ PlayerTank.prototype.render = function (ctx, du) {
     // fetch correct sprite from spriteManager
     this.sprite = spriteManager.spriteTank(
         this.type,
-        consts.TANK_POWER_NONE,
+        this.starLevel,
         this.orientation,
         this.animationFrame
     );
@@ -392,67 +369,4 @@ PlayerTank.prototype.render = function (ctx, du) {
 	ctx.translate(-this.cx, -this.cy)
     this.sprite.drawTankAt(ctx, this.cx, this.cy);
     ctx.restore();
-
-    /*
-
-    var spriteCount = 0;
-
-    // HD: Unlike other direction-focused switch statements in PlayerTank, this
-    // particular switch is ordered up-left-down-right. That's the reading order
-    // of images in spritesheet.png, so it's probably a good idea to keep that
-    // same order here.
-    // TODO: Only change animation if the tank is actually moving
-    // TODO #2: Fix how rapidly the animatiaion changes.
-        switch(this.orientation) {
-        case(consts.DIRECTION_UP):
-            if(this.animationTicker)
-            {
-                spriteCount = 0;
-            }
-            else
-            {
-                spriteCount = 1;
-            }
-        break;
-        case(consts.DIRECTION_LEFT):
-            if(this.animationTicker)
-            {
-                spriteCount = 2;
-            }
-            else
-            {
-                spriteCount = 3;
-            }
-        break;
-        case(consts.DIRECTION_DOWN):
-            if(this.animationTicker)
-            {
-                spriteCount = 4;
-            }
-            else
-            {
-                spriteCount = 5;
-            }
-        break;
-        case(consts.DIRECTION_RIGHT):
-            if(this.animationTicker)
-            {
-                spriteCount = 6;
-            }
-            else
-            {
-                spriteCount = 7;
-            }
-        break;
-    }
-
-    this.animationTicker = !this.animationTicker;
-
-    //HD: Adding a new temp function for this so that we can still use
-    //this.sprite.drawCentredAt() until we don't need it anymore.
-    this.spriteList[spriteCount].drawTankAt(
-      ctx, this.cx, this.cy
-    );
-    */
-
 };

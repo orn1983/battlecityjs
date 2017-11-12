@@ -145,9 +145,11 @@ resetPlayerTanks: function() {
 
 
 generatePowerup : function(){
-    //TODO: Pick random type of Powerup
-    //this._powerups.push(new Powerup(descr));
-    this._powerups.push(new Powerup());
+    //Pick random number from 1 to 6;
+    var randomPowerUp = Math.floor(Math.random() * 6 + 1);
+
+    //this._powerups.push(new Powerup());
+    this._powerups.push(new Powerup({poweruptype : randomPowerUp}));
 },
 
 generateEffect :  function(effect_type, x, y, callback) {
@@ -174,7 +176,7 @@ removeFortress : function() {
         if (this._bricks[i].cx >= g_canvas.width/g_gridSize*11 && this._bricks[i].cx <= g_canvas.width/g_gridSize*15 && this._bricks[i].cy >= g_canvas.width/g_gridSize*22) {
             this._bricks.splice(i,1);
             i--;
-        }    
+        }
     }
 },
 
@@ -211,6 +213,40 @@ getNumberOfEnemyTanks : function(){
 	return this._enemyTanks + this._enemyTanksInPlay;
 },
 
+activatePowerup : function(tank, poweruptype) {
+
+    gameState.addScore(tank.type, poweruptype);
+
+    switch(poweruptype){
+        case(consts.POWERUP_HELMET):
+            //Gives a temporary force field that shields from enemy shots, like the one at the beginning of every stage.
+        break;
+        case(consts.POWERUP_TIMER):
+            //    The timer power-up temporarily freezes time, stopping all enemy tanks' movement.
+            //    Tip: enables the ability to harmlessly approach every tank and destroy them.
+        break;
+        case(consts.POWERUP_SHOVEL):
+            // Turns the brick walls around the fortress to stone,
+            // which gives temporary invulnerability to the walls,
+            // preventing enemies from destroying it.
+            // ALSO repairs all the damage previously done to the wall.
+        break;
+        case(consts.POWERUP_STAR):
+            //Increases your offensive power by one tier (tiers are: default, second, third, and fourth). Power level only resets to default when you die.
+            //First star (second tier): fired bullets are as fast as Power Tanks' bullets.
+            //Second star (third tier): two bullets can be fired on the screen at a time.
+            //Third star (fourth tier): fired bullets can destroy steel walls and are twice as effective against brick walls.
+        break;
+        case(consts.POWERUP_GRENADE):
+            //Destroys every enemy currently on the screen. No points given
+        break;
+        case(consts.POWERUP_TANK):
+            tank.numberOfLives += 1;
+        break;
+    }
+
+},
+
 update: function(du) {
 
     for (var c = 0; c < this._categories.length; ++c) {
@@ -229,7 +265,7 @@ update: function(du) {
                 //actually reach)
                 //N.B.: deferredSetup() creates this._categories, and
                 //this._categories[3] in that function is the tanks array
-                if( (c === 3) && (aCategory[i].tanktype == consts.POWERUP_TANK) ) {
+                if( (c === 3) && (aCategory[i].powerLevel === consts.TANK_POWER_DROPSPOWERUP) ) {
                     generatePowerup();
 
                 }
