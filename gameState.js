@@ -15,6 +15,8 @@ var gameState = {
 	_POWER_SCORE   : 300,
 	_ARMOR_SCORE   : 400,
 	_POWERUP_SCORE : 500,
+	
+	_spawnTimer    : 5000 / NOMINAL_UPDATE_INTERVAL;
 
 	// this will count how many tanks of each type each player kills,
 	// This information can then be used for counting scores after each level
@@ -210,5 +212,15 @@ createLevel : function() {
     createLevel(g_levels[g_sortedLevelKeys[this._currentLevel]]);
     entityManager.generateStatue();
 }, 
+
+update : function(du) {
+    this._spawnTimer -= du;
+	
+	//Todo: give new life for each 20.000 points you earn.
+},
+
+resetSpawnTimer : function() {
+	this._spawnTimer = 5000 / NOMINAL_UPDATE_INTERVAL;
+}
     
 }
