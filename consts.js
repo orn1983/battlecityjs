@@ -66,5 +66,6 @@ var consts = {
     EFFECT_INVULNERABLE     : 37,
     EFFECT_POINTS           : 38,
 
-    BULLET                  : 39
+    BULLET                  : 39,
+    BORDER                  : 40
 };
