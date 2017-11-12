@@ -22,6 +22,8 @@ function Wall(descr) {
 
 Wall.prototype = new Entity();
 
+Wall.prototype.type = consts.BORDER
+
 // Attributes used in the spatialManager to determine collision.
 
 Wall.prototype.update = function (du) {
