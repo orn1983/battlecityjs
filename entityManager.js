@@ -27,13 +27,14 @@ var entityManager = {
 
 // "PRIVATE" DATA
 
-_terrain        : [],
-_bricks         : [],
-_bullets        : [],
-_playerTanks    : [],
-_enemyTanks     : [],
-_powerups       : [],
-_trees          : [],
+_terrain          : [],
+_bricks           : [],
+_bullets          : [],
+_playerTanks      : [],
+_enemyTanks       : [],
+_enemyTanksInPlay : [],
+_powerups         : [],
+_trees            : [],
 
 //_bShowRocks : true,
 
@@ -148,12 +149,19 @@ destroyLevel : function() {
     // EAH: for some reason array = [] doesn't work (???)
     // so using array.length = 0 to clear
     this._terrain.length = 0;
+	gameState.saveFortress(this._bricks);
     this._bricks.length = 0;
     this._bullets.length = 0;
-    this._playerTanks.length = 0;
+    this.resetPlayerTanks();
     this._powerups.length = 0;
     this._trees.length = 0;
 },
+
+resetPlayerTanks : function() {
+	for (i = 0; i < this._playerTanks.length ; i++){
+		this._playerTanks[i].reset();
+	}
+}
 
 // getter for player lives to draw on background canvas
 getPlayerLives : function(playerNumber) {
@@ -161,6 +169,10 @@ getPlayerLives : function(playerNumber) {
     //HD NB: Throws an error when enemy tank kills player: the player tank
     //is "undefined"
 },
+
+getNumberOfEnemyTanks : function(){
+	return this._enemyTanks + this._enemyTanksInPlay;
+}
 
 update: function(du) {
 
