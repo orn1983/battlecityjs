@@ -40,6 +40,11 @@ function SFXManager() {
             "interruptable": true,
             "requested": false,
             "repeating": false},
+        "destroyEnemy": {
+            "audio": new Audio("sounds/destroy_enemy.wav"),
+            "interruptable": true,
+            "requested": false,
+            "repeating": false},
         "tankIdle": {
             "audio": new Audio("sounds/tank_idle.wav"),
             "interruptable": false,
@@ -58,6 +63,7 @@ function SFXManager() {
         this.SFX.bulletSteelHit.audio.volume = this.volume;
         this.SFX.bulletBrickHit.audio.volume = this.volume;
         this.SFX.destroyPlayer.audio.volume = this.volume;
+        this.SFX.destroyEnemy.audio.volume = this.volume;
         this.SFX.tankIdle.audio.volume = this.volume;
         this.SFX.tankMove.audio.volume = this.volume;
     }
