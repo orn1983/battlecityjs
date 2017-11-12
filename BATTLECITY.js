@@ -42,9 +42,9 @@ function createInitialTanks() {
         gamepad : gamepadManager.getGamepad()
     });
 
-    //createEnemyTank(1);
-    //createEnemyTank(2);
-    //createEnemyTank(3);
+    createEnemyTank(1);
+    createEnemyTank(2);
+    createEnemyTank(3);
 
 
     // TODO if two players

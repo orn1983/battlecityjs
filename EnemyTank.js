@@ -378,7 +378,7 @@ EnemyTank.prototype.takeBulletHit = function (bullet) {
             this.numberOfLives -= 1;
         }
         else {
-            gamestate.addScore(bullet.tank, this.tanktype);
+            gameState.addScore(bullet.tank, this.tanktype);
             entityManager.generatePowerup();
             this.kill();
             g_SFX.request(bullet.soundDestroyPlayer);
