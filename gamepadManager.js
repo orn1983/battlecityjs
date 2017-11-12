@@ -53,6 +53,44 @@ updateGamepads : function() {
     this._gamepads = navigator.getGamepads();
 },
 
+// set gamepad for menu commands
+updateMenuInputs : function() {
+    this._gamepads = navigator.getGamepads();
+
+    if (this._gamepads[0]) {
+        var gp = this._gamepads[0];
+    
+        var x = gp.axes[0];
+        var y = gp.axes[1];
+        
+        var button0 = gp.buttons[0];
+        var button1 = gp.buttons[1];
+        
+        // vertical movement
+        // 0: center, -1: up, 1: down
+        if (y < -0.5) {
+            keys[keyCode('W')] = true;
+            keys[keyCode('S')] = false;
+        }
+        else if (y > 0.5) {
+            keys[keyCode('S')] = true;
+            keys[keyCode('W')] = false;
+        }
+        else {
+            keys[keyCode('W')] = false;
+            keys[keyCode('S')] = false;
+        }
+        
+        // fire
+        if (button0.pressed || button1.pressed) {
+            keys[keyCode(' ')] = true;
+        }
+        else {
+            keys[keyCode(' ')] = false;
+        }        
+    }
+},
+
 // maps tank keys to gamepad buttons and updates keys array accordingly
 // EAH: this is done on every update, maybe find a way to store it?
 updateInputs : function(gp, tank) {
