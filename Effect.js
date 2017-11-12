@@ -17,7 +17,6 @@ function Effect(descr) {
 
     // Common inherited setup logic from Entity
     this.setup(descr);
-    this.sprite = spriteManager.spriteEffect(this.type);
 }
 
 Effect.prototype = new Entity();
@@ -28,10 +27,13 @@ Effect.prototype.cy = 200;
 // Velocity is only used for scores
 Effect.prototype.vel = 2;
 
+Effect.prototype.animationFrame = 0;
+Effect.prototype.animationFrameCounter = 0;
+
 Effect.prototype.metaData = [];
-Effect.prototype.metaData[consts.EFFECT_SPAWNFLASH] =  {numFrames: 4, cycleSpeed: 2, numCycles: 2};
-Effect.prototype.metaData[consts.EFFECT_EXPLOSIONSMALL] = {numFrames: 3, cycleSpeed: 2, numCycles: 1};
-Effect.prototype.metaData[consts.EFFECT_EXPLOSIONBIG] = {numFrames: 2, cycleSpeed: 2, numCycles: 1};
+Effect.prototype.metaData[consts.EFFECT_SPAWNFLASH] =  {numFrames: 4, cycleSpeed: 3, numCycles: 2};
+Effect.prototype.metaData[consts.EFFECT_SMALLEXPLOSION] = {numFrames: 3, cycleSpeed: 3, numCycles: 1};
+Effect.prototype.metaData[consts.EFFECT_LARGEEXPLOSION] = {numFrames: 2, cycleSpeed: 3, numCycles: 1};
 Effect.prototype.metaData[consts.EFFECT_INVULNERABLE] = {numFrames: 2, cycleSpeed: 2, numCycles: 0};
 Effect.prototype.metaData[consts.EFFECT_POINTS] = {numFrames: 1, cycleSpeed: 0, numCycles: 0};
 
@@ -48,13 +50,16 @@ Effect.prototype.update = function (du) {
     }
     else {
         this.animationFrameCounter++;
-        if (this.animationFrameCounter % this.metaData[this.type].cycleSpeed === 0)
+        if (this.animationFrameCounter % this.metaData[this.type].cycleSpeed === 0) {
             this.animationFrame++;
+            if (this.animationFrame >= this.metaData[this.type].numFrames)
+                return entityManager.KILL_ME_NOW;
+        }
     }
 };
 
 Effect.prototype.render = function (ctx) {
     // fetch sprite from spriteManager
-    this.sprite = spriteManager.spriteBullet(this.direction);
-    this.sprite.drawCentredAt(ctx, this.cx, this.cy);
+    this.sprite = spriteManager.spriteEffect(this.type, this.animationFrame);
+    this.sprite.drawBulletAt(ctx, this.cx, this.cy, 1, g_spriteScale);
 };

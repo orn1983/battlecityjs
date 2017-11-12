@@ -66,8 +66,4 @@ var consts = {
     EFFECT_INVULNERABLE     : 37,
     EFFECT_POINTS          : 38
 
-
-
-
-
 };
