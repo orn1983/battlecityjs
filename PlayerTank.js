@@ -297,8 +297,7 @@ PlayerTank.prototype.maybeFireBullet = function () {
         this.bulletDelayCounter++;
         //tank may only fire if no bullets alive
         //or only one bullet alive and canFireTwice is true
-        if ( (this.bulletsAlive === 0 || (this.bulletsAlive === 1 && this.canFireTwice))
-                && (this.bulletDelayCounter % 30 === 0) ) {
+        if (this.bulletsAlive === 0 || (this.bulletsAlive === 1 && this.canFireTwice))  {
             var turretX, turretY;
             // EAH: add offset so bullet doesn't collide with tank!
             var alpha = 5;
