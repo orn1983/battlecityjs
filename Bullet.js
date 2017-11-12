@@ -108,9 +108,14 @@ Bullet.prototype.getRadius = function () {
     return 4;
 };
 
+Bullet.prototype.decrementBulletTimeout = function(tank) {
+    tank.bulletsAlive--;
+}
+
 // decrements bullet counter for tank before killing bullet
 Bullet.prototype.killMeNow = function () {
-    this.tank.bulletsAlive--;
+    var that = this;
+    setTimeout(function () { that.tank.bulletsAlive--; } , 200);
     return entityManager.KILL_ME_NOW;
 };
 
