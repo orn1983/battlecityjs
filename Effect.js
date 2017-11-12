@@ -30,9 +30,10 @@ Effect.prototype.vel = 2;
 Effect.prototype.animationFrame = 0;
 Effect.prototype.animationFrameCounter = 0;
 Effect.prototype.animationCycles = 0;
+Effect.prototype.delta = 1;
 
 Effect.prototype.metaData = [];
-Effect.prototype.metaData[consts.EFFECT_SPAWNFLASH] =  {numFrames: 4, cycleSpeed: 6, numCycles: 2};
+Effect.prototype.metaData[consts.EFFECT_SPAWNFLASH] =  {numFrames: 4, cycleSpeed: 3, numCycles: 2.5};
 Effect.prototype.metaData[consts.EFFECT_SMALLEXPLOSION] = {numFrames: 3, cycleSpeed: 3, numCycles: 1};
 Effect.prototype.metaData[consts.EFFECT_LARGEEXPLOSION] = {numFrames: 2, cycleSpeed: 3, numCycles: 1};
 Effect.prototype.metaData[consts.EFFECT_INVULNERABLE] = {numFrames: 2, cycleSpeed: 2, numCycles: 0};
@@ -48,6 +49,25 @@ Effect.prototype.update = function (du) {
     // This is the only effect that moves, but ironically has no frames
     if (this.type === consts.EFFECT_POINTS) {
         this.cy -= this.cy * du;
+    }
+    else if (this.type === consts.EFFECT_SPAWNFLASH) {
+        this.animationFrameCounter++;
+        if (this.animationFrameCounter % this.metaData[this.type].cycleSpeed === 0) {
+            this.animationFrame += this.delta;
+            if (this.animationFrame % this.metaData[this.type].numFrames === 0) {
+                this.animationCycles += 0.5;
+                this.delta = -this.delta;
+                // Revert last frame as we overshot
+                this.animationFrame += this.delta;
+
+                if (this.animationCycles >= this.metaData[this.type].numCycles) {
+                    if (this.callWhenDone) {
+                        this.callWhenDone()
+                    }
+                    return entityManager.KILL_ME_NOW;
+                }
+            }
+        }
     }
     else {
         this.animationFrameCounter++;
