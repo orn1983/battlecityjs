@@ -375,7 +375,7 @@ PlayerTank.prototype.render = function (ctx, du) {
 
     // fetch correct sprite from spriteManager
     this.sprite = spriteManager.spriteTank(
-        this.tanktype,
+        this.type,
         consts.TANK_POWER_NONE,
         this.orientation,
         this.animationFrame
