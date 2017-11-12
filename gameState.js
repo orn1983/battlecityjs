@@ -8,7 +8,7 @@
 
 var gameState = {
 	
-	_currentLevel : 1,
+	_currentLevel : 0,
 
 	_BASIC_SCORE   : 100,
 	_FAST_SCORE    : 200,
@@ -36,6 +36,19 @@ var gameState = {
 	_player2Points : 0,
     
     fortress : [],
+	
+// sets current level score to zero when 
+resetCurrentLevelScore : function() {
+	this._currentLevelScore.p1_basic = 0;
+	this._currentLevelScore.p1_fast  = 0;
+	this._currentLevelScore.p1_power = 0;
+	this._currentLevelScore.p1_armor = 0;
+	
+	this._currentLevelScore.p2_basic = 0;
+	this._currentLevelScore.p2_fast  = 0;
+	this._currentLevelScore.p2_power = 0;
+	this._currentLevelScore.p2_armor = 0;
+},
     
     // EAH: No idea where to put these functions so just stuffing them here for now!
 prevLevel : function() {
