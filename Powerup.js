@@ -68,7 +68,7 @@ Powerup.prototype.render = function (ctx) {
     if(this.animateThisFrame)
     {
 
-        this.sprite = spriteManager.spritePowerup(this.poweruptype
+        this.sprite = spriteManager.spritePowerup(this.poweruptype);
         //TODO: Change drawTankAt to the name of whatever function we end up
         // using for drawing everything
         this.sprite.drawTankAt(ctx, this.cx, this.cy);
