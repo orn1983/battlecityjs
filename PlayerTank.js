@@ -101,6 +101,10 @@ PlayerTank.prototype.animationFrame = 0;
 //counts number of updates called
 PlayerTank.prototype.animationFrameCounter = 0;
 
+
+//Used as a counter to space apart how often the tank fires bullets
+EnemyTank.prototype.bulletDelayCounter = 0;
+
 // HACKED-IN AUDIO (no preloading)
 PlayerTank.prototype.soundIdle = "tankIdle";
 PlayerTank.prototype.soundMove = "tankMove";
@@ -290,9 +294,11 @@ PlayerTank.prototype.maybeFireBullet = function () {
     //      even if you can fire more than one bullet at one, you
     //      probably don't want to fire them all with one button push!
     if (eatKey(this.KEY_FIRE)) {
+        this.bulletDelayCounter++;
         //tank may only fire if no bullets alive
         //or only one bullet alive and canFireTwice is true
-        if (this.bulletsAlive === 0 || (this.bulletsAlive === 1 && this.canFireTwice)) {
+        if ( (this.bulletsAlive === 0 || (this.bulletsAlive === 1 && this.canFireTwice))
+                && && (this.bulletDelayCounter % 30 === 0) ) {
             var turretX, turretY;
             // EAH: add offset so bullet doesn't collide with tank!
             var alpha = 5;
@@ -339,7 +345,7 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
         this.reset();
         g_SFX.request(bullet.soundDestroyPlayer);
     }
-    
+
     this._numberOfLives--;
 
     //Enemy got shot by player. We'll have to do other things here later on,

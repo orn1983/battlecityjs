@@ -338,8 +338,6 @@ EnemyTank.prototype.lockToNearestGrid = function() {
 
 EnemyTank.prototype.maybeFireBullet = function () {
 
-//TODO: Code a counter so that the enemy tank fires at a fixed rate,
-//not super-fast (especially against a wall)
     this.bulletDelayCounter++;
 
         if( (this.bulletsAlive === 0) && (this.bulletDelayCounter % 30 === 0) ) {
