@@ -66,7 +66,7 @@ Bullet.prototype.update = function (du) {
 
     // move bullet
     switch (this.direction) {
-        case(consts.DIRECTION_UP)     : this.cy -= this.vel * du; break;
+        case(consts.DIRECTION_UP)    : this.cy -= this.vel * du; break;
         case(consts.DIRECTION_DOWN)  : this.cy += this.vel * du; break;
         case(consts.DIRECTION_RIGHT) : this.cx += this.vel * du; break;
         case(consts.DIRECTION_LEFT)  : this.cx -= this.vel * du; break;
@@ -85,13 +85,26 @@ Bullet.prototype.update = function (du) {
             if (canTakeHit) {
                 hitSomething = true
                 canTakeHit.call(hitEntity.entity, this);
-                entityManager.generateEffect(consts.EFFECT_SMALLEXPLOSION, this.cx, this.cy);
             }
         }
-    if(hitSomething)	return this.killMeNow();
+    }
+    if (hitSomething) {
+        if (hitEntity.entity.type === consts.STRUCTURE_BRICK ||
+                hitEntity.entity.type === consts.STRUCTURE_STEEL ||
+                hitEntity.entity.type === consts.STRUCTURE_FLAG ||
+                hitEntity.entity.type === consts.TANK_ENEMY_BASIC ||
+                hitEntity.entity.type === consts.TANK_ENEMY_FAST ||
+                hitEntity.entity.type === consts.TANK_ENEMY_POWER ||
+                hitEntity.entity.type === consts.TANK_ENEMY_ARMOR ||
+                hitEntity.entity.type === consts.TANK_PLAYER1 ||
+                hitEntity.entity.type === consts.TANK_PLAYER2) {
+            entityManager.generateEffect(consts.EFFECT_SMALLEXPLOSION, this.cx, this.cy);
+        }
+        return this.killMeNow();
     }
     else if (hitEntities && hitEntities.length !== 0) {
         // bullet hit outer border, just kill it
+        entityManager.generateEffect(consts.EFFECT_SMALLEXPLOSION, this.cx, this.cy);
         g_SFX.request(this.soundHitSteel);
         return this.killMeNow();
     }
