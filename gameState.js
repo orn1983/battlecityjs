@@ -10,16 +10,16 @@ var gameState = {
 	
 	_currentLevel : 1,
 
-	_BASIC_SCORE : 100,
-	_FAST_SCORE  : 200,
-	_POWER_SCORE : 300,
-	_ARMOR_SCORE : 400,
-	_POWER_SCORE : 500,
+	_BASIC_SCORE   : 100,
+	_FAST_SCORE    : 200,
+	_POWER_SCORE   : 300,
+	_ARMOR_SCORE   : 400,
+	_POWERUP_SCORE : 500,
 
 	// this will count how many tanks of each type each player kills,
 	// This information can then be used for counting scores after each level
 	// notice this does not have to keep score
-	_currentLevelPoints : {
+	_currentLevelScore : {
 		p1_basic : 0,
 		p1_fast  : 0,
 		p1_power : 0,
@@ -140,9 +140,60 @@ restoreFortress : function(bricks) {
     }
 },
 
-
 addScore : function(player, type) {
-    // store values in some arrays?
+	
+	if (type === consts.TANK_ENEMY_BASIC){
+		if (player === consts.TANK_PLAYER1){
+			this._player1Points += this._BASIC_SCORE;
+			this._currentLevelScore.p1_basic += 1;
+		}
+		else if (player === consts.TANK_PLAYER2){
+			this._player2Points += this._BASIC_SCORE;
+			this._currentLevelScore.p2_basic += 1;
+		}
+	}
+	
+	else if(type === consts.TANK_ENEMY_FAST){
+		if (player === consts.TANK_PLAYER1){
+			this._player1Points += this._FAST_SCORE;
+			this._currentLevelScore.p1_fast += 1;
+		}
+		else if (player === consts.TANK_PLAYER2){
+			this._player2Points += this._FAST_SCORE;
+			this._currentLevelScore.p2_fast += 1;
+		}
+	}
+	
+	else if(type === consts.TANK_ENEMY_POWER){
+		if (player === consts.TANK_PLAYER1){
+			this._player1Points += this._POWER_SCORE;
+			this._currentLevelScore.p1_power += 1;
+		}
+		else if (player === consts.TANK_PLAYER2){
+			this._player2Points += this._POWER_SCORE;
+			this._currentLevelScore.p2_power += 1;
+		}
+	}
+	
+	else if(type === consts.TANK_ENEMY_ARMOR){
+		if (player === consts.TANK_PLAYER1){
+			this._player1Points += this._ARMOR_SCORE;
+			this._currentLevelScore.p1_armor += 1;
+		}
+		else if (player === consts.TANK_PLAYER2){
+			this._player2Points += this._ARMOR_SCORE;
+			this._currentLevelScore.p2_armor += 1;
+		}
+	}
+	
+	else if(type >== consts.POWERUP_HELMET && type <== consts.POWERUP_TANK){
+		if (player === consts.TANK_PLAYER1){
+			this._player1Points += this._POWERUP_SCORE;
+		}
+		else if (player === consts.TANK_PLAYER2){
+			this._player2Points += this._POWERUP_SCORE;
+		}
+    }
 },
     
     
