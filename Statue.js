@@ -17,7 +17,7 @@ function Statue(descr) {
 
     // Common inherited setup logic from Entity
     this.setup(descr);
-      
+
     this.sprite = spriteManager.spriteStructure(consts.STRUCTURE_FLAG);
 };
 
@@ -26,6 +26,8 @@ Statue.prototype = new Entity();
 // Attributes used in the spatialManager to determine collision.
 Statue.prototype.halfHeight = g_canvas.height/g_gridSize;
 Statue.prototype.halfWidth = g_canvas.width/g_gridSize;
+
+Statue.prototype.type = consts.STRUCTURE_FLAG;
 
 
 Statue.prototype.cx = g_first_step + g_gridStep*12.5;
@@ -38,7 +40,7 @@ Statue.prototype.update = function (du) {
 
     if (this._isDeadNow)
         return entityManager.KILL_ME_NOW;
-    
+
     spatialManager.register(this);
 
 };

@@ -106,6 +106,9 @@ EnemyTank.prototype.animationFrame = 0;
 //counts number of updates called
 EnemyTank.prototype.animationFrameCounter = 0;
 
+//Used as a counter to space apart how often the tank fires bullets
+EnemyTank.prototype.bulletDelayCounter = 0;
+
 //For powerup tanks only. Determines whether to pick the red or the gray
 //frame for the "blinking" effect.
 EnemyTank.prototype.animationFramePowerup = 0;
@@ -211,19 +214,19 @@ EnemyTank.prototype.move = function(du, newX, newY)
 {
 
     var hitEntity = this.findHitEntity(newX, newY);
+
+console.log(hitEntity);
+
     if (!hitEntity)
     {
         this.cx = newX;
         this.cy = newY;
     }
 
-    else {
-        var aimedAtFlag = false;
-        if(hitEntity.type == consts.STRUCTURE_FLAG) {
-            aimedAtFlag = true;
-        }
-        this.changeDirection(aimedAtFlag);
+    else if( hitEntity.entity.type !== consts.STRUCTURE_FLAG ){
+        this.changeDirection();
     }
+    
 
     // update animation frame
     this.animationFrameCounter++;
@@ -245,9 +248,11 @@ EnemyTank.prototype.move = function(du, newX, newY)
         //console.log(this.animationFrameCounter);
     }
     this.isMoving = true;
+
+
 };
 
-EnemyTank.prototype.changeDirection = function(aimedAtFlag) {
+EnemyTank.prototype.changeDirection = function() {
     //HD: If a tank is aimed at a flag, it'll stay where it is and keep firing.
     //Otherwise, it will change direction to something other than its current
     //one. We want the tanks to slightly head toward the flag, so the odds
@@ -263,7 +268,7 @@ EnemyTank.prototype.changeDirection = function(aimedAtFlag) {
     // not that smart).
 
     var newDirection = -1;
-    if(!aimedAtFlag) {
+
         switch (this.orientation) {
             case(consts.DIRECTION_DOWN):  //1 to 30
             newDirection = 1;
@@ -306,13 +311,13 @@ EnemyTank.prototype.changeDirection = function(aimedAtFlag) {
             this.orientation = consts.DIRECTION_UP;
         }
 
-    }
+
 
 };
 
 
 // use direction to determine wether we lock to X-grid og Y-grid
-EnemyTank.prototype.lockToNearestGrid = function(){
+EnemyTank.prototype.lockToNearestGrid = function() {
 	if(this.orientation === consts.DIRECTION_UP || this.orientation == consts.DIRECTION_DOWN){
 		// lock to nearest x coordinates on the grid
 		var gridStep = g_canvas.width/g_gridSize;
@@ -337,8 +342,9 @@ EnemyTank.prototype.maybeFireBullet = function () {
 
 //TODO: Code a counter so that the enemy tank fires at a fixed rate,
 //not super-fast (especially against a wall)
+    this.bulletDelayCounter++;
 
-        if (this.bulletsAlive === 0 ) {
+        if( (this.bulletsAlive === 0) && (this.bulletDelayCounter % 30 === 0) ) {
             var turretX, turretY;
             // EAH: add offset so bullet doesn't collide with tank!
             var alpha = 5;
@@ -374,8 +380,6 @@ EnemyTank.prototype.takeBulletHit = function (bullet) {
     //Enemy got shot by player
     if((!this.isPlayer) && (bullet.player)) {
 
-        //TODO: Check if the tank actually dies or if it just lowers its life
-        //(in the case of the armor tank)
         if(this.numberOfLives>1)
         {
             this.numberOfLives -= 1;

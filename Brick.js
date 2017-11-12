@@ -17,10 +17,10 @@ function Brick(descr) {
 
     // Common inherited setup logic from Entity
     this.setup(descr);
-      
+
     this.sprite = spriteManager.spriteStructure(this.type, this.look);
     this.scale  = this.scale  || 1;
-	
+
 	// These boolean values determine if brick has been destroyed from the left or right side respectfully
 	this.horizontal = [true, true];
 	// These boolean values determine if brick has been destroyed from the bottom or top side respectfully
@@ -34,12 +34,14 @@ Brick.prototype = new Entity();
 Brick.prototype.halfHeight = g_canvas.height/g_gridSize/2;
 Brick.prototype.halfWidth = g_canvas.width/g_gridSize/2;
 
+Brick.prototype.type = consts.STRUCTURE_WHOLE;
+
 Brick.prototype.update = function (du) {
     spatialManager.unregister(this);
 
     if (this._isDeadNow)
         return entityManager.KILL_ME_NOW;
-    
+
     spatialManager.register(this);
 
 };
@@ -48,7 +50,7 @@ Brick.prototype.update = function (du) {
 // After: If bullet strength is 4, it destroys the brick
 //        otherwise it partially destroyes a brick
 Brick.prototype.takeBulletHit = function (bullet) {
-    
+
     if(bullet.strength === 4){
         this.kill();
         g_SFX.request(bullet.soundHitBrick);
@@ -83,7 +85,7 @@ Brick.prototype.updateStructure = function(hitDirection){
 		if(this.horizontal[0] === true)	this.horizontal[0] = false;
 		else this.kill()
 	}
-	
+
 	if(this.vertical.toString() === [false, false].toString() || this.horizontal.toString() === [false, false].toString())
 		this.kill();
 }
