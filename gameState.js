@@ -7,6 +7,33 @@
 // and handles progression between levels
 
 var gameState = {
+	
+	_currentLevel : 1,
+
+	_BASIC_SCORE : 100,
+	_FAST_SCORE  : 200,
+	_POWER_SCORE : 300,
+	_ARMOR_SCORE : 400,
+	_POWER_SCORE : 500,
+
+	// this will count how many tanks of each type each player kills,
+	// This information can then be used for counting scores after each level
+	// notice this does not have to keep score
+	_currentLevelPoints : {
+		p1_basic : 0,
+		p1_fast  : 0,
+		p1_power : 0,
+		p1_armor : 0,
+		
+		p2_basic : 0,
+		p2_fast  : 0,
+		p2_power : 0,
+		p2_armor : 0,
+	},
+
+	// skýra þetta kannski eitthvað annað
+	_player1Points : 0,
+	_player2Points : 0,
     
     fortress : [],
     
