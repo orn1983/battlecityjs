@@ -59,7 +59,7 @@ KILL_ME_NOW : -1,
 //
 deferredSetup : function () {
     this._categories = [ this._terrain, this._bricks, this._statue, this._bullets,
-        this._playerTanks, this._enemyTanks, this._trees, this._powerups,
+        this._playerTanks, this._enemyTanksInPlay, this._trees, this._powerups,
         this._effects, this._border];
 },
 
