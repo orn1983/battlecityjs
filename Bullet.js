@@ -89,17 +89,8 @@ Bullet.prototype.update = function (du) {
         }
     }
     if (hitSomething) {
-        if (hitEntity.entity.type === consts.STRUCTURE_BRICK ||
-                hitEntity.entity.type === consts.STRUCTURE_STEEL ||
-                hitEntity.entity.type === consts.STRUCTURE_FLAG ||
-                hitEntity.entity.type === consts.TANK_ENEMY_BASIC ||
-                hitEntity.entity.type === consts.TANK_ENEMY_FAST ||
-                hitEntity.entity.type === consts.TANK_ENEMY_POWER ||
-                hitEntity.entity.type === consts.TANK_ENEMY_ARMOR ||
-                hitEntity.entity.type === consts.TANK_PLAYER1 ||
-                hitEntity.entity.type === consts.TANK_PLAYER2) {
+        if (hitEntity.entity.type !== consts.BULLET)
             entityManager.generateEffect(consts.EFFECT_SMALLEXPLOSION, this.cx, this.cy);
-        }
         return this.killMeNow();
     }
     // else if (hitEntities && hitEntities.length !== 0) {
