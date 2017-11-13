@@ -242,7 +242,13 @@ getPlayerLives : function(playerNumber) {
 },
 
 getNumberOfEnemyTanks : function(){
-	return this._enemyTanks + this._enemyTanksInPlay;
+	return this._enemyTanks.length + this._enemyTanksInPlay.length;
+},
+
+// returns number of enemy tanks that haven't spawned
+// because that is the number that is printed on sidebar
+getNumberOfEnemyTanksLeft : function() {
+    return this._enemyTanks.length;
 },
 
 activatePowerup : function(tank, poweruptype) {

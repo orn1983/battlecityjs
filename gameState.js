@@ -121,6 +121,7 @@ drawInfo : function() {
     flagIcon.drawBulletAt(g_backgroundCtx, 685, 555, consts.DIRECTION_UP, 3);
 
     this.drawLevelNumber(this._currentLevel + 1);
+    this.drawNumberOfEnemyTanksLeft();
 },
 
 drawLevelNumber : function(number) {
@@ -134,6 +135,19 @@ drawLevelNumber : function(number) {
 
     var secondDigitIcon = spriteManager.spriteNumber(secondDigit);
     secondDigitIcon.drawBulletAt(g_backgroundCtx, 695, 595, consts.DIRECTION_UP, 3);
+},
+
+drawNumberOfEnemyTanksLeft : function() {
+    var num = entityManager.getNumberOfEnemyTanksLeft();
+    var enemyTankIcon = spriteManager.spriteEnemyIcon();
+    var x = 675;
+    var y = 70;
+    for (var i = 0; i < num; i++) {
+        //x = x + (i % 2) * 5;
+        y = y + ((i+1) % 2) * 24;
+        enemyTankIcon.drawBulletAt(g_backgroundCtx, x + (i % 2) * 24, y, consts.DIRECTION_UP, g_spriteScale);
+    }
+    
 },
 
 
