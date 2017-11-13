@@ -70,7 +70,8 @@ PlayerTank.prototype.canFireTwice = false;
 //increments when bullet fired, decrements when bullet is destroyed
 PlayerTank.prototype.bulletsAlive = 0;
 
-PlayerTank.prototype.hasForceField = false;
+//0 is no forcefield, 1 is brief spawning forcefield, 2 is longer powerfup field.
+PlayerTank.prototype.forceFieldType = 0;
 
 //Counter while tank is frozen. Only affects AI tanks when a player tank picks
 //up a "freeze-time" powerup: The entityManager then sets this to some positive
@@ -353,13 +354,13 @@ PlayerTank.prototype.addStar = function() {
     }
 };
 
-PlayerTank.prototype.addForceField = function() {
-    this.hasForceField = true;
+PlayerTank.prototype.addForceField = function(forceFieldType) {
+    this.forceFieldType = forceFieldType;
     entityManager.generateEffect(consts.EFFECT_INVULNERABLE, this.cx, this.cy, this.removeForceField);
 };
 
 PlayerTank.prototype.removeForceField = function() {
-    this.hasForceField = false;
+    this.forceFieldType = 0;
 };
 
 
