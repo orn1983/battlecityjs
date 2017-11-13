@@ -309,7 +309,7 @@ update : function(du) {
 	
 	// spawn another enemy if we should
 	if(this._spawnTimer < 0 && entityManager._enemyTanksInPlay.length < 4){
-		entityManager.spawnEnemyTank(this._spawnPosition);
+		//entityManager.spawnEnemyTank(this._spawnPosition);
 		this._spawnPosition = (this._spawnPosition + 1)%3;
 		this.resetSpawnTimer();
 	}

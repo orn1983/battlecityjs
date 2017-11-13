@@ -120,6 +120,12 @@ EnemyTank.prototype.isMoving = false;
 EnemyTank.prototype.bumpedIntoObstacle = false;
 
 EnemyTank.prototype.update = function (du) {
+    
+    // return if enemies frozen
+    if (gameState.getFreezeTimer() > 0) {
+        return;
+    }
+    
     spatialManager.unregister(this);
 
     // store old value of isMoving to detect if tank

@@ -232,10 +232,13 @@ activatePowerup : function(tank, poweruptype) {
     switch(poweruptype){
         case(consts.POWERUP_HELMET):
             //Gives a temporary force field that shields from enemy shots, like the one at the beginning of every stage.
+            tank.addForceField();
+            setTimeout(function() {tank.removeForceField();}, 30000);
         break;
         case(consts.POWERUP_TIMER):
             //    The timer power-up temporarily freezes time, stopping all enemy tanks' movement.
             //    Tip: enables the ability to harmlessly approach every tank and destroy them.
+            gameState.setFreezeTimer();
         break;
         case(consts.POWERUP_SHOVEL):
             // Turns the brick walls around the fortress to stone,

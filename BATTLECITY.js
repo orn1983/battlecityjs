@@ -178,7 +178,8 @@ function updateSimulation(du) {
 
     if (g_gameStarted) {
         processDiagnostics();
-        entityManager.update(du);        
+        entityManager.update(du);   
+        gameState.update(du);
     }
     else {
         mainMenu.update();
