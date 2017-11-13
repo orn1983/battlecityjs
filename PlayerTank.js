@@ -295,6 +295,7 @@ PlayerTank.prototype.maybeFireBullet = function () {
 
 PlayerTank.prototype.takeBulletHit = function (bullet) {
 
+    
     //Player got shot by enemy
     if((this.isPlayer) && (!bullet.player) && (!this.hasForceField) ) {
         var coords = {cx: this.cx, cy: this.cy};
@@ -304,6 +305,7 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
         };
         entityManager.generateEffect(consts.EFFECT_SMALLEXPLOSION, coords, largeExplosion);
         g_SFX.request(bullet.soundDestroyPlayer);
+        this.numberOfLives--;
     }
 
     //Player got shot by other player
@@ -316,7 +318,7 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
         g_SFX.request(bullet.soundDestroyPlayer);
     }
 
-    this._numberOfLives--;
+
 
     //Enemy got shot by player. We'll have to do other things here later on,
     //such as incrementing the score for the player who owned the bullet,
