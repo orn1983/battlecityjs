@@ -32,7 +32,7 @@ Powerup.prototype.halfWidth = 20;
 //Default values
 Powerup.prototype.cx = 200;
 Powerup.prototype.cy = 200;
-Powerup.prototype.poweruptype = consts.POWERUP_HELMET;
+Powerup.prototype.type = consts.POWERUP_HELMET;
 
 Powerup.prototype.animateThisFrame = true;
 
