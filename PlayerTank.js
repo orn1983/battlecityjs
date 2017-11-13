@@ -206,18 +206,18 @@ PlayerTank.prototype.move = function(du, newX, newY)
 
     var hitEntity = this.findHitEntity(newX, newY);
     if ( (!hitEntity) ||
-         (hitEntity.type === consts.POWERUP_HELMET) ||
-         (hitEntity.type === consts.POWERUP_TIMER) ||
-         (hitEntity.type === consts.POWERUP_SHOVEL) ||
-         (hitEntity.type === consts.POWERUP_STAR) ||
-         (hitEntity.type === consts.POWERUP_GRENADE) ||
-         (hitEntity.type === consts.POWERUP_TANK) )
+         (hitEntity.entity.type === consts.POWERUP_HELMET) ||
+         (hitEntity.entity.type === consts.POWERUP_TIMER) ||
+         (hitEntity.entity.type === consts.POWERUP_SHOVEL) ||
+         (hitEntity.entity.type === consts.POWERUP_STAR) ||
+         (hitEntity.entity.type === consts.POWERUP_GRENADE) ||
+         (hitEntity.entity.type === consts.POWERUP_TANK) )
     {
         this.cx = newX;
         this.cy = newY;
         //React to if we drove over a powerup
         if(hitEntity){
-            hitEntity.getPickedUp(this);
+            hitEntity.entity.getPickedUp(this);
         }
     }
 
