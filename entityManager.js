@@ -125,17 +125,18 @@ generateEnemyTank : function(descr) {
     var tankIndex = this._enemyTanks.length - 1;
 },
 
-putEnemyInPlay : function(){
-	console.log(entityManager._enemyTanks);
-	if(entityManager._enemyTanks.length !== 0){
+putEnemyInPlay : function(that){
+    var _this = this;
+	if(_this._enemyTanks.length !== 0){
 		var take = entityManager._enemyTanks.splice(0,1);
-		entityManager._enemyTanksInPlay.push(take[0]);
+		_this._enemyTanksInPlay.push(take[0]);
 	}
 },
 
 spawnEnemyTank : function(){
 	var tank = this._enemyTanks[0];
-	this.generateEffect(consts.EFFECT_SPAWNFLASH, tank, this.putEnemyInPlay); 
+    var that = this;
+	this.generateEffect(consts.EFFECT_SPAWNFLASH, tank, function() { that.putEnemyInPlay(that) }); 
 },
 
 
