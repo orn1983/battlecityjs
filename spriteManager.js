@@ -272,7 +272,8 @@ var spriteManager = {
             case(consts.EFFECT_INVULNERABLE):
                 width = 16;
                 height = 16;
-                sy = sy + (mul*3) + (mul*frameNumber);
+                sx = sx + (mul*frameNumber);
+                sy = sy + (mul*3);
             break;
             case(consts.EFFECT_POINTS):
                 width = 16;
