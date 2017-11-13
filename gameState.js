@@ -316,6 +316,15 @@ update : function(du) {
 	// update freezeTimer
 	this._freezeTimer -= du;
 	
+    // check if players are dead
+    var lives = entityManager.getPlayerLives(1);
+    if (g_numPlayers === 2) {
+        lives += entityManager.getPlayerLives(2);
+    }
+    if (lives < 0 - g_numPlayers) {
+        setTimeout(function () { main.gameOver(); } , 1000);
+    }
+    
 	// see if level is over, then start next level
 	if(entityManager.getNumberOfEnemyTanks() === 0){
 		// make sure destroy level also kills all enemies in current level.
