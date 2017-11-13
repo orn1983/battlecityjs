@@ -417,10 +417,11 @@ EnemyTank.prototype.takeBulletHit = function (bullet) {
             entityManager.generatePowerup();
             this.kill();
             g_SFX.request(bullet.soundDestroyEnemy);
+            var coords = {cx: this.cx, cy: this.cy};
             var largeExplosion = function () {
-                entityManager.generateEffect(consts.EFFECT_LARGEEXPLOSION, this);
+                entityManager.generateEffect(consts.EFFECT_LARGEEXPLOSION, coords);
             };
-            entityManager.generateEffect(consts.EFFECT_SMALLEXPLOSION, this, largeExplosion);
+            entityManager.generateEffect(consts.EFFECT_SMALLEXPLOSION, coords, largeExplosion);
         }
     }
 

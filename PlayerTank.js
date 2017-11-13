@@ -297,7 +297,12 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
 
     //Player got shot by enemy
     if((this.isPlayer) && (!bullet.player) && (!this.hasForceField) ) {
+        var coords = {cx: this.cx, cy: this.cy};
         this.reset();
+        var largeExplosion = function () {
+            entityManager.generateEffect(consts.EFFECT_LARGEEXPLOSION, coords);
+        };
+        entityManager.generateEffect(consts.EFFECT_SMALLEXPLOSION, coords, largeExplosion);
         g_SFX.request(bullet.soundDestroyPlayer);
     }
 
