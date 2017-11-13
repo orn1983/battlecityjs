@@ -152,29 +152,42 @@ generatePowerup : function(){
     this._powerups.push(new Powerup({poweruptype : randomPowerUp}));
 },
 
-generateEffect :  function(effect_type, x, y, callback) {
+generateEffect :  function(effect_type, coords, callback) {
     // Pass a callback function to e.g. chain effects or spawn things after animations
     if (callback) {
         this._effects.push(new Effect({
             type: effect_type,
-            coords: {cx: x, cy: y},
+            coords: coords,
             callWhenDone: callback
         }));
     }
     else
-        this._effects.push(new Effect({type: effect_type, coords: {cx: x, cy: y}}));
+        this._effects.push(new Effect({type: effect_type, coords: coords}));
 },
 
 
 initLevel : function() {
     gameState.restoreFortress(this._bricks);
+    createBorder();
 },
 
 removeFortress : function() {
     for (var i = 0; i < this._bricks.length; i++) {
         if (this._bricks[i].cx >= g_canvas.width/g_gridSize*11 && this._bricks[i].cx <= g_canvas.width/g_gridSize*15 && this._bricks[i].cy >= g_canvas.width/g_gridSize*22) {
-            this._bricks.splice(i,1);
-            i--;
+            this._bricks[i].kill();
+
+        }
+    }
+},
+
+// when shovel powerup expires, change steel bricks around
+// flag into normal bricks
+removeSteelFortress : function(em) {
+    for (var i = 0; i < em._bricks.length; i++) {
+        if (em._bricks[i].cx >= g_canvas.width/g_gridSize*11 && em._bricks[i].cx <= g_canvas.width/g_gridSize*15 && em._bricks[i].cy >= g_canvas.width/g_gridSize*22) {
+            // change type to brick and update sprite
+            em._bricks[i].type = consts.STRUCTURE_BRICK;
+            em._bricks[i].sprite = spriteManager.spriteStructure(em._bricks[i].type, em._bricks[i].look);
         }
     }
 },
@@ -229,15 +242,22 @@ activatePowerup : function(tank, poweruptype) {
             // which gives temporary invulnerability to the walls,
             // preventing enemies from destroying it.
             // ALSO repairs all the damage previously done to the wall.
+            gameState.createSteelFortress();
         break;
         case(consts.POWERUP_STAR):
             //Increases your offensive power by one tier (tiers are: default, second, third, and fourth). Power level only resets to default when you die.
             //First star (second tier): fired bullets are as fast as Power Tanks' bullets.
             //Second star (third tier): two bullets can be fired on the screen at a time.
             //Third star (fourth tier): fired bullets can destroy steel walls and are twice as effective against brick walls.
+            if (tank.bulletStrength < 4) {
+                tank.bulletStrength++;
+            }
         break;
         case(consts.POWERUP_GRENADE):
             //Destroys every enemy currently on the screen. No points given
+            for (var i = 0; i < this._enemyTanksInPlay.length; i++) {
+                this._enemyTanksInPlay[i].kill();
+            }
         break;
         case(consts.POWERUP_TANK):
             tank.numberOfLives += 1;

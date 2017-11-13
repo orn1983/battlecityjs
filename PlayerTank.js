@@ -354,9 +354,15 @@ PlayerTank.prototype.addStar = function() {
     }
 };
 
+<<<<<<< HEAD
 PlayerTank.prototype.addForceField = function(forceFieldType) {
     this.forceFieldType = forceFieldType;
     entityManager.generateEffect(consts.EFFECT_INVULNERABLE, this.cx, this.cy, this.removeForceField);
+=======
+PlayerTank.prototype.addForceField = function() {
+    this.hasForceField = true;
+    entityManager.generateEffect(consts.EFFECT_INVULNERABLE, this, this.removeForceField);
+>>>>>>> origin/master
 };
 
 PlayerTank.prototype.removeForceField = function() {

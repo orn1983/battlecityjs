@@ -161,6 +161,64 @@ restoreFortress : function(bricks) {
     }
 },
 
+createSteelFortress : function() {
+    // remove the current fortress first
+    entityManager.removeFortress();
+  
+    // create 8 steel bricks around statue
+    entityManager.generateBrick({
+        cx      : g_first_step + g_gridStep*11,
+        cy      : g_first_step + g_gridStep*23,
+        type    : consts.STRUCTURE_STEEL,
+        look    : consts.STRUCTURE_WHOLE
+    });
+    entityManager.generateBrick({
+        cx      : g_first_step + g_gridStep*12,
+        cy      : g_first_step + g_gridStep*23,
+        type    : consts.STRUCTURE_STEEL,
+        look    : consts.STRUCTURE_WHOLE
+    });    
+    entityManager.generateBrick({
+        cx      : g_first_step + g_gridStep*13,
+        cy      : g_first_step + g_gridStep*23,
+        type    : consts.STRUCTURE_STEEL,
+        look    : consts.STRUCTURE_WHOLE
+    });
+    entityManager.generateBrick({
+        cx      : g_first_step + g_gridStep*14,
+        cy      : g_first_step + g_gridStep*23,
+        type    : consts.STRUCTURE_STEEL,
+        look    : consts.STRUCTURE_WHOLE
+    });
+    entityManager.generateBrick({
+        cx      : g_first_step + g_gridStep*11,
+        cy      : g_first_step + g_gridStep*24,
+        type    : consts.STRUCTURE_STEEL,
+        look    : consts.STRUCTURE_WHOLE
+    });
+    entityManager.generateBrick({
+        cx      : g_first_step + g_gridStep*14,
+        cy      : g_first_step + g_gridStep*24,
+        type    : consts.STRUCTURE_STEEL,
+        look    : consts.STRUCTURE_WHOLE
+    });
+    entityManager.generateBrick({
+        cx      : g_first_step + g_gridStep*11,
+        cy      : g_first_step + g_gridStep*25,
+        type    : consts.STRUCTURE_STEEL,
+        look    : consts.STRUCTURE_WHOLE
+    });
+    entityManager.generateBrick({
+        cx      : g_first_step + g_gridStep*14,
+        cy      : g_first_step + g_gridStep*25,
+        type    : consts.STRUCTURE_STEEL,
+        look    : consts.STRUCTURE_WHOLE
+    });
+    
+    // remove steel after timeout
+    setTimeout(function() {entityManager.removeSteelFortress(entityManager);}, 20000);
+},
+
 addScore : function(player, type) {
 	
 	if (type === consts.TANK_ENEMY_BASIC){
