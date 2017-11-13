@@ -136,7 +136,7 @@ putEnemyInPlay : function(that){
 spawnEnemyTank : function(){
 	var tank = this._enemyTanks[0];
     var that = this;
-	this.generateEffect(consts.EFFECT_SPAWNFLASH, tank, function() { that.putEnemyInPlay(that) }); 
+	this.generateEffect(consts.EFFECT_SPAWNFLASH, tank, function() { that.putEnemyInPlay(that) });
 },
 
 
@@ -160,7 +160,11 @@ resetPlayerTanks: function() {
 
 generatePowerup : function(){
     //Pick random number from 1 to 6;
-    var randomPowerUp = Math.floor(Math.random() * 33 + 28);
+    var min = 28;
+    min = Math.ceil(min);
+    var max = 33;
+    max = Math.floor(max);
+    var randomPowerUp = Math.floor(Math.random() * (max - min + 1)) + min;
 
     //this._powerups.push(new Powerup());
     this._powerups.push(new Powerup({type : randomPowerUp}));
