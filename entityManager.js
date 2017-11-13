@@ -168,13 +168,26 @@ generateEffect :  function(effect_type, coords, callback) {
 
 initLevel : function() {
     gameState.restoreFortress(this._bricks);
+    createBorder();
 },
 
 removeFortress : function() {
     for (var i = 0; i < this._bricks.length; i++) {
         if (this._bricks[i].cx >= g_canvas.width/g_gridSize*11 && this._bricks[i].cx <= g_canvas.width/g_gridSize*15 && this._bricks[i].cy >= g_canvas.width/g_gridSize*22) {
-            this._bricks.splice(i,1);
-            i--;
+            this._bricks[i].kill();
+
+        }
+    }
+},
+
+// when shovel powerup expires, change steel bricks around
+// flag into normal bricks
+removeSteelFortress : function(em) {
+    for (var i = 0; i < em._bricks.length; i++) {
+        if (em._bricks[i].cx >= g_canvas.width/g_gridSize*11 && em._bricks[i].cx <= g_canvas.width/g_gridSize*15 && em._bricks[i].cy >= g_canvas.width/g_gridSize*22) {
+            // change type to brick and update sprite
+            em._bricks[i].type = consts.STRUCTURE_BRICK;
+            em._bricks[i].sprite = spriteManager.spriteStructure(em._bricks[i].type, em._bricks[i].look);
         }
     }
 },
@@ -229,6 +242,7 @@ activatePowerup : function(tank, poweruptype) {
             // which gives temporary invulnerability to the walls,
             // preventing enemies from destroying it.
             // ALSO repairs all the damage previously done to the wall.
+            gameState.createSteelFortress();
         break;
         case(consts.POWERUP_STAR):
             //Increases your offensive power by one tier (tiers are: default, second, third, and fourth). Power level only resets to default when you die.
