@@ -102,7 +102,7 @@ PlayerTank.prototype.animationFrameCounter = 0;
 
 
 //Used as a counter to space apart how often the tank fires bullets
-EnemyTank.prototype.bulletDelayCounter = 0;
+PlayerTank.prototype.bulletDelayCounter = 0;
 
 // HACKED-IN AUDIO (no preloading)
 PlayerTank.prototype.soundIdle = "tankIdle";

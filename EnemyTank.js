@@ -189,7 +189,7 @@ EnemyTank.prototype.update = function (du) {
 };
 
 
-EnemyTank.prototype.updateAbilities() {
+EnemyTank.prototype.updateAbilities = function() {
 
     switch(this.type){
         case(consts.TANK_ENEMY_BASIC):
