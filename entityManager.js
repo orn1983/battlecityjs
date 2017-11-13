@@ -157,13 +157,12 @@ generateEffect :  function(effect_type, x, y, callback) {
     if (callback) {
         this._effects.push(new Effect({
             type: effect_type,
-            cx: x,
-            cy: y,
+            coords: {cx: x, cy: y},
             callWhenDone: callback
         }));
     }
     else
-        this._effects.push(new Effect({type: effect_type, cx: x, cy: y}));
+        this._effects.push(new Effect({type: effect_type, coords: {cx: x, cy: y}}));
 },
 
 

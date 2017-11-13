@@ -21,9 +21,6 @@ function Effect(descr) {
 
 Effect.prototype = new Entity();
 
-// Initial, inheritable, default values
-Effect.prototype.cx = 200;
-Effect.prototype.cy = 200;
 // Velocity is only used for scores
 Effect.prototype.vel = 2;
 
@@ -36,7 +33,7 @@ Effect.prototype.metaData = [];
 Effect.prototype.metaData[consts.EFFECT_SPAWNFLASH] =  {numFrames: 4, cycleSpeed: 3, numCycles: 2.5};
 Effect.prototype.metaData[consts.EFFECT_SMALLEXPLOSION] = {numFrames: 3, cycleSpeed: 3, numCycles: 1};
 Effect.prototype.metaData[consts.EFFECT_LARGEEXPLOSION] = {numFrames: 2, cycleSpeed: 3, numCycles: 1};
-Effect.prototype.metaData[consts.EFFECT_INVULNERABLE] = {numFrames: 2, cycleSpeed: 3, numCycles: 100};
+Effect.prototype.metaData[consts.EFFECT_INVULNERABLE] = {numFrames: 2, cycleSpeed: 2, numCycles: 0};
 Effect.prototype.metaData[consts.EFFECT_POINTS] = {numFrames: 1, cycleSpeed: 0, numCycles: 0};
 
 // Convert times from milliseconds to "nominal" time units.
@@ -92,5 +89,5 @@ Effect.prototype.update = function (du) {
 Effect.prototype.render = function (ctx) {
     // fetch sprite from spriteManager
     this.sprite = spriteManager.spriteEffect(this.type, this.animationFrame);
-    this.sprite.drawBulletAt(ctx, this.cx, this.cy, 1, g_spriteScale);
+    this.sprite.drawBulletAt(ctx, this.coords.cx, this.coords.cy, 1, g_spriteScale);
 };
