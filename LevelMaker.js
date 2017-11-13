@@ -14,6 +14,51 @@ var g_gridMultiplier = 26;
 var g_first_step = g_level_start_x + g_levelWidth/g_gridSize/2;
 var g_gridStep = g_levelWidth/g_gridSize;
 
+// there are always 20 enemies in each level, so array has to have length 20
+function createEnemies(array){
+	var position = 0;
+	// 4 11 18
+	for (var i = 0; i<20; i++){
+		switch(array[i])
+		{
+			case(0):
+				if(position === 3 || position === 10 || position === 17)
+					createTank(position%3, consts.TANK_ENEMY_BASIC, true);
+				else
+					creatTank(position%3, consts.TANK_ENEMY_BASIC, false);
+			break;
+			case(1):
+				if(position === 3 || position === 10 || position === 17)
+					createTank(position%3, consts.TANK_ENEMY_FAST, true);
+				else
+					creatTank(position%3, consts.TANK_ENEMY_FAST, false);
+			break;
+			case(2):
+				if(position === 3 || position === 10 || position === 17)
+					createTank(position%3, consts.TANK_ENEMY_POWER, true);
+				else
+					creatTank(position%3, consts.TANK_ENEMY_POWER, false);
+			break;
+			case(3):
+				if(position === 3 || position === 10 || position === 17)
+					createTank(position%3, consts.TANK_ENEMY_ARMOR, true);
+				else
+					creatTank(position%3, consts.TANK_ENEMY_ARMOR, false);
+			break;
+		}
+		position = (position + 1);
+	}
+}
+
+function createTank(position, type, powerlevel){
+	entityManager.generateEnemyTanks({
+					cx :  g_canvas.width/26 + position*(g_canvas.width/2-g_canvas.width/26),
+					cy :  g_canvas.height/26,
+					type : type,
+					powerLevel : powerlevel,
+	});
+}
+
 //level is 26 X 26 small bricks 
 function createLevel(array) {
     // just for testing
