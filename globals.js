@@ -31,6 +31,7 @@ var g_numPlayers = 1;
 //var g_currentLevel = 0; not used anymore
 
 var g_sortedLevelKeys = Object.keys(g_levels).sort();
+var g_sortedEnemyKeys = Object.keys(g_enemies).sort();
 
 var g_friendlyFire = false;
 
