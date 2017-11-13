@@ -216,7 +216,7 @@ createSteelFortress : function() {
     });
     
     // remove steel after timeout
-    setTimeout(function() {entityManager.removeSteelFortress(entityManager);}, 5000);
+    setTimeout(function() {entityManager.removeSteelFortress(entityManager);}, 20000);
 },
 
 addScore : function(player, type) {
