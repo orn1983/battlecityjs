@@ -25,25 +25,25 @@ function createEnemies(array){
 				if(position === 3 || position === 10 || position === 17)
 					createTank(position%3, consts.TANK_ENEMY_BASIC, true);
 				else
-					creatTank(position%3, consts.TANK_ENEMY_BASIC, false);
+					createTank(position%3, consts.TANK_ENEMY_BASIC, false);
 			break;
 			case(1):
 				if(position === 3 || position === 10 || position === 17)
 					createTank(position%3, consts.TANK_ENEMY_FAST, true);
 				else
-					creatTank(position%3, consts.TANK_ENEMY_FAST, false);
+					createTank(position%3, consts.TANK_ENEMY_FAST, false);
 			break;
 			case(2):
 				if(position === 3 || position === 10 || position === 17)
 					createTank(position%3, consts.TANK_ENEMY_POWER, true);
 				else
-					creatTank(position%3, consts.TANK_ENEMY_POWER, false);
+					createTank(position%3, consts.TANK_ENEMY_POWER, false);
 			break;
 			case(3):
 				if(position === 3 || position === 10 || position === 17)
 					createTank(position%3, consts.TANK_ENEMY_ARMOR, true);
 				else
-					creatTank(position%3, consts.TANK_ENEMY_ARMOR, false);
+					createTank(position%3, consts.TANK_ENEMY_ARMOR, false);
 			break;
 		}
 		position = (position + 1);
@@ -51,7 +51,7 @@ function createEnemies(array){
 }
 
 function createTank(position, type, powerlevel){
-	entityManager.generateEnemyTanks({
+	entityManager.generateEnemyTank({
 					cx :  g_canvas.width/26 + position*(g_canvas.width/2-g_canvas.width/26),
 					cy :  g_canvas.height/26,
 					type : type,

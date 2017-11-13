@@ -277,6 +277,7 @@ addScore : function(player, type) {
 
 createLevel : function() {
     createLevel(g_levels[g_sortedLevelKeys[this._currentLevel]]);
+	createEnemies(g_enemies[g_sortedEnemyKeys[this._currentLevel]]);
     entityManager.generateStatue();
 }, 
 
@@ -309,8 +310,7 @@ update : function(du) {
 	
 	// spawn another enemy if we should
 	if(this._spawnTimer < 0 && entityManager._enemyTanksInPlay.length < 4){
-		//entityManager.spawnEnemyTank(this._spawnPosition);
-		this._spawnPosition = (this._spawnPosition + 1)%3;
+		entityManager.spawnEnemyTank();
 		this.resetSpawnTimer();
 	}
 	//Todo: give new life for each 20.000 points you earn.
