@@ -89,5 +89,5 @@ Effect.prototype.update = function (du) {
 Effect.prototype.render = function (ctx) {
     // fetch sprite from spriteManager
     this.sprite = spriteManager.spriteEffect(this.type, this.animationFrame);
-    this.sprite.drawBulletAt(ctx, this.coords.cx, this.coords.cy, 1, g_spriteScale);
+    this.sprite.drawBulletAt(ctx, this.caller.cx, this.caller.cy, 1, g_spriteScale);
 };
