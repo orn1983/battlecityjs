@@ -220,6 +220,8 @@ destroyLevel : function() {
     this._terrain.length = 0;
 	gameState.saveFortress(this._bricks);
     this._bricks.length = 0;
+    this._enemyTanks.length = 0;
+    this._enemyTanksInPlay.length = 0;
     this._bullets.length = 0;
     this.resetPlayerTanks();
     this._powerups.length = 0;
