@@ -70,6 +70,8 @@ PlayerTank.prototype.canFireTwice = false;
 //increments when bullet fired, decrements when bullet is destroyed
 PlayerTank.prototype.bulletsAlive = 0;
 
+PlayerTank.prototype.hasForceField = false;
+
 //Counter while tank is frozen. Only affects AI tanks when a player tank picks
 //up a "freeze-time" powerup: The entityManager then sets this to some positive
 //integer, and the tank needs to let it count down. When it reaches 0, the tank
@@ -283,13 +285,16 @@ PlayerTank.prototype.maybeFireBullet = function () {
 PlayerTank.prototype.takeBulletHit = function (bullet) {
 
     //Player got shot by enemy
-    if((this.isPlayer) && (!bullet.player)) {
+    if((this.isPlayer) && (!bullet.player) && (!this.hasForceField) ) {
         this.reset();
         g_SFX.request(bullet.soundDestroyPlayer);
     }
 
-    //EAH: enabling friendly fire for now
-    if((this.isPlayer) && (bullet.player)) {
+    //Player got shot by other player
+    if((this.isPlayer) && (bullet.player) && (!this.hasForceField) ) {
+
+        //TODO: Freeze player in place temporarily (he can turn and fire but not move)
+
         // just do a reset for now
         this.reset();
         g_SFX.request(bullet.soundDestroyPlayer);
@@ -336,8 +341,15 @@ PlayerTank.prototype.addStar = function() {
             //Nothing happens.
         break;
     }
+};
 
+PlayerTank.prototype.addForceField = function() {
+    this.hasForceField = true;
+    entityManager.generateEffect(consts.EFFECT_INVULNERABLE, this.cx, this.cy, this.removeForceField);
+};
 
+PlayerTank.prototype.removeForceField = function() {
+    this.hasForceField = false;
 };
 
 

@@ -18,6 +18,10 @@ function EnemyTank(descr) {
     // Common inherited setup logic from Entity
     this.setup(descr);
 
+    //Adjusting setup logic (velocity, bullet speed) depending on the tank type
+    //that was created
+    this.updateAbilities();
+
     this.rememberResets();
 
 };
@@ -46,12 +50,6 @@ EnemyTank.prototype.cy = 200;
 EnemyTank.prototype.halfHeight = g_canvas.height/g_gridSize-3;
 EnemyTank.prototype.halfWidth = g_canvas.width/g_gridSize-3;
 
-/*
-TANK_ENEMY_BASIC    : 3,
-TANK_ENEMY_FAST     : 4,
-TANK_ENEMY_POWER    : 5,
-TANK_ENEMY_ARMOR    : 6,
-*/
 
 EnemyTank.prototype.type = consts.TANK_ENEMY_BASIC;
 
@@ -190,6 +188,38 @@ EnemyTank.prototype.update = function (du) {
 
 };
 
+
+EnemyTank.prototype.updateAbilities() {
+
+    switch(this.type){
+        case(consts.TANK_ENEMY_BASIC):
+            this.moveDistance = 1;
+            this.bulletVelocity = 6;
+            this.numberOfLives = 1;
+            this.pointsValue = 100;
+        break;
+        case(consts.TANK_ENEMY_FAST):
+            this.moveDistance = 3;
+            this.bulletVelocity = 9;
+            this.numberOfLives = 1;
+            this.pointsValue = 200;
+        break;
+        case(consts.TANK_ENEMY_POWER):
+            this.moveDistance = 2;
+            this.bulletVelocity = 12;
+            this.numberOfLives = 1;
+            this.pointsValue = 300;
+        break;
+        case(consts.TANK_ENEMY_ARMOR):
+            this.moveDistance = 2;
+            this.bulletVelocity = 9;
+            this.numberOfLives = 2;
+            this.pointsValue = 400;
+        break;
+    }
+
+};
+
 EnemyTank.prototype.slide = function(du, newX, newY) {
     var hitEntity = this.findHitEntity(newX, newY);
     if (!hitEntity)
@@ -204,7 +234,14 @@ EnemyTank.prototype.move = function(du, newX, newY)
 
     var hitEntity = this.findHitEntity(newX, newY);
 
-    if (!hitEntity)
+    if ( (!hitEntity) ||
+         (hitEntity.type === consts.POWERUP_HELMET) ||
+         (hitEntity.type === consts.POWERUP_TIMER) ||
+         (hitEntity.type === consts.POWERUP_SHOVEL) ||
+         (hitEntity.type === consts.POWERUP_STAR) ||
+         (hitEntity.type === consts.POWERUP_GRENADE) ||
+         (hitEntity.type === consts.POWERUP_TANK) )
+
     {
         this.cx = newX;
         this.cy = newY;
