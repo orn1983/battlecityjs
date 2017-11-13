@@ -152,17 +152,17 @@ generatePowerup : function(){
     this._powerups.push(new Powerup({poweruptype : randomPowerUp}));
 },
 
-generateEffect :  function(effect_type, x, y, callback) {
+generateEffect :  function(effect_type, coords, callback) {
     // Pass a callback function to e.g. chain effects or spawn things after animations
     if (callback) {
         this._effects.push(new Effect({
             type: effect_type,
-            coords: {cx: x, cy: y},
+            coords: coords,
             callWhenDone: callback
         }));
     }
     else
-        this._effects.push(new Effect({type: effect_type, coords: {cx: x, cy: y}}));
+        this._effects.push(new Effect({type: effect_type, coords: coords}));
 },
 
 
