@@ -160,10 +160,10 @@ resetPlayerTanks: function() {
 
 generatePowerup : function(){
     //Pick random number from 1 to 6;
-    var randomPowerUp = Math.floor(Math.random() * 6 + 1);
+    var randomPowerUp = Math.floor(Math.random() * 33 + 28);
 
     //this._powerups.push(new Powerup());
-    this._powerups.push(new Powerup({poweruptype : randomPowerUp}));
+    this._powerups.push(new Powerup({type : randomPowerUp}));
 },
 
 generateEffect :  function(effect_type, caller, callback) {
