@@ -300,10 +300,7 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
     if((this.isPlayer) && (!bullet.player) && (!this.hasForceField) ) {
         var coords = {cx: this.cx, cy: this.cy};
         this.reset();
-        var largeExplosion = function () {
-            entityManager.generateEffect(consts.EFFECT_LARGEEXPLOSION, coords);
-        };
-        entityManager.generateEffect(consts.EFFECT_SMALLEXPLOSION, coords, largeExplosion);
+        entityManager.generateEffect("explosionBig", coords);
         g_SFX.request(bullet.soundDestroyPlayer);
         this.numberOfLives--;
     }
@@ -332,6 +329,7 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
 PlayerTank.prototype.reset = function () {
     this.setPos(this.reset_cx, this.reset_cy);
     this.orientation = this.reset_orientation;
+    this.forceFieldType = 1;
 
     //this.halt();
 };

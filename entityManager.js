@@ -135,7 +135,7 @@ putEnemyInPlay : function(){
 spawnEnemyTank : function(){
 	var tank = this._enemyTanks[0];
     var that = this;
-	this.generateEffect(consts.EFFECT_SPAWNFLASH, tank, function() { that.putEnemyInPlay() });
+	this.generateEffect("spawnFlash", tank, function() { that.putEnemyInPlay() });
 },
 
 
@@ -170,16 +170,34 @@ generatePowerup : function(){
 },
 
 generateEffect :  function(effect_type, caller, callback) {
-    // Pass a callback function to e.g. chain effects or spawn things after animations
-    if (callback) {
-        this._effects.push(new Effect({
-            type: effect_type,
-            caller: caller,
-            callWhenDone: callback
-        }));
+    var effect;
+    switch (effect_type) {
+        case "explosionSmall":
+            effect = consts.EFFECT_SMALLEXPLOSION;
+            break;
+        case "explosionBig":
+            effect = consts.EFFECT_SMALLEXPLOSION;
+            var originalCallback = callback;
+            var explosionBig = function () {
+                entityManager.generateEffect("explosionBigHelper", caller, originalCallback);
+            };
+            callback = explosionBig;
+            break;
+        case "explosionBigHelper":
+            effect = consts.EFFECT_LARGEEXPLOSION;
+            break;
+        case "points":
+            effect = consts.EFFECT_POINTS;
+            break;
+        case "spawnFlash":
+            effect = consts.EFFECT_SPAWNFLASH;
+            break;
+        case "invulnerable":
+            effect = consts.EFFECT_INVULNERABLE;
+            break;
     }
-    else
-        this._effects.push(new Effect({type: effect_type, caller: caller}));
+
+    this._effects.push(new Effect({type: effect, caller: caller, callWhenDone: callback}));
 },
 
 

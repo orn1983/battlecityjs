@@ -92,7 +92,7 @@ Bullet.prototype.update = function (du) {
     }
     if (hitSomething) {
         if (hitEntity.entity.type !== consts.BULLET)
-            entityManager.generateEffect(consts.EFFECT_SMALLEXPLOSION, this);
+            entityManager.generateEffect("explosionSmall", this);
         return this.killMeNow();
     }
     spatialManager.register(this);
