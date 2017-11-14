@@ -1,6 +1,6 @@
-// ==========
-// SHIP STUFF
-// ==========
+// ===========
+// ENEMY TANKS
+// ===========
 
 "use strict";
 
@@ -457,13 +457,13 @@ EnemyTank.prototype.render = function (ctx, du) {
     }
 
 
-        // fetch correct sprite from spriteManager
-        this.sprite = spriteManager.spriteTank(
-            this.tanktype,
-            powerlevelSprite,
-            this.orientation,
-            this.animationFrame
-        );
+    // fetch correct sprite from spriteManager
+    this.sprite = spriteManager.spriteTank(
+        this.tanktype,
+        powerlevelSprite,
+        this.orientation,
+        this.animationFrame
+    );
 
 
 	ctx.save();
