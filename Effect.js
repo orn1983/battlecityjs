@@ -1,5 +1,5 @@
 // ======
-// BULLET
+// EFFECT
 // ======
 
 "use strict";
@@ -74,5 +74,8 @@ Effect.prototype.update = function (du) {
 Effect.prototype.render = function (ctx) {
     // fetch sprite from spriteManager
     this.sprite = spriteManager.spriteEffect(this.type, this.animationFrame);
-    this.sprite.drawBulletAt(ctx, this.caller.cx, this.caller.cy, 1, g_spriteScale);
+    if (this.caller)
+        this.sprite.drawBulletAt(ctx, this.caller.cx, this.caller.cy, 1, g_spriteScale);
+    else
+        console.log("Trying to spawn effect but have no co-ordinates");
 };

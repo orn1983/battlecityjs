@@ -334,7 +334,7 @@ update : function(du) {
 	
 	
 	// spawn another enemy if we should
-	if(this._spawnTimer < 0 && entityManager._enemyTanksInPlay.length < 4){
+	if(this._spawnTimer < 0 && entityManager._enemyTanksInPlay.length < 4 && entityManager._enemyTanks.length > 0){
 		entityManager.spawnEnemyTank();
 		this.resetSpawnTimer();
 	}
