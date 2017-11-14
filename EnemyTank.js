@@ -197,7 +197,7 @@ EnemyTank.prototype.update = function (du) {
 
 EnemyTank.prototype.updateAbilities = function() {
 
-    switch(this.type){
+    switch(this.tanktype){
         case(consts.TANK_ENEMY_BASIC):
             this.moveDistance = 1;
             this.bulletVelocity = 6;
