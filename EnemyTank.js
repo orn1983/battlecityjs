@@ -446,7 +446,7 @@ EnemyTank.prototype.takeBulletHit = function (bullet) {
             this.numberOfLives -= 1;
         }
         else {
-            gameState.addScore(bullet.tank, this.type);
+            gameState.addScore(bullet.tank.type, this.type);
             entityManager.generatePowerup();
             this.kill();
             g_SFX.request(bullet.soundDestroyEnemy);
@@ -460,7 +460,7 @@ EnemyTank.prototype.takeBulletHit = function (bullet) {
 };
 
 EnemyTank.prototype.explode = function (tank) {
-	gameState.addScore(tank, consts.POWERUP_GRENADE);
+	gameState.addScore(tank.type, consts.POWERUP_GRENADE);
 	this.kill();
 	var bullet = new Bullet();
 	g_SFX.request(bullet.soundDestroyEnemy);
