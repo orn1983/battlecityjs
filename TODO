@@ -1,17 +1,11 @@
 Must haves (ish)
-o Powerup size
-o Powerup effects
-  - Remove all enemy tank scores when picking up grenade (I think -- in the score tally
-    at the end of the level, the grenade score is never tallied. Maybe they just use
-    the scores as if the tanks were killed?
-o Ignore hits when invulnerable
 o Tank collisions (getting stuck together)
   XXX - Ignore tank collisions if tank spawns within a collision until there no longer is a
     collision (woah nilly)
   - Make sure fast tanks don't collide
-o Delay respawn time after killed. Set invulnerable
 o Explosion when eagle killed. Maybe go to main menu instead of freezing simulation
-o Delay entering next level
+o Disable keypresses on next map while spawning is taking place
+o Overhaul things when changing levels
 
 Nice to have:
 o Main menu

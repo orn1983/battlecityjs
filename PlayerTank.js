@@ -377,7 +377,11 @@ PlayerTank.prototype.addStar = function() {
 
 PlayerTank.prototype.addForceField = function(forceFieldType) {
     this.forceFieldType = forceFieldType;
-    entityManager.generateEffect("invulnerable", this, this.removeForceField);
+		var that = this;
+		var removeForceField = function () {
+			that.removeForceField();
+		}
+    entityManager.generateEffect("invulnerable", this, removeForceField);
 };
 
 PlayerTank.prototype.removeForceField = function() {

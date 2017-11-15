@@ -276,7 +276,6 @@ activatePowerup : function(tank, poweruptype) {
         case(consts.POWERUP_HELMET):
             //Gives a temporary force field that shields from enemy shots, like the one at the beginning of every stage.
             tank.addForceField(2);
-            setTimeout(function() {tank.removeForceField();}, 30000);
         break;
         case(consts.POWERUP_TIMER):
             //    The timer power-up temporarily freezes time, stopping all enemy tanks' movement.
