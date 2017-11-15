@@ -459,6 +459,18 @@ EnemyTank.prototype.takeBulletHit = function (bullet) {
     }
 };
 
+EnemyTank.prototype.explode = function (tank) {
+	gameState.addScore(tank, consts.POWERUP_GRENADE);
+	this.kill();
+	var bullet = new Bullet();
+	g_SFX.request(bullet.soundDestroyEnemy);
+	var coords = {cx: this.cx, cy: this.cy, points: 0};
+	var points = function () {
+        entityManager.generateEffect("points", coords);
+    }
+	entityManager.generateEffect("explosionBig", coords, points);
+};
+
 EnemyTank.prototype.reset = function () {
     this.setPos(this.reset_cx, this.reset_cy);
     this.orientation = this.reset_orientation;
