@@ -114,6 +114,8 @@ PlayerTank.prototype.soundMove = "tankMove";
 
 PlayerTank.prototype.isMoving = false;
 
+PlayerTank.prototype.isDead = false;
+
 PlayerTank.prototype.update = function (du) {
     spatialManager.unregister(this);
 
@@ -181,10 +183,11 @@ PlayerTank.prototype.update = function (du) {
         this.slideCounter -= 1;
     }
 
-    spatialManager.register(this);
+    if (!this.isDead)
+      spatialManager.register(this);
 
     // Play audio for tank
-    if (this.isMoving) {
+    if (this.isMoving && !this.isDead) {
         g_SFX.request(this.soundMove);
     } else {
         g_SFX.request(this.soundIdle);
@@ -297,12 +300,19 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
 
     
     //Player got shot by enemy
-    if((this.isPlayer) && (!bullet.player) && (!this.hasForceField) ) {
+    if(this.isPlayer && !bullet.player && !this.hasForceField && !this.isDead ) {
+        this.isDead = true;
         var coords = {cx: this.cx, cy: this.cy};
-        this.reset();
-        entityManager.generateEffect("explosionBig", coords);
+        var that = this;
+        var spawnFlash = function() {
+            var reset_coords = {cx: that.reset_cx, cy: that.reset_cy};
+            var reset = function() { that.reset() };
+            entityManager.generateEffect("spawnFlash", reset_coords, reset);
+        }
+        entityManager.generateEffect("explosionBig", coords, spawnFlash);
         g_SFX.request(bullet.soundDestroyPlayer);
         this.numberOfLives--;
+        var that = this;
     }
 
     //Player got shot by other player
@@ -330,6 +340,7 @@ PlayerTank.prototype.reset = function () {
     this.setPos(this.reset_cx, this.reset_cy);
     this.orientation = this.reset_orientation;
     this.forceFieldType = 1;
+    this.isDead = false;
 
     //this.halt();
 };
@@ -383,6 +394,9 @@ PlayerTank.prototype.addSprite = function(image, sx, sy, width, height,
 
 PlayerTank.prototype.render = function (ctx, du) {
 
+    if (this.isDead)
+        return;
+
     // fetch correct sprite from spriteManager
     this.sprite = spriteManager.spriteTank(
         this.type,
@@ -391,10 +405,10 @@ PlayerTank.prototype.render = function (ctx, du) {
         this.animationFrame
     );
 
-	ctx.save();
-	ctx.translate(this.cx, this.cy)
-	ctx.scale(g_spriteScale, g_spriteScale);
-	ctx.translate(-this.cx, -this.cy)
+    ctx.save();
+    ctx.translate(this.cx, this.cy)
+    ctx.scale(g_spriteScale, g_spriteScale);
+    ctx.translate(-this.cx, -this.cy)
     this.sprite.drawTankAt(ctx, this.cx, this.cy);
     ctx.restore();
 };
