@@ -51,7 +51,7 @@ Brick.prototype.update = function (du) {
 //        otherwise it partially destroyes a brick
 Brick.prototype.takeBulletHit = function (bullet) {
 
-    if(bullet.strength === 4){
+    if(bullet.strength === 2){
         this.kill();
         if (bullet.player)
             g_SFX.request(bullet.soundHitBrick);
