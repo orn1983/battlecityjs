@@ -17,13 +17,6 @@ for the sprites they need to draw themselves.
 
 var spriteManager = {
 
-// HD: TODO: MAYYYYYYBE move some preloading logic into the initialization of
-// spatialManager, if we think belongs here. I'm not sure myself; I think the
-// logic of what entities to load and in what order should be fully in the
-// hands of Battlecity.js.
-
-    // g_images.spritesheet : "images/spritesheet.png",
-
     spriteTank : function(type, power, direction, frameNumber) {
         //HD: Framenumber should always be 0 or 1 for tanks.
         var sx = 0
@@ -60,8 +53,7 @@ var spriteManager = {
             break;
         }
 
-
-        if( (type == consts.PLAYER1) || (type == consts.PLAYER1) )
+        if( (type === consts.TANK_PLAYER1) || (type === consts.TANK_PLAYER2) )
         {
             switch(power)
             {
@@ -118,7 +110,7 @@ var spriteManager = {
             break;
         }
 
-        //HD: The "1,1" is for numCols and numRows, which the Sprite constructor
+        //The "1,1" is for numCols and numRows, which the Sprite constructor
         //requires. Not sure we need them for this, but I don't see that they
         //do any harm.
         return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);

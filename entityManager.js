@@ -104,15 +104,6 @@ generatePlayerTank : function(descr) {
     this._playerTanks.push(new PlayerTank(descr));
     var tankIndex = this._playerTanks.length - 1;
 
-      //HD NB: When we start creating different tanks, we can use properties of
-      //descr to determine where spriteXOffset should start.
-      /*for(var i=0; i<8; i++)
-      {
-            var spriteXOffset = i*16;
-            var spriteYOffset = this._playerTanks[tankIndex].playerSpriteOffset;
-            this._playerTanks[tankIndex].addSprite(g_images.spritesheet,
-                spriteXOffset, spriteYOffset, 16, 16, 1, 1);
-      }*/
 
 },
 
@@ -168,7 +159,7 @@ generatePowerup : function(){
     var randomcX = Math.floor(Math.random() * (g_canvas.width - 0 + 1)) + 0;
     var randomcY = Math.floor(Math.random() * (g_canvas.height - 0 + 1)) + min;
 
-    //this._powerups.push(new Powerup());
+
     this._powerups.push(new Powerup(
         {
             type : randomPowerUp,
@@ -303,16 +294,14 @@ activatePowerup : function(tank, poweruptype) {
             //First star (second tier): fired bullets are as fast as Power Tanks' bullets.
             //Second star (third tier): two bullets can be fired on the screen at a time.
             //Third star (fourth tier): fired bullets can destroy steel walls and are twice as effective against brick walls.
-            if (tank.bulletStrength < 4) {
-                tank.addStar();
-            }
+            tank.addStar();
         break;
         case(consts.POWERUP_GRENADE):
             //Destroys every enemy currently on the screen. No points given
             for (var i = 0; i < this._enemyTanksInPlay.length; i++) {
                 this._enemyTanksInPlay[i].kill();
                 // this._enemyTanksInPlay[i].takeBulletHit(new Bullet({cx: -10, cy:-10,}));
-				
+
             }
         break;
         case(consts.POWERUP_TANK):
