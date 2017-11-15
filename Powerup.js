@@ -32,7 +32,7 @@ Powerup.prototype.halfWidth = 20;
 //Default values
 Powerup.prototype.cx = 200;
 Powerup.prototype.cy = 200;
-Powerup.prototype.type = consts.POWERUP_HELMET;
+//Powerup.prototype.type = consts.POWERUP_HELMET;
 
 Powerup.prototype.animateThisFrame = true;
 
@@ -62,10 +62,11 @@ Powerup.prototype.render = function (ctx) {
     if(this.animateThisFrame)
     {
 
-        this.sprite = spriteManager.spritePowerup(this.poweruptype);
+        this.sprite = spriteManager.spritePowerup(this.type);
         //TODO: Change drawTankAt to the name of whatever function we end up
         // using for drawing everything
-        this.sprite.drawTankAt(ctx, this.cx, this.cy);
+        //this.sprite.drawTankAt(ctx, this.cx, this.cy);
+        this.sprite.drawCentredAt(ctx, this.cx, this.cy, 1);
     }
 
 };
