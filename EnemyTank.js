@@ -248,7 +248,8 @@ EnemyTank.prototype.move = function(du, newX, newY)
     var hitEntity = this.findHitEntity(newX, newY);
 
     if ( (!hitEntity) ||
-         (this.noCollision) ||
+         ((this.noCollision) && (hitEntity.entity.tanktype >= 4)
+             && (hitEntity.entity.tanktype <= 9)) ||
          (hitEntity.type === consts.POWERUP_HELMET) ||
          (hitEntity.type === consts.POWERUP_TIMER) ||
          (hitEntity.type === consts.POWERUP_SHOVEL) ||
@@ -263,6 +264,7 @@ EnemyTank.prototype.move = function(du, newX, newY)
             this.noCollision = false;
             this.bumpedIntoTank = false;
         }
+
     }
 
     else if( hitEntity.entity.type !== consts.STRUCTURE_FLAG ){
@@ -280,6 +282,9 @@ EnemyTank.prototype.move = function(du, newX, newY)
                 //...and either way, let's remember this bump for next time.
                 this.bumpedIntoTank = true;
             }
+        else{
+            this.bumpedIntoTank = false;
+        }
 
         this.changeDirection();
 
@@ -354,7 +359,7 @@ EnemyTank.prototype.changeDirection = function() {
             break;
         }
 
-        if(newDirection <= 33) {
+        if(newDirection <= 30) {
             this.orientation = consts.DIRECTION_DOWN;
         }
         else if( (newDirection>30) && (newDirection <=55) )
