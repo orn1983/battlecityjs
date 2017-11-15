@@ -250,12 +250,12 @@ EnemyTank.prototype.move = function(du, newX, newY)
     if ( (!hitEntity) ||
          ((this.noCollision) && (hitEntity.entity.type >= 4)
              && (hitEntity.entity.type <= 9)) ||
-         (hitEntity.type === consts.POWERUP_HELMET) ||
-         (hitEntity.type === consts.POWERUP_TIMER) ||
-         (hitEntity.type === consts.POWERUP_SHOVEL) ||
-         (hitEntity.type === consts.POWERUP_STAR) ||
-         (hitEntity.type === consts.POWERUP_GRENADE) ||
-         (hitEntity.type === consts.POWERUP_TANK) )
+         (hitEntity.entity.type === consts.POWERUP_HELMET) ||
+         (hitEntity.entity.type === consts.POWERUP_TIMER) ||
+         (hitEntity.entity.type === consts.POWERUP_SHOVEL) ||
+         (hitEntity.entity.type === consts.POWERUP_STAR) ||
+         (hitEntity.entity.type === consts.POWERUP_GRENADE) ||
+         (hitEntity.entity.type === consts.POWERUP_TANK) )
 
     {
         this.cx = newX;
