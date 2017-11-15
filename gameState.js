@@ -37,7 +37,9 @@ var gameState = {
 	_player1Points : 0,
 	_player2Points : 0,
 	
-	_spawnPosition : 0,
+	_spawnPosition : 1,
+
+  _nextLevelRequested : false,
     
     fortress : [],
 	
@@ -46,8 +48,7 @@ resetCurrentLevelScore : function() {
 	this._currentLevelScore.p1_basic = 0;
 	this._currentLevelScore.p1_fast  = 0;
 	this._currentLevelScore.p1_power = 0;
-	this._currentLevelScore.p1_armor = 0;
-	
+	this._currentLevelScore.p1_armor = 0; 
 	this._currentLevelScore.p2_basic = 0;
 	this._currentLevelScore.p2_fast  = 0;
 	this._currentLevelScore.p2_power = 0;
@@ -67,12 +68,13 @@ prevLevel : function() {
         //createInitialTanks();
         this.createLevel(g_levels[g_sortedLevelKeys[this._currentLevel]]);
         entityManager.initLevel();
-		this._spawnPosition = 0;
+		this._spawnPosition = 1;
         this.resetSpawnTimer();
     }
 },
 
 nextLevel : function() {
+    this.nextLevelRequested = false;
     //only do something if not already on last level
     if (this._currentLevel < 34) {
         this._currentLevel++;
@@ -80,7 +82,7 @@ nextLevel : function() {
         //createInitialTanks();
         this.createLevel(g_levels[g_sortedLevelKeys[this._currentLevel]]);
         entityManager.initLevel();
-		this._spawnPosition = 0;
+		this._spawnPosition = 1;
         this.resetSpawnTimer();
     }
 },
@@ -293,7 +295,7 @@ addScore : function(player, type) {
 
 createLevel : function() {
     createLevel(g_levels[g_sortedLevelKeys[this._currentLevel]]);
-	createEnemies(g_enemies[g_sortedEnemyKeys[this._currentLevel]]);
+    createEnemies(g_enemies[g_sortedEnemyKeys[this._currentLevel]]);
     entityManager.generateStatue();
 }, 
 
@@ -326,9 +328,11 @@ update : function(du) {
     }
     
 	// see if level is over, then start next level
-	if(entityManager.getNumberOfEnemyTanks() === 0){
-		// make sure destroy level also kills all enemies in current level.
-		this.nextLevel();
+	if(entityManager.getNumberOfEnemyTanks() === 0 && !this._nextLevelRequested){
+        // make sure destroy level also kills all enemies in current level.
+        var that = this;
+        setTimeout(function() { that.nextLevel() }, 2000);
+        this._nextLevelRequested = true;
 	}
 	var nr = entityManager.getNumberOfEnemyTanks();
 	
