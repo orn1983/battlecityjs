@@ -116,16 +116,23 @@ EnemyTank.prototype.animationFramePowerupCounter = 0;
 
 EnemyTank.prototype.isMoving = false;
 
+//Disables collision. Used to ensure the enemy tank doesn't get stuck on other
+//tanks, such as when it has just spawned. Gets set to "false" as soon as the
+//tank is free (that is, returns !hitEntity when moving)
+EnemyTank.prototype.noCollision = true;
+
+EnemyTank.prototype.bumpedIntoTank = false;
+
 //HD: Using this to check when the tank should turn
 EnemyTank.prototype.bumpedIntoObstacle = false;
 
 EnemyTank.prototype.update = function (du) {
-    
+
     // return if enemies frozen
     if (gameState.getFreezeTimer() > 0) {
         return;
     }
-    
+
     spatialManager.unregister(this);
 
     // store old value of isMoving to detect if tank
@@ -241,6 +248,7 @@ EnemyTank.prototype.move = function(du, newX, newY)
     var hitEntity = this.findHitEntity(newX, newY);
 
     if ( (!hitEntity) ||
+         (this.noCollision) ||
          (hitEntity.type === consts.POWERUP_HELMET) ||
          (hitEntity.type === consts.POWERUP_TIMER) ||
          (hitEntity.type === consts.POWERUP_SHOVEL) ||
@@ -251,10 +259,26 @@ EnemyTank.prototype.move = function(du, newX, newY)
     {
         this.cx = newX;
         this.cy = newY;
+        if(!hitEntity){
+            this.noCollision = false;
+            this.bumpedIntoTank = false;
+        }
     }
 
     else if( hitEntity.entity.type !== consts.STRUCTURE_FLAG ){
+    //We haven't hit the flag.
+
+        //Let's check if we've already hit a tank and are hitting one again.
+        //If so, we're stuck and need to disable our collision until we can
+        //free ourselves
+        if( (this.bumpedIntoTank) && (hitEntity.entity.tanktype >= 4)
+            && (hitEntity.entity.tanktype <= 9) )
+            {
+                this.noCollision = true;
+            }
+
         this.changeDirection();
+
     }
 
 
