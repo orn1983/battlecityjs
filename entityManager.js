@@ -165,8 +165,16 @@ generatePowerup : function(){
     max = Math.floor(max);
     var randomPowerUp = Math.floor(Math.random() * (max - min + 1)) + min;
 
+    var randomcX = Math.floor(Math.random() * (g_canvas.width - 0 + 1)) + 0;
+    var randomcY = Math.floor(Math.random() * (g_canvas.height - 0 + 1)) + min;
+
     //this._powerups.push(new Powerup());
-    this._powerups.push(new Powerup({type : randomPowerUp}));
+    this._powerups.push(new Powerup(
+        {
+            type : randomPowerUp,
+            cx : randomcX,
+            cy : randomcY
+        }));
 },
 
 generateEffect :  function(effect_type, caller, callback) {
