@@ -54,7 +54,7 @@ function createTank(position, type, powerlevel){
 	entityManager.generateEnemyTank({
 					cx :  g_canvas.width/26 + position*(g_canvas.width/2-g_canvas.width/26),
 					cy :  g_canvas.height/26,
-					tanktype : type,
+					type : type,
 					powerLevel : powerlevel,
 	});
 }
