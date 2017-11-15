@@ -304,13 +304,15 @@ activatePowerup : function(tank, poweruptype) {
             //Second star (third tier): two bullets can be fired on the screen at a time.
             //Third star (fourth tier): fired bullets can destroy steel walls and are twice as effective against brick walls.
             if (tank.bulletStrength < 4) {
-                tank.bulletStrength++;
+                tank.addStar();
             }
         break;
         case(consts.POWERUP_GRENADE):
             //Destroys every enemy currently on the screen. No points given
             for (var i = 0; i < this._enemyTanksInPlay.length; i++) {
                 this._enemyTanksInPlay[i].kill();
+                // this._enemyTanksInPlay[i].takeBulletHit(new Bullet({cx: -10, cy:-10,}));
+				
             }
         break;
         case(consts.POWERUP_TANK):
