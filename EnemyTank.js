@@ -266,15 +266,19 @@ EnemyTank.prototype.move = function(du, newX, newY)
     }
 
     else if( hitEntity.entity.type !== consts.STRUCTURE_FLAG ){
-    //We haven't hit the flag.
+    //We hit something, but not the flag, so we want to keep moving
 
-        //Let's check if we've already hit a tank and are hitting one again.
-        //If so, we're stuck and need to disable our collision until we can
-        //free ourselves
-        if( (this.bumpedIntoTank) && (hitEntity.entity.tanktype >= 4)
+        //We just bumped into a tank.
+        if( (hitEntity.entity.tanktype >= 4)
             && (hitEntity.entity.tanktype <= 9) )
             {
-                this.noCollision = true;
+                //Let's check if it's the second bump.
+                //If so, let's extricate ourselves...
+                if(this.bumpedIntoTank) {
+                    this.noCollision = true;
+                }
+                //...and either way, let's remember this bump for next time.
+                this.bumpedIntoTank = true;
             }
 
         this.changeDirection();
