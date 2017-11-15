@@ -299,8 +299,8 @@ activatePowerup : function(tank, poweruptype) {
         case(consts.POWERUP_GRENADE):
             //Destroys every enemy currently on the screen. No points given
             for (var i = 0; i < this._enemyTanksInPlay.length; i++) {
-                this._enemyTanksInPlay[i].kill();
-                // this._enemyTanksInPlay[i].takeBulletHit(new Bullet({cx: -10, cy:-10,}));
+                // this._enemyTanksInPlay[i].kill();
+                this._enemyTanksInPlay[i].explode(tank, consts.POWERUP_GRENADE);
 
             }
         break;

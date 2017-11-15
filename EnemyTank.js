@@ -446,7 +446,7 @@ EnemyTank.prototype.takeBulletHit = function (bullet) {
             this.numberOfLives -= 1;
         }
         else {
-            gameState.addScore(bullet.tank, this.type);
+            gameState.addScore(bullet.tank.type, this.type);
             entityManager.generatePowerup();
             this.kill();
             g_SFX.request(bullet.soundDestroyEnemy);
@@ -457,6 +457,18 @@ EnemyTank.prototype.takeBulletHit = function (bullet) {
             entityManager.generateEffect("explosionBig", coords, points);
         }
     }
+};
+
+EnemyTank.prototype.explode = function (tank) {
+	gameState.addScore(tank.type, consts.POWERUP_GRENADE);
+	this.kill();
+	var bullet = new Bullet();
+	g_SFX.request(bullet.soundDestroyEnemy);
+	var coords = {cx: this.cx, cy: this.cy, points: 0};
+	var points = function () {
+        entityManager.generateEffect("points", coords);
+    }
+	entityManager.generateEffect("explosionBig", coords, points);
 };
 
 EnemyTank.prototype.reset = function () {
