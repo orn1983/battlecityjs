@@ -204,7 +204,7 @@ EnemyTank.prototype.update = function (du) {
 
 EnemyTank.prototype.updateAbilities = function() {
 
-    switch(this.tanktype){
+    switch(this.type){
         case(consts.TANK_ENEMY_BASIC):
             this.moveDistance = 1;
             this.bulletVelocity = 6;
@@ -248,8 +248,8 @@ EnemyTank.prototype.move = function(du, newX, newY)
     var hitEntity = this.findHitEntity(newX, newY);
 
     if ( (!hitEntity) ||
-         ((this.noCollision) && (hitEntity.entity.tanktype >= 4)
-             && (hitEntity.entity.tanktype <= 9)) ||
+         ((this.noCollision) && (hitEntity.entity.type >= 4)
+             && (hitEntity.entity.type <= 9)) ||
          (hitEntity.type === consts.POWERUP_HELMET) ||
          (hitEntity.type === consts.POWERUP_TIMER) ||
          (hitEntity.type === consts.POWERUP_SHOVEL) ||
@@ -271,8 +271,8 @@ EnemyTank.prototype.move = function(du, newX, newY)
     //We hit something, but not the flag, so we want to keep moving
 
         //We just bumped into a tank.
-        if( (hitEntity.entity.tanktype >= 4)
-            && (hitEntity.entity.tanktype <= 9) )
+        if( (hitEntity.entity.type >= 4)
+            && (hitEntity.entity.type <= 9) )
             {
                 //Let's check if it's the second bump.
                 //If so, let's extricate ourselves...
@@ -446,7 +446,7 @@ EnemyTank.prototype.takeBulletHit = function (bullet) {
             this.numberOfLives -= 1;
         }
         else {
-            gameState.addScore(bullet.tank, this.tanktype);
+            gameState.addScore(bullet.tank, this.type);
             entityManager.generatePowerup();
             this.kill();
             g_SFX.request(bullet.soundDestroyEnemy);
@@ -492,7 +492,7 @@ EnemyTank.prototype.render = function (ctx, du) {
 
     // fetch correct sprite from spriteManager
     this.sprite = spriteManager.spriteTank(
-        this.tanktype,
+        this.type,
         powerlevelSprite,
         this.orientation,
         this.animationFrame
