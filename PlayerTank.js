@@ -118,6 +118,10 @@ PlayerTank.prototype.isDead = false;
 
 PlayerTank.prototype.update = function (du) {
     spatialManager.unregister(this);
+    
+    if (this.numberOfLives <= -1) {
+        this.isDead = true;
+    }
 
     // store old value of isMoving to detect if tank
     // has stopped (used for slide effect on ice)
@@ -301,7 +305,7 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
 
     
     //Player got shot by enemy
-    if(this.isPlayer && !bullet.player && !this.hasForceField && !this.isDead ) {
+    if(this.isPlayer && !bullet.player && (this.forceFieldType === 0) && !this.isDead ) {
         this.isDead = true;
         var coords = {cx: this.cx, cy: this.cy};
         var that = this;

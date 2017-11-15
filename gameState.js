@@ -317,15 +317,22 @@ update : function(du) {
 	
 	// update freezeTimer
 	this._freezeTimer -= du;
+    
+    // end game if player(s) is/are dead
+    if (entityManager._playerTanks[0].isDead) {
+        if (g_numPlayers === 1 || (g_numPlayers === 2 && entityManager._playerTanks[1].isDead)) {
+            setTimeout(function () { main.gameOver(); } , 1000);
+        }
+    }
 	
     // check if players are dead
-    var lives = entityManager.getPlayerLives(1);
-    if (g_numPlayers === 2) {
-        lives += entityManager.getPlayerLives(2);
-    }
-    if (lives < 0 - g_numPlayers) {
-        setTimeout(function () { main.gameOver(); } , 1000);
-    }
+    //var lives = entityManager.getPlayerLives(1);
+    //if (g_numPlayers === 2) {
+    //    lives += entityManager.getPlayerLives(2);
+    //}
+    //if (lives < 0 - g_numPlayers) {
+    //    
+    //}
     
 	// see if level is over, then start next level
 	if(entityManager.getNumberOfEnemyTanks() === 0 && !this._nextLevelRequested){
