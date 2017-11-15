@@ -340,6 +340,7 @@ PlayerTank.prototype.reset = function () {
     this.setPos(this.reset_cx, this.reset_cy);
     this.orientation = this.reset_orientation;
     this.forceFieldType = 1;
+    entityManager.generateEffect("invulnerable", this, this.removeForceField);
     this.isDead = false;
 
     //this.halt();
@@ -372,7 +373,7 @@ PlayerTank.prototype.addStar = function() {
 
 PlayerTank.prototype.addForceField = function(forceFieldType) {
     this.forceFieldType = forceFieldType;
-    entityManager.generateEffect(consts.EFFECT_INVULNERABLE, this, this.removeForceField);
+    entityManager.generateEffect("invulnerable", this, this.removeForceField);
 };
 
 PlayerTank.prototype.removeForceField = function() {
