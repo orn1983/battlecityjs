@@ -26,13 +26,12 @@ function Powerup(descr) {
 
 Powerup.prototype = new Entity();
 
-Powerup.prototype.halfHeight = 20;
-Powerup.prototype.halfWidth = 20;
+Powerup.prototype.halfHeight = g_canvas.height/g_gridSize;
+Powerup.prototype.halfWidth = g_canvas.width/g_gridSize;
 
 //Default values
 Powerup.prototype.cx = 200;
 Powerup.prototype.cy = 200;
-//Powerup.prototype.type = consts.POWERUP_HELMET;
 
 Powerup.prototype.animateThisFrame = true;
 
@@ -52,7 +51,7 @@ Powerup.prototype.update = function (du) {
 
 
 Powerup.prototype.getPickedUp = function (tank) {
-    entityManager.activatePowerup(tank, this.poweruptype);
+    entityManager.activatePowerup(tank, this.type);
     this.kill();
 };
 
@@ -66,7 +65,9 @@ Powerup.prototype.render = function (ctx) {
         //TODO: Change drawTankAt to the name of whatever function we end up
         // using for drawing everything
         //this.sprite.drawTankAt(ctx, this.cx, this.cy);
-        this.sprite.drawCentredAt(ctx, this.cx, this.cy, 1);
+		this.sprite.scaleX = g_spriteScale;
+		this.sprite.scaleY = g_spriteScale;
+        this.sprite.drawCentredAt(ctx, this.cx, this.cy,0);
     }
 
 };
