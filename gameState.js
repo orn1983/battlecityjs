@@ -69,6 +69,7 @@ prevLevel : function() {
         this.createLevel(g_levels[g_sortedLevelKeys[this._currentLevel]]);
         entityManager.initLevel();
 		this._spawnPosition = 1;
+        this._nextLevelRequested = false;
         this.resetSpawnTimer();
     }
 },
@@ -83,6 +84,7 @@ nextLevel : function() {
         this.createLevel(g_levels[g_sortedLevelKeys[this._currentLevel]]);
         entityManager.initLevel();
 		this._spawnPosition = 1;
+        this._nextLevelRequested = false;
         this.resetSpawnTimer();
     }
 },
