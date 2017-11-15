@@ -16,7 +16,7 @@ var g_gridStep = g_levelWidth/g_gridSize;
 
 // there are always 20 enemies in each level, so array has to have length 20
 function createEnemies(array){
-	var position = 0;
+	var position = 1;
 	// 4 11 18
 	for (var i = 0; i<20; i++){
 		switch(array[i])
