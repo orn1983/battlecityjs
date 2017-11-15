@@ -128,10 +128,7 @@ EnemyTank.prototype.bumpedIntoObstacle = false;
 
 EnemyTank.prototype.update = function (du) {
 
-    // return if enemies frozen
-    if (gameState.getFreezeTimer() > 0) {
-        return;
-    }
+
 
     spatialManager.unregister(this);
 
@@ -166,7 +163,11 @@ EnemyTank.prototype.update = function (du) {
     }
 
     //Handle firing. (Remember that we can fire even if we can't move.)
-    this.maybeFireBullet();
+    // don't shoot if enemy fozen
+    if (gameState.getFreezeTimer() <= 0) {
+        this.maybeFireBullet();
+    }
+    
 
     // if tank was moving but isn't moving now and is on ice...
     if (wasMoving && !this.isMoving && spatialManager.isOnIce(this.cx, this.cy)) {
@@ -244,6 +245,10 @@ EnemyTank.prototype.slide = function(du, newX, newY) {
 
 EnemyTank.prototype.move = function(du, newX, newY)
 {
+    // return if enemies frozen
+    if (gameState.getFreezeTimer() > 0) {
+        return;
+    }
 
     var hitEntity = this.findHitEntity(newX, newY);
 
