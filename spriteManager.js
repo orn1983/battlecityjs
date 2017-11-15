@@ -311,7 +311,7 @@ var spriteManager = {
                 sx += mul*3;
             break;
             case(consts.POWERUP_GRENADE):
-                sx += mul*5;
+                sx += mul*4;
             break;
             case(consts.POWERUP_TANK):
                 sx += mul*5;
