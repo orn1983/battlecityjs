@@ -71,6 +71,13 @@ Effect.prototype.update = function (du) {
     }
 };
 
+//HD: Used when the effect is the invulnerability blink; we want the tank to
+//be able to turn it off right away if the tank dies.
+Effect.prototype.killEffect = function(){
+        return entityManager.KILL_ME_NOW;
+};
+
+
 Effect.prototype.render = function (ctx) {
     // fetch sprite from spriteManager
     this.sprite = spriteManager.spriteEffect(this.type, this.animationFrame);
