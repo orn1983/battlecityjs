@@ -269,12 +269,13 @@ PlayerTank.prototype.maybeFireBullet = function () {
             var alpha = 5;
 
             switch(this.orientation) {
+                // added offsets when shooting up or down
                 case(consts.DIRECTION_UP):
-                    turretX = this.cx;
+                    turretX = this.cx - 2;
                     turretY = this.cy - this.halfHeight - alpha;
                     break;
                 case(consts.DIRECTION_DOWN):
-                    turretX = this.cx;
+                    turretX = this.cx - 3;
                     turretY = this.cy + this.halfHeight + alpha;
                     break;
                 case(consts.DIRECTION_LEFT):
