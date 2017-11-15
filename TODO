@@ -6,10 +6,12 @@ o Powerup effects
     the scores as if the tanks were killed?
 o Ignore hits when invulnerable
 o Tank collisions (getting stuck together)
-  - Ignore tank collisions if tank spawns within a collision until there no longer is a
+  XXX - Ignore tank collisions if tank spawns within a collision until there no longer is a
     collision (woah nilly)
+  - Make sure fast tanks don't collide
 o Delay respawn time after killed. Set invulnerable
 o Explosion when eagle killed. Maybe go to main menu instead of freezing simulation
+o Delay entering next level
 
 Nice to have:
 o Main menu
