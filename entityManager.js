@@ -246,6 +246,7 @@ destroyLevel : function() {
 
 resetPlayerTanks : function() {
 	for (var i = 0; i < this._playerTanks.length ; i++){
+		this._playerTanks[i].isDead = true;
 		this._playerTanks[i].reset();
 	}
 },

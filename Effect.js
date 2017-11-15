@@ -47,7 +47,6 @@ Effect.prototype.metaData[consts.EFFECT_POINTS] = {numFrames: 1, cycleSpeed: 15,
 //Bullet.prototype.lifeSpan = 3000 / NOMINAL_UPDATE_INTERVAL;
 
 Effect.prototype.update = function (du) {
-    //console.log(this.type);
     var numFrames = this.metaData[this.type].numFrames;
     var cycleSpeed = this.metaData[this.type].cycleSpeed;
     var numCycles = this.metaData[this.type].numCycles;

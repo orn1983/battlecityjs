@@ -305,15 +305,10 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
         this.isDead = true;
         var coords = {cx: this.cx, cy: this.cy};
         var that = this;
-        var spawnFlash = function() {
-            var reset_coords = {cx: that.reset_cx, cy: that.reset_cy};
-            var reset = function() { that.reset() };
-            entityManager.generateEffect("spawnFlash", reset_coords, reset);
-        }
-        entityManager.generateEffect("explosionBig", coords, spawnFlash);
+        var reset = function() { that.reset() };
+        entityManager.generateEffect("explosionBig", coords, reset);
         g_SFX.request(bullet.soundDestroyPlayer);
         this.numberOfLives--;
-        var that = this;
     }
 
     //Player got shot by other player
@@ -337,14 +332,18 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
 
     };
 
-PlayerTank.prototype.reset = function () {
-    this.setPos(this.reset_cx, this.reset_cy);
+PlayerTank.prototype._doReset = function () {
     this.orientation = this.reset_orientation;
     this.forceFieldType = 1;
     entityManager.generateEffect("invulnerable", this, this.removeForceField);
     this.isDead = false;
+};
 
-    //this.halt();
+PlayerTank.prototype.reset = function () {
+    this.setPos(this.reset_cx, this.reset_cy);
+    var that = this;
+    var do_reset = function () { that._doReset() };
+    entityManager.generateEffect("spawnFlash", this, do_reset);
 };
 
 PlayerTank.prototype.addStar = function() {
