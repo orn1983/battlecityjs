@@ -23,27 +23,27 @@ function createEnemies(array){
 		{
 			case(0):
 				if(position === 3 || position === 10 || position === 17)
-					createTank(position%3, consts.TANK_ENEMY_BASIC, true);
+					createTank(position%3, consts.TANK_ENEMY_BASIC, consts.TANK_POWER_DROPSPOWERUP);
 				else
-					createTank(position%3, consts.TANK_ENEMY_BASIC, false);
+					createTank(position%3, consts.TANK_ENEMY_BASIC, consts.TANK_POWER_NONE);
 			break;
 			case(1):
 				if(position === 3 || position === 10 || position === 17)
-					createTank(position%3, consts.TANK_ENEMY_FAST, true);
+					createTank(position%3, consts.TANK_ENEMY_FAST, consts.TANK_POWER_DROPSPOWERUP);
 				else
-					createTank(position%3, consts.TANK_ENEMY_FAST, false);
+					createTank(position%3, consts.TANK_ENEMY_FAST, consts.TANK_POWER_NONE);
 			break;
 			case(2):
 				if(position === 3 || position === 10 || position === 17)
-					createTank(position%3, consts.TANK_ENEMY_POWER, true);
+					createTank(position%3, consts.TANK_ENEMY_POWER, consts.TANK_POWER_DROPSPOWERUP);
 				else
-					createTank(position%3, consts.TANK_ENEMY_POWER, false);
+					createTank(position%3, consts.TANK_ENEMY_POWER, consts.TANK_POWER_NONE);
 			break;
 			case(3):
 				if(position === 3 || position === 10 || position === 17)
-					createTank(position%3, consts.TANK_ENEMY_ARMOR, true);
+					createTank(position%3, consts.TANK_ENEMY_ARMOR, consts.TANK_POWER_DROPSPOWERUP);
 				else
-					createTank(position%3, consts.TANK_ENEMY_ARMOR, false);
+					createTank(position%3, consts.TANK_ENEMY_ARMOR, consts.TANK_POWER_NONE);
 			break;
 		}
 		position = (position + 1);
@@ -59,7 +59,7 @@ function createTank(position, type, powerlevel){
 	});
 }
 
-//level is 26 X 26 small bricks 
+//level is 26 X 26 small bricks
 function createLevel(array) {
     // just for testing
     for (var i = 0; i < g_gridSize; i++){
@@ -105,7 +105,7 @@ function createLevel(array) {
                     break;
                     case(5):
                     break;
-                    
+
 
             }
         }
