@@ -167,7 +167,7 @@ EnemyTank.prototype.update = function (du) {
     if (gameState.getFreezeTimer() <= 0) {
         this.maybeFireBullet();
     }
-    
+
 
     // if tank was moving but isn't moving now and is on ice...
     if (wasMoving && !this.isMoving && spatialManager.isOnIce(this.cx, this.cy)) {
@@ -452,7 +452,10 @@ EnemyTank.prototype.takeBulletHit = function (bullet) {
         }
         else {
             gameState.addScore(bullet.tank.type, this.type);
-            entityManager.generatePowerup();
+            if(this.powerLevel === consts.TANK_POWER_DROPSPOWERUP)
+            {
+                entityManager.generatePowerup();
+            }
             this.kill();
             g_SFX.request(bullet.soundDestroyEnemy);
             var coords = {cx: this.cx, cy: this.cy, points: this.pointsValue};

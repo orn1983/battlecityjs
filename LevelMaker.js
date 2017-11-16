@@ -17,33 +17,29 @@ var g_gridStep = g_levelWidth/g_gridSize;
 // there are always 20 enemies in each level, so array has to have length 20
 function createEnemies(array){
 	var position = 1;
+	var thisPowerup = consts.TANK_POWER_NONE;
 	// 4 11 18
 	for (var i = 0; i<20; i++){
+		if(i === 3 || i === 10 || i === 17)
+		{
+			thisPowerup = consts.TANK_POWER_DROPSPOWERUP;
+		}
+		else {
+			thisPowerup = consts.TANK_POWER_NONE;
+		}
 		switch(array[i])
 		{
 			case(0):
-				if(position === 3 || position === 10 || position === 17)
-					createTank(position%3, consts.TANK_ENEMY_BASIC, consts.TANK_POWER_DROPSPOWERUP);
-				else
-					createTank(position%3, consts.TANK_ENEMY_BASIC, consts.TANK_POWER_NONE);
+				createTank(position%3, consts.TANK_ENEMY_BASIC, thisPowerup);
 			break;
 			case(1):
-				if(position === 3 || position === 10 || position === 17)
-					createTank(position%3, consts.TANK_ENEMY_FAST, consts.TANK_POWER_DROPSPOWERUP);
-				else
-					createTank(position%3, consts.TANK_ENEMY_FAST, consts.TANK_POWER_NONE);
+				createTank(position%3, consts.TANK_ENEMY_FAST, thisPowerup);
 			break;
 			case(2):
-				if(position === 3 || position === 10 || position === 17)
-					createTank(position%3, consts.TANK_ENEMY_POWER, consts.TANK_POWER_DROPSPOWERUP);
-				else
-					createTank(position%3, consts.TANK_ENEMY_POWER, consts.TANK_POWER_NONE);
+				createTank(position%3, consts.TANK_ENEMY_POWER, thisPowerup);
 			break;
 			case(3):
-				if(position === 3 || position === 10 || position === 17)
-					createTank(position%3, consts.TANK_ENEMY_ARMOR, consts.TANK_POWER_DROPSPOWERUP);
-				else
-					createTank(position%3, consts.TANK_ENEMY_ARMOR, consts.TANK_POWER_NONE);
+				createTank(position%3, consts.TANK_ENEMY_ARMOR, thisPowerup);
 			break;
 		}
 		position = (position + 1);
