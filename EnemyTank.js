@@ -265,7 +265,10 @@ EnemyTank.prototype.move = function(du, newX, newY)
     {
         this.cx = newX;
         this.cy = newY;
-        if(!hitEntity){
+        if( (!hitEntity) ||
+            (hitEntity.entity.type < 4) ||
+            (hitEntity.entity.type > 9) )
+        {
             this.noCollision = false;
             this.bumpedIntoTank = false;
         }
