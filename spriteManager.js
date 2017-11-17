@@ -73,21 +73,7 @@ var spriteManager = {
 
         if( power==consts.TANK_POWER_DROPSPOWERUP )
         {
-            switch(type)
-            {
-                case(consts.TANK_ENEMY_BASIC):
-                    sy += mul*8;
-                break;
-                case(consts.TANK_ENEMY_FAST):
-                    sy += mul*9;
-                break;
-                case(consts.TANK_ENEMY_POWER):
-                    sy += mul*10;
-                break;
-                case(consts.TANK_ENEMY_ARMOR):
-                    sy += mul*11;
-                break;
-            }
+            sy += mul*8;
         }
 
         switch(direction)
