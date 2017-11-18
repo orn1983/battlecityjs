@@ -124,8 +124,12 @@ PlayerTank.prototype.update = function (du) {
 
     if (this._isDeadNow)
         return entityManager.KILL_ME_NOW;
-
-    if (keys[this.KEY_UP]) {
+    
+    if (this.frozenCounter >= 0) {
+        // don't move if tank is frozen
+        this.frozenCounter -= du;
+    }
+    else if (keys[this.KEY_UP]) {
         this.orientation = consts.DIRECTION_UP;
 		this.lockToNearestGrid();
         this.move(du, this.cx, this.cy - this.moveDistance);
@@ -331,6 +335,7 @@ PlayerTank.prototype._doReset = function () {
 };
 
 PlayerTank.prototype.reset = function () {
+    this.frozenCounter = 50;
     this.setPos(this.reset_cx, this.reset_cy);
     var that = this;
     var do_reset = function () { that._doReset() };
