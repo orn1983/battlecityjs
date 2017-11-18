@@ -86,8 +86,8 @@ function SFXManager() {
     };
 
     this.processRequests = function() {
-        if (g_isUpdatePaused) {
-            // stop all sounds if game is paused
+        if (g_isUpdatePaused || main._isGameOver) {
+            // stop all sounds if game is paused or game over
             for (var sound in this.SFX) {
                 this.stop(sound);
             }
