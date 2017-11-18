@@ -32,23 +32,20 @@ PlayerTank.prototype.rememberResets = function () {
     this.reset_orientation = this.orientation;
 };
 
-PlayerTank.prototype.KEY_UP = 'W'.charCodeAt(0);
+PlayerTank.prototype.KEY_UP    = 'W'.charCodeAt(0);
 PlayerTank.prototype.KEY_DOWN  = 'S'.charCodeAt(0);
-PlayerTank.prototype.KEY_LEFT   = 'A'.charCodeAt(0);
-PlayerTank.prototype.KEY_RIGHT  = 'D'.charCodeAt(0);
-PlayerTank.prototype.KEY_FIRE   = ' '.charCodeAt(0);
+PlayerTank.prototype.KEY_LEFT  = 'A'.charCodeAt(0);
+PlayerTank.prototype.KEY_RIGHT = 'D'.charCodeAt(0);
+PlayerTank.prototype.KEY_FIRE  = ' '.charCodeAt(0);
 
 PlayerTank.prototype.NORTH = 0;
 PlayerTank.prototype.SOUTH = 1;
-PlayerTank.prototype.WEST = 2;
-PlayerTank.prototype.EAST = 3;
+PlayerTank.prototype.WEST  = 2;
+PlayerTank.prototype.EAST  = 3;
 
-//TODO: Initialize xy coords based on default location for tank in environment
 PlayerTank.prototype.cx = 200;
 PlayerTank.prototype.cy = 200;
 
-//HD NB: Need these for calculations, but I'm just making up numbers.
-//Adjust them later based on tank size.
 PlayerTank.prototype.halfHeight = g_canvas.height/g_gridSize-3;
 PlayerTank.prototype.halfWidth = g_canvas.width/g_gridSize-3;
 
@@ -79,15 +76,13 @@ PlayerTank.prototype.forceFieldType = 0;
 //can move again.
 PlayerTank.prototype.frozenCounter = 0;
 
-//TODO: Implement higher speed when player picks up a powerup, plus permanent
-//lower and higher speeds when entityManager creates certain enemy types
 PlayerTank.prototype.moveDistance = 2;
 
 PlayerTank.prototype.orientation = consts.DIRECTION_UP;
 
 PlayerTank.prototype.numberOfLives = 2;
 
-//TODO: Use this as check to decide whether the tank's bullets will destroy
+//Used as check to decide whether the tank's bullets will destroy
 //an enemy tank (player->enemy or enemy->player, maybe also enemy->enemy) or
 //temporarily paralyze it (player->player)
 PlayerTank.prototype.isPlayer = true;
@@ -101,16 +96,12 @@ PlayerTank.prototype.animationFrame = 0;
 //counts number of updates called
 PlayerTank.prototype.animationFrameCounter = 0;
 
-
 //Used as a counter to space apart how often the tank fires bullets
 PlayerTank.prototype.bulletDelayCounter = 0;
 
 // HACKED-IN AUDIO (no preloading)
 PlayerTank.prototype.soundIdle = "tankIdle";
 PlayerTank.prototype.soundMove = "tankMove";
-
-//HD: Using this as a "1-2" tick between two animation frames in .render()
-//PlayerTank.prototype.animationTicker = true;
 
 PlayerTank.prototype.isMoving = false;
 
@@ -160,7 +151,6 @@ PlayerTank.prototype.update = function (du) {
 
     // if tank was moving but isn't moving now and is on ice...
     if (wasMoving && !this.isMoving && spatialManager.isOnIce(this.cx, this.cy)) {
-        // EAH: value of 20 looks okay I guess?
         this.slideCounter = 20;
     }
 
@@ -269,7 +259,7 @@ PlayerTank.prototype.maybeFireBullet = function () {
         //or only one bullet alive and canFireTwice is true
         if (this.bulletsAlive === 0 || (this.bulletsAlive === 1 && this.canFireTwice))  {
             var turretX, turretY;
-            // EAH: add offset so bullet doesn't collide with tank!
+            // offset so bullet doesn't collide with tank!
             var alpha = 5;
 
             switch(this.orientation) {
@@ -302,7 +292,6 @@ PlayerTank.prototype.maybeFireBullet = function () {
 };
 
 PlayerTank.prototype.takeBulletHit = function (bullet) {
-
     
     //Player got shot by enemy
     if(this.isPlayer && !bullet.player && (this.forceFieldType === 0) && !this.isDead ) {
@@ -324,8 +313,6 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
         this.reset();
         g_SFX.request(bullet.soundDestroyPlayer);
     }
-
-
 
     //Enemy got shot by player. We'll have to do other things here later on,
     //such as incrementing the score for the player who owned the bullet,
@@ -386,19 +373,6 @@ PlayerTank.prototype.addForceField = function(forceFieldType) {
 
 PlayerTank.prototype.removeForceField = function() {
     this.forceFieldType = 0;
-};
-
-
-// EAH; don't need this function anymore?
-PlayerTank.prototype.addSprite = function(image, sx, sy, width, height,
-    numCols=1, numRows=1)
-{
-    // HD TODO: This is the basic 1st version of having an object load its own
-    // sprites, so I'm skipping animation code for now. We let the tank assume
-    // that every two entries in spriteList are animation frames pointing in
-    //the same direction.
-    this.spriteList.push(new Sprite(image, sx, sy, width, height,
-        numCols, numRows));
 };
 
 PlayerTank.prototype.render = function (ctx, du) {
