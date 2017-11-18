@@ -104,8 +104,8 @@ generateBrick : function(descr) {
 generatePlayerTank : function(descr) {
     this._playerTanks.push(new PlayerTank(descr));
     var tankIndex = this._playerTanks.length - 1;
-
-
+    this._playerTanks[tankIndex].isDead = true;
+    this._playerTanks[tankIndex].reset();
 },
 
 generateStatue : function(descr) {
@@ -143,9 +143,9 @@ handleGamepads : function() {
 },
 
 
-resetPlayerTanks: function() {
-    this._forEachOf(this._playerTanks, PlayerTank.prototype.reset);
-},
+//resetPlayerTanks: function() {
+//    this._forEachOf(this._playerTanks, PlayerTank.prototype.reset);
+//},
 
 
 

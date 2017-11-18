@@ -35,6 +35,8 @@ function createInitialTanks() {
     // also create player 2 tank if 2 players
     if (g_numPlayers >= 2) {
         createPlayerTwoTank();
+        // call reset to create spawn flash + forcefield
+        entityManager._playerTanks[1].reset();
     }
 }
 
@@ -202,7 +204,7 @@ function preloadDone() {
     if (g_gameStarted) {
         entityManager.init();
         gameState.init();
-		createBorder();
+        entityManager.initLevel();
         gameState.createLevel();        
     }
     else {
