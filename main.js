@@ -58,13 +58,7 @@ main._updateClocks = function (frameTime) {
 };
 
 main._iterCore = function (dt) {
-    
-    // Handle QUIT
-    if (requestedQuit()) {
-        this.gameOver();
-        return;
-    }
-    
+
     gatherInputs();
     update(dt);
     render(g_ctx);
