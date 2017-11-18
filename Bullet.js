@@ -125,13 +125,13 @@ Bullet.prototype.render = function (ctx) {
 
     // fetch sprite from spriteManager
     this.sprite = spriteManager.spriteBullet(this.direction);
-    this.sprite.drawBulletAt(ctx, this.cx, this.cy, this.direction, g_spriteScale);
+    this.sprite.drawScaledAt(ctx, this.cx, this.cy, this.direction, g_spriteScale);
     
     
 //HD: Shouldn't bullet call its own sprite like tank does,
 //rather than referencing the g_sprites array?
     //g_sprites.bullet.drawCentredAt(
-    //this.sprite[this.direction].drawBulletAt(
+    //this.sprite[this.direction].drawScaledAt(
     //    ctx, this.cx, this.cy, this.direction
     //);
 

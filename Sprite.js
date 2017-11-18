@@ -88,8 +88,8 @@ Sprite.prototype.drawTankAt = function (ctx, cx, cy) {
 };
 
 
-// draws bullet
-Sprite.prototype.drawBulletAt = function (ctx, cx, cy, direction, scale) {
+// draws sprite in specific scale
+Sprite.prototype.drawScaledAt = function (ctx, cx, cy, direction, scale) {
     var w = this.width,
         h = this.height;
 

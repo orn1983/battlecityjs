@@ -82,7 +82,7 @@ Effect.prototype.render = function (ctx) {
     // fetch sprite from spriteManager
     this.sprite = spriteManager.spriteEffect(this.type, this.animationFrame);
     if (this.caller)
-        this.sprite.drawBulletAt(ctx, this.caller.cx, this.caller.cy, 1, g_spriteScale);
+        this.sprite.drawScaledAt(ctx, this.caller.cx, this.caller.cy, 1, g_spriteScale);
     else
         console.log("Trying to spawn effect but have no co-ordinates");
 };
