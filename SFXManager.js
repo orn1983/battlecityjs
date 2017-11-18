@@ -86,26 +86,34 @@ function SFXManager() {
     };
 
     this.processRequests = function() {
-        for (var sound in this.SFX) {
-            if (this.SFX[sound].requested) {
-                if (sound !== "tankIdle" && sound !== "tankMove") {
-                    this.play(sound);
-                    this.SFX[sound].requested = false;
-                }
-                else {
-                    // Special case for tank movement as we only play one at a time,
-                    // even if we have two tanks requesting the sound
-                    if (sound === "tankIdle") {
-                        if (!this.SFX["tankMove"].requested) {
-                            this.stop("tankMove");
-                            this.play(sound);
-                        }
+        if (g_isUpdatePaused) {
+            // stop all sounds if game is paused
+            for (var sound in this.SFX) {
+                this.stop(sound);
+            }
+        }
+        else {
+            for (var sound in this.SFX) {
+                if (this.SFX[sound].requested) {
+                    if (sound !== "tankIdle" && sound !== "tankMove") {
+                        this.play(sound);
                         this.SFX[sound].requested = false;
                     }
                     else {
-                        this.stop("tankIdle");
-                        this.play(sound);
-                        this.SFX[sound].requested = false;
+                        // Special case for tank movement as we only play one at a time,
+                        // even if we have two tanks requesting the sound
+                        if (sound === "tankIdle") {
+                            if (!this.SFX["tankMove"].requested) {
+                                this.stop("tankMove");
+                                this.play(sound);
+                            }
+                            this.SFX[sound].requested = false;
+                        }
+                        else {
+                            this.stop("tankIdle");
+                            this.play(sound);
+                            this.SFX[sound].requested = false;
+                        }
                     }
                 }
             }
