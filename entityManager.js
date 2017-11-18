@@ -37,7 +37,8 @@ _enemyTanksInPlay : [],
 _powerups         : [],
 _trees            : [],
 _effects          : [],
-_border            : [],
+_border           : [],
+_points           : [],  
 
 // "PRIVATE" METHODS
 
@@ -59,8 +60,8 @@ KILL_ME_NOW : -1,
 //
 deferredSetup : function () {
     this._categories = [ this._terrain, this._bricks, this._statue, this._bullets,
-        this._playerTanks, this._enemyTanksInPlay, this._trees, this._powerups,
-        this._effects, this._border];
+        this._playerTanks, this._enemyTanksInPlay, this._effects, this._trees, 
+        this._powerups, this._border, this._points];
 },
 
 init: function() {
@@ -195,8 +196,13 @@ generateEffect :  function(effect_type, caller, callback) {
             effect = consts.EFFECT_INVULNERABLE;
             break;
     }
-
-    this._effects.push(new Effect({type: effect, caller: caller, callWhenDone: callback}));
+    
+    if (effect_type === "points") {
+        this._points.push(new Effect({type: effect, caller: caller, callWhenDone: callback}));    
+    }
+    else {
+        this._effects.push(new Effect({type: effect, caller: caller, callWhenDone: callback}));
+    }
 },
 
 
