@@ -25,29 +25,14 @@ var g_backgroundCtx = g_backgroundCanvas.getContext("2d");
 
 function createInitialTanks() {
     entityManager.generatePlayerTank({
-        //HD: Adding a tanktype property with a const value. Will eventually
-        //drop the old type:"player1" above this comment, since I'm pretty sure
-        //they're used for basically the same thing, but I'm leaving it in for
-        //now so that it doesn't break anything with its absence.
         type: consts.TANK_PLAYER1,
-        //sprite: g_sprites.playerTank1,
         cx :    g_canvas.width/26 + g_canvas.width/13*4,
         cy :    g_canvas.width/26 + g_canvas.width/13*12,
-        //HD: If we use a spritemanager, we'd probably pull from that and
-        // write it directly into the spriteList below. Since we don't yet
-        // have one, I'm going to let entityManager call the tank's
-        // addSprite() function when it pushes the tank into _playerTanks.
-        spriteList: [],
         playerSpriteOffset : 0,
         gamepad : gamepadManager.getGamepad()
     });
 
-    // createEnemyTank(1);
-    // createEnemyTank(2);
-    // createEnemyTank(3);
-
-
-    // TODO if two players
+    // also create player 2 tank if 2 players
     if (g_numPlayers >= 2) {
         createPlayerTwoTank();
     }
@@ -57,15 +42,11 @@ function createInitialTanks() {
 function createPlayerTwoTank() {
     g_numPlayers = 2;
     entityManager.generatePlayerTank({
-        //HD: We'll probably drop the "type" once tanktype is fully implemented.
         type: consts.TANK_PLAYER2,
-        //sprite: g_sprites.playerTank2,
         cx :    g_canvas.width/26 + g_canvas.width/13*8,
         cy :    g_canvas.width/26 + g_canvas.width/13*12,
-        //HD: Once the spriteManager is working, we can drop spriteList[]
-        spriteList: [],
         // overwrite prototype definitions:
-        KEY_UP    : 38, // up arrow, is there a'W'.charCodeAt(0) version?
+        KEY_UP    : 38, // up arrow
         KEY_DOWN  : 40, // down arrow
         KEY_LEFT  : 37, // left arrow
         KEY_RIGHT : 39, // right arrow
@@ -73,48 +54,6 @@ function createPlayerTwoTank() {
         // sprite offset
         playerSpriteOffset : 128,
         gamepad : gamepadManager.getGamepad()
-    });
-}
-
-function createEnemyTank(start) {
-//HD: Temporary function used to create enemy tanks at given starting locations
-    var thiscX, thiscY;
-    var thisTankType = consts.TANK_ENEMY_BASIC;
-    var movementSpeed = 2;
-    var bulletSpeed = 6;
-    switch(start){
-        case 1: //upper left corner, basic tank (half speed, half bullet speed)
-            thiscX = g_canvas.width/26;
-            thiscY = g_canvas.width/26;
-            thisTankType = consts.TANK_ENEMY_BASIC;
-            movementSpeed = 1;
-            bulletSpeed = 3;
-        break;
-        case 2: //upper middle, fast tank (double speed, normal bullet speed)
-            thiscX = g_canvas.width/26 + g_canvas.width/13*6;
-            thiscY = g_canvas.width/26;
-            thisTankType = consts.TANK_ENEMY_FAST;
-            movementSpeed = 3;
-            bulletSpeed = 2;
-        break;
-        case 3: //upper right corner, power tank (normal speed, fast bullet speed)
-            thiscX = g_canvas.width/26 + g_canvas.width/13*12;
-            thiscY = g_canvas.width/26;
-            thisTankType = consts.TANK_ENEMY_ARMOR;
-            movementSpeed = 2;
-            bulletSpeed = 3;
-        break;
-    }
-
-
-    entityManager.generateEnemyTank({
-        //cx :    g_canvas.width/26 + g_canvas.width/13*8,
-        //cy :    g_canvas.width/26 + g_canvas.width/13*12,
-        cx : thiscX,
-        cy :  thiscY,
-        tanktype : thisTankType,
-        moveDistance : movementSpeed,
-        bulletVelocity : bulletSpeed
     });
 }
 
