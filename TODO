@@ -1,14 +1,18 @@
 Must haves (ish)
-o Tank collisions (getting stuck together)
-  XXX - Ignore tank collisions if tank spawns within a collision until there no longer is a
-    collision (woah nilly)
-  - Make sure fast tanks don't collide
+o Tank collisions: Edge case where enemy tank gets stuck inside brick, usually
+  after having bumped up against a player. (All other collisions should be fixed by now.)
 o Explosion when eagle killed. Maybe go to main menu instead of freezing simulation
 o Disable keypresses on next map while spawning is taking place
 o Overhaul things when changing levels
+o Change "quit level" button from 'q' to some other letter far away from the
+  controls (Pat requested this in the instructional text for the final submission).
+o Clean up unnecessary comments (of course we can leave the ones that explain
+  what our code does, but let's make sure there's no "//HD: Jesus Christ. Alright.
+  This boolean is my 56th attempt attempt to fix tank collision...")
 
 Nice to have:
+o Instructions (most basic form: HTML hardcoded on blank part of page;
+  more advanced form: separate part of main menu; final form: pictures and icons
+  pulled from spriteManager, fancy-like.)
 o Main menu
 o Score tally
-
-

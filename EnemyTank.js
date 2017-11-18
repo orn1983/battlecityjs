@@ -116,12 +116,16 @@ EnemyTank.prototype.animationFramePowerupCounter = 0;
 
 EnemyTank.prototype.isMoving = false;
 
-//Disables collision. Used to ensure the enemy tank doesn't get stuck on other
-//tanks, such as when it has just spawned. Gets set to "false" as soon as the
-//tank is free (that is, returns !hitEntity when moving)
-EnemyTank.prototype.noCollision = true;
+//Disables collision. Used to get a tank out of another tank, such as when
+//one of them has just spawned.
+EnemyTank.prototype.noCollision = false;
 
 EnemyTank.prototype.bumpedIntoTank = false;
+
+//HD: Yet another attempt at fixing tank collision. This is set to either false
+//(so we can do a "!lastBumpedTank" check) or to the actual tank object we
+//bumped into last.
+EnemyTank.prototype.lastBumpedTank = false;
 
 //HD: Using this to check when the tank should turn
 EnemyTank.prototype.bumpedIntoObstacle = false;
@@ -252,52 +256,160 @@ EnemyTank.prototype.move = function(du, newX, newY)
 
     var hitEntity = this.findHitEntity(newX, newY);
 
-    if ( (!hitEntity) ||
-         ((this.noCollision) && (hitEntity.entity.type >= 4)
-             && (hitEntity.entity.type <= 9)) ||
+    //We're extricating ourselves from a tank. (Let's make sure we don't drive
+    //into anything else.)
+    if(this.noCollision)
+    {
+        //We found a valid direction to move in.
+        if ( (!hitEntity) ||
+             (hitEntity.entity.type === consts.POWERUP_HELMET) ||
+             (hitEntity.entity.type === consts.POWERUP_TIMER) ||
+             (hitEntity.entity.type === consts.POWERUP_SHOVEL) ||
+             (hitEntity.entity.type === consts.POWERUP_STAR) ||
+             (hitEntity.entity.type === consts.POWERUP_GRENADE) ||
+             (hitEntity.entity.type === consts.POWERUP_TANK) )
+
+        {
+            this.cx = newX;
+            this.cy = newY;
+            this.noCollision = false;
+            this.bumpedIntoTank = false;
+            this.lastBumpedTank = false;
+
+        }
+
+        //We're still driving out of the tank.
+        else if (this.lastBumpedTank == hitEntity.entity)
+        {
+
+            //We'd get stuck on something else, or go off-map. No good.
+            //Change direction and don't move.
+            if(this.goingOffMap(newX, newY))
+            {
+                this.changeDirection();
+            }
+            //Not going off map. Good. Move there.
+            else
+            {
+                this.cx = newX;
+                this.cy = newY;
+            }
+        }
+
+        //NB: Stuck-in-brick villan á sér líklega uppruna í næsta else skilyrði:
+        //Collision is off.
+        //We're not headed into safe open space (empty lane or powerup).
+        //But we're not stuck inside a tank, either.
+        //So we're about to drive into something we'll get stuck in.
+        else
+        {
+            var currentEntity = this.findHitEntity(this.cx, this.cy);
+
+            //Edge case: We're stuck inside something other than a tank.
+            //Turn off collision again so we can get out.
+            if(currentEntity.entity == hitEntity.entity)
+            {
+                this.noCollision = true;
+                this.changeDirection();
+            }
+            //We're not stuck on anything; we just bumped into it. Turn.
+            else
+            {
+                this.changeDirection();
+            }
+        }
+
+    }
+
+    //We're not stuck on a tank. We're hitting nothing (or just driving over
+    //powerups). Keep moving, don't change direction, and make sure collision
+    //is on and bumper checks are off.
+    else if ( (!hitEntity) ||
          (hitEntity.entity.type === consts.POWERUP_HELMET) ||
          (hitEntity.entity.type === consts.POWERUP_TIMER) ||
          (hitEntity.entity.type === consts.POWERUP_SHOVEL) ||
          (hitEntity.entity.type === consts.POWERUP_STAR) ||
          (hitEntity.entity.type === consts.POWERUP_GRENADE) ||
          (hitEntity.entity.type === consts.POWERUP_TANK) )
-
     {
         this.cx = newX;
         this.cy = newY;
-        if( (!hitEntity) ||
-            (hitEntity.entity.type < 4) ||
-            (hitEntity.entity.type > 9) )
-        {
-            this.noCollision = false;
-            this.bumpedIntoTank = false;
-        }
-
+        this.noCollision = false;
+        this.bumpedIntoTank = false;
+        this.lastBumpedTank = false;
     }
 
-    else if( hitEntity.entity.type !== consts.STRUCTURE_FLAG ){
-    //We hit something, but not the flag, so we want to keep moving
+    //We're hitting the flag. We want to fire at the flag. Stay put, don't change
+    //direction, and make sure collision is on and bumper checks are off.
+    else if( hitEntity.entity.type === consts.STRUCTURE_FLAG )
+    {
+        this.noCollision = false;
+        this.bumpedIntoTank = false;
+        this.lastBumpedTank = false;
+    }
 
+    //We hit something, and it wasn't the flag. We'll probably change direction,
+    //but let's make sure we aren't running into collision issues with a tank.
+    else
+    {
         //We just bumped into a tank.
         if( (hitEntity.entity.type >= 4)
             && (hitEntity.entity.type <= 9) )
             {
-                //Let's check if it's the second bump.
-                //If so, let's extricate ourselves...
-                if(this.bumpedIntoTank) {
-                    this.noCollision = true;
+                //First time we hit any tank at all. Might not be a collision,
+                //but let's set a few parameters to prepare for one.
+                if(this.lastBumpedTank == false)
+                {
+                    this.bumpedIntoTank = true;
+                    this.lastBumpedTank = hitEntity.entity;
+                    this.changeDirection();
                 }
-                //...and either way, let's remember this bump for next time.
-                this.bumpedIntoTank = true;
+                //Uh-oh. We've hit a tank twice in a row. Might be stuck.
+                else
+                {
+                    //It's not the same tank, so we won't turn off collision
+                    //detection quite yet - but let's remember this new one.
+                    if(this.lastBumpedTank != hitEntity.entity)
+                    {
+                        this.bumpedIntoTank = true;
+                        this.lastBumpedTank = hitEntity.entity;
+                        this.changeDirection();
+                    }
+                    //It's the same tank. We're stuck inside one another.
+                    else
+                    {
+                        this.bumpedIntoTank = true;
+                        //Does the other tank have collision turned off? If so,
+                        //we're just going to let that tank drive away, while
+                        //we stay right where we are.
+                        if(this.lastBumpedTank.noCollision)
+                        {
+                            //Do nothing. Just wait out this tick of the clock.
+                        }
+                        //The other tank doesn't have collision turned off.
+                        //Let's turn ours off and drive out of that tank.
+                        else
+                        {
+
+                            this.noCollision = true;
+                            this.changeDirection();
+                        }
+                    }
+                }
             }
-        else{
-            this.bumpedIntoTank = false;
-        }
+            //We bumped into something that wasn't a tank (or the statue).
+            //Let's reset all collision detectors, and change direction.
+            else
+            {
 
-        this.changeDirection();
+                this.noCollision = false;
+                this.bumpedIntoTank = false;
+                this.lastBumpedTank = false;
+                this.changeDirection();
+            }
 
+    //End of all bump checks, changeDirection calls and actual moving.
     }
-
 
     // update animation frame
     this.animationFrameCounter++;
@@ -316,11 +428,25 @@ EnemyTank.prototype.move = function(du, newX, newY)
             this.animationFramePowerup === 0 ? this.animationFramePowerup = 1
                                       : this.animationFramePowerup = 0
         }
-        //console.log(this.animationFrameCounter);
     }
     this.isMoving = true;
 
 
+};
+
+EnemyTank.prototype.goingOffMap = function(newX, newY) {
+    if(    (newX-this.halfWidth < 0)
+        || (newX+this.halfWidth > g_canvas.width)
+        || (newY-this.halfHeight < 0)
+        || (newY+this.halfHeight > g_canvas.height)
+       )
+    {
+       return true;
+    }
+    else
+    {
+        return false;
+    }
 };
 
 EnemyTank.prototype.changeDirection = function() {
