@@ -298,7 +298,7 @@ PlayerTank.prototype.maybeFireBullet = function () {
 PlayerTank.prototype.takeBulletHit = function (bullet) {
     
     //Player got shot by enemy
-    if(this.isPlayer && !bullet.player && (this.forceFieldType === 0) && !this.isDead ) {
+    if(!bullet.player && (this.forceFieldType === 0) && !this.isDead) {
         this.isDead = true;
         var coords = {cx: this.cx, cy: this.cy};
         var that = this;
@@ -309,23 +309,23 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
     }
 
     //Player got shot by other player
-    if((this.isPlayer) && (bullet.player) && (!this.hasForceField) ) {
-
-        //TODO: Freeze player in place temporarily (he can turn and fire but not move)
-
-        // just do a reset for now
-        this.reset();
-        g_SFX.request(bullet.soundDestroyPlayer);
+    else if(bullet.player && (this.forceFieldType === 0)) {
+        if (g_friendlyFire) {
+            // friendly fire on, kill player
+            this.isDead = true;
+            var coords = {cx: this.cx, cy: this.cy};
+            var that = this;
+            var reset = function() { that.reset() };
+            entityManager.generateEffect("explosionBig", coords, reset);
+            g_SFX.request(bullet.soundDestroyPlayer);
+            this.numberOfLives--;
+        }
+        else {  // friendly fire is off
+            // freeze player for a while
+            this.frozenCounter = 100;
+        }
     }
-
-    //Enemy got shot by player. We'll have to do other things here later on,
-    //such as incrementing the score for the player who owned the bullet,
-    //and possibly lower the tank's health instead of killing it.
-    if((!this.isPlayer) && (bullet.isPlayer)) {
-        this.kill();
-    }
-
-    };
+};
 
 PlayerTank.prototype._doReset = function () {
     this.orientation = this.reset_orientation;
