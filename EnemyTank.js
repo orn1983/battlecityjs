@@ -248,7 +248,7 @@ EnemyTank.prototype.slide = function(du, newX, newY) {
     }
 };
 
-EnemyTank.prototype.move = function(du, newX, newY)
+EnemyTank.prototype.moveOLD = function(du, newX, newY)
 {
     // return if enemies frozen
     if (gameState.getFreezeTimer() > 0) {
@@ -433,6 +433,137 @@ EnemyTank.prototype.move = function(du, newX, newY)
     this.isMoving = true;
 
 
+};
+
+EnemyTank.prototype.move = function(du, newX, newY) {
+	// return if enemies frozen
+    if (gameState.getFreezeTimer() > 0) {
+        return;
+    }
+
+    var hitEntities = this.findHitEntities(newX, newY);
+	
+	// hit nothing, you can move:
+    if(hitEntities.length === 0){
+		this.cx = newX;
+        this.cy = newY;
+        this.canMoveWhileColliding = false;
+	}
+	// we would hit brick, water, border, or eagle:
+	else if(this.doesContainUncrossableObject(hitEntities)){
+		// do nothing I guess, OR try to change direction
+		this.changeDirection();
+	}
+	// we would hit another Tank
+	else if(this.doesContainTank(hitEntities)){
+		// check if I am already colliding with another tank:
+		var collidingWithTank = false;
+		if(this.doesContainTank(this.findHitEntities(this.cx, this.cy))){
+			collidingWithTank = true;
+		}
+		
+		var tanks = this.findAllTanksInList(hitEntities);
+		if(collidingWithTank === true){
+			if(!this.isAnyTankInListAllowedToMove(tanks)){
+				this.canMoveWhileColliding = true;
+				this.cx = newX;
+				this.cy = newY;
+			}
+			else{
+				this.canMoveWhileColliding = false;
+			}
+		}
+		else{
+			this.changeDirection();
+		}
+		
+	}
+	// rest is powerup, bullet, or crossable terrain
+	else {
+		this.cx = newX;
+        this.cy = newY;
+		this.canMoveWhileColliding = false;
+	}	
+	
+	// random change direction stuff, for temporary testing
+	// if(Math.random() < 0.01){
+		// this.changeDirection()
+	// }
+	
+	// update animation frame
+    this.animationFrameCounter++;
+    if (this.animationFrameCounter % 3 === 0) {
+        // switch frame every 3rd update
+        this.animationFrame === 0 ? this.animationFrame = 1
+                                  : this.animationFrame = 0;
+    }
+
+    if(this.powerLevel === consts.TANK_POWER_DROPSPOWERUP)
+    {
+
+        this.animationFramePowerupCounter++;
+        if (this.animationFrameCounter % 6 === 0) {
+            // switch red-grey frame every 3rd update
+            this.animationFramePowerup === 0 ? this.animationFramePowerup = 1
+                                      : this.animationFramePowerup = 0
+        }
+    }
+    this.isMoving = true;
+};
+
+// takes in list of tanks
+EnemyTank.prototype.isAnyTankInListAllowedToMove = function(list){
+	var temp = false;
+	for(var i = 0; i < list.length; i++){
+		if (list[i].canMoveWhileColliding){
+				temp = true;
+				break;
+			}
+	}
+	return temp;
+}
+
+EnemyTank.prototype.findAllTanksInList = function(list){
+	var tankList = [];
+	for(var i = 0; i < list.length; i++){
+		if (list[i].entity.type >= consts.TANK_PLAYER1 && 
+			list[i].entity.type <= consts.TANK_ENEMY_ARMOR){
+				tankList.push(list[i].entity);
+			}
+	}
+	return tankList;
+}
+
+EnemyTank.prototype.doesContainTank = function(list){
+	var temp
+	for(var i = 0; i < list.length; i++){
+		if (list[i].entity.type >= consts.TANK_PLAYER1 && 
+			list[i].entity.type <= consts.TANK_ENEMY_ARMOR){
+				temp = true;
+				break;
+			}
+	}
+	return temp;
+}
+
+// checks if list contains object that is not allowed to move through no matter what
+// (Brick, Terrain, Border or Eagle)
+EnemyTank.prototype.doesContainUncrossableObject = function(list){
+	// is True is we find Brick, Terrain, Border or Eagle in list. False otherwise
+	var temp
+	for(var i = 0; i<list.length; i++){
+		if (list[i].entity.type === consts.STRUCTURE_BRICK || 
+			list[i].entity.type === consts.STRUCTURE_STEEL ||
+			list[i].entity.type === consts.STRUCTURE_FLAG || 
+			list[i].entity.type === consts.STRUCTURE_FLAG ||
+			list[i].entity.type === consts.TERRAIN_WATER ||
+			list[i].entity.type === consts.TERRAIN_WATER ||
+			list[i].entity.type === consts.BORDER){
+				temp = true;
+				break;
+			}
+	}
+	return temp;
 };
 
 EnemyTank.prototype.goingOffMap = function(newX, newY) {
