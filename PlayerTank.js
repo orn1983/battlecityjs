@@ -153,7 +153,9 @@ PlayerTank.prototype.update = function (du) {
     }
 
     //HD: Handle firing. (Remember that we can fire even if we can't move.)
-    this.maybeFireBullet();
+    //EAH: don't fire if tank is dead (e.g. when spawning)
+    if (!this.isDead) 
+        this.maybeFireBullet();
 
     // if tank was moving but isn't moving now and is on ice...
     if (wasMoving && !this.isMoving && spatialManager.isOnIce(this.cx, this.cy)) {
