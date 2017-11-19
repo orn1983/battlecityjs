@@ -24,13 +24,13 @@ function Effect(descr) {
 
     if (this.type === consts.EFFECT_INVULNERABLE)
         if (this.caller.forceFieldType === 2)
-            this.metaData[consts.EFFECT_INVULNERABLE].numCycles = 200;
+            this.numCycles = 200;
 
     if (this.type === consts.EFFECT_POINTS) {
         this.animationFrame = (this.caller.points / 100) - 1;
         if (this.caller.points === 500)
             // Poweup points should stay on the screen longer than normal
-            this.cycleSpeed = 100;
+            this.cycleSpeed = 70;
     }
 }
 
