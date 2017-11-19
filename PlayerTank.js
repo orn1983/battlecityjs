@@ -329,8 +329,9 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
 
 PlayerTank.prototype._doReset = function () {
     this.orientation = this.reset_orientation;
-    this.forceFieldType = 1;
-    entityManager.generateEffect("invulnerable", this, this.removeForceField);
+    //this.forceFieldType = 1;
+    //entityManager.generateEffect("invulnerable", this, this.removeForceField);
+    this.addForceField(1);
     this.isDead = false;
 };
 
@@ -369,10 +370,10 @@ PlayerTank.prototype.addStar = function() {
 
 PlayerTank.prototype.addForceField = function(forceFieldType) {
     this.forceFieldType = forceFieldType;
-		var that = this;
-		var removeForceField = function () {
-			that.removeForceField();
-		}
+    var that = this;
+    var removeForceField = function () {
+        that.removeForceField();
+    }
     entityManager.generateEffect("invulnerable", this, removeForceField);
 };
 
