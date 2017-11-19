@@ -41,7 +41,7 @@ EnemyTank.prototype.SOUTH = 1;
 EnemyTank.prototype.WEST = 2;
 EnemyTank.prototype.EAST = 3;
 
-// Start off with a 90% chance of firing bullets
+// Start off with a 95% chance of firing bullets
 EnemyTank.prototype.chanceOfBulletFire = 0.95;
 
 EnemyTank.prototype.cx = 200;
