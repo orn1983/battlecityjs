@@ -603,7 +603,9 @@ EnemyTank.prototype.takeBulletHit = function (bullet) {
             }
             entityManager.generateEffect("explosionBig", coords, points);
         }
+        return true;
     }
+    return false;
 };
 
 EnemyTank.prototype.explode = function (tank) {

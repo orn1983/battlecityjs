@@ -341,6 +341,7 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
             this.frozenCounter = 100;
         }
     }
+    return true;
 };
 
 PlayerTank.prototype._doReset = function () {

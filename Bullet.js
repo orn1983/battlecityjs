@@ -81,8 +81,9 @@ Bullet.prototype.update = function (du) {
             var hitEntity = hitEntities[i];
             var canTakeHit = hitEntity.entity.takeBulletHit;
             if (canTakeHit) {
-                hitSomething = true
-                canTakeHit.call(hitEntity.entity, this);
+                var res = canTakeHit.call(hitEntity.entity, this);
+                if (res)
+                    hitSomething = true
             }
         }
     }
@@ -115,6 +116,7 @@ Bullet.prototype.takeBulletHit = function (bullet) {
     this.killMeNow();
     
     this.kill();
+    return true;
 };
 
 Bullet.prototype.render = function (ctx) {

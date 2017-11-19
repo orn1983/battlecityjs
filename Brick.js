@@ -60,13 +60,14 @@ Brick.prototype.takeBulletHit = function (bullet) {
         if(this.type == consts.STRUCTURE_STEEL) {
             if (bullet.player)
                 g_SFX.request(bullet.soundHitSteel);
-            return;
+            return true;
         }
         this.updateStructure(bullet.direction)
         this.updateSprite();
         if (bullet.player)
             g_SFX.request(bullet.soundHitBrick);
     }
+    return true;
 };
 
 // We update the structure if it has been hit by a bullet

@@ -53,6 +53,7 @@ Statue.prototype.takeBulletHit = function (bullet) {
     entityManager.generateEffect("explosionBig", coords);
     // game over
     setTimeout(function () { main.gameOver(); } , 1000);
+    return true;
 };
 
 Statue.prototype.render = function (ctx) {

@@ -39,6 +39,7 @@ Border.prototype.update = function (du) {
 Border.prototype.takeBulletHit = function (bullet) {
     if (bullet.player)
         g_SFX.request(bullet.soundHitSteel);
+    return true;
 };
 
 // We update the structure if it has been hit by a bullet
