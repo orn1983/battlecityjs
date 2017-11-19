@@ -1,13 +1,16 @@
 // main menu
 
 var mainMenu = {
-    
-menuItems : ["1 PLAYER", "2 PLAYERS", "VS MODE"],
+
+menuItems : ["1 PLAYER", "2 PLAYERS", "VS MODE", "INSTRUCTIONS"],
 
 selectedItem : 0,
 
 // indicated whether to show the level select menu or not
 levelSelect : false,
+
+// whether to show the instructions menu
+helpMenu : false,
 
 init : function() {
     g_backgroundCtx.save();
@@ -21,11 +24,11 @@ close : function() {
     g_backgroundCtx.restore();
     g_doClear = true;
     g_gameStarted = true;
-    g_canvas.style.display = "";  
+    g_canvas.style.display = "";
     entityManager.init();
     gameState.init();
     createBorder();
-    gameState.createLevel();  
+    gameState.createLevel();
 
 },
 
@@ -37,14 +40,34 @@ switchToLevelSelect : function() {
     this.selectedItem = 0;
 },
 
-update : function() {
-    
-    
+switchToHelpMenu : function() {
+
     setInterval(gamepadManager.updateMenuInputs(), 3000);
-    
+
+    if (eatKey(13) || eatKey(keyCode(' ')))
+    //enter key, go back to main menu
+    {
+        this.helpMenu = false;
+    }
+},
+
+drawHelpMenu : function(ctx) {
+    util.clearBackgroundCanvas(ctx, "black");
+    var goBack = "Press ENTER to go back";
+    var centerX = g_backgroundCanvas.width/2;
+    var centerY = g_backgroundCanvas.height/2;
+    ctx.fillStyle = "white";
+    ctx.fillText(goBack,centerX,centerY);
+},
+
+update : function() {
+
+
+    setInterval(gamepadManager.updateMenuInputs(), 3000);
+
     if (eatKey(13) || eatKey(keyCode(' '))) {
         // enter key, go to level select menu
-        if (!this.levelSelect) {
+        if ( (!this.levelSelect) && (!this.helpMenu)) {
             if (this.selectedItem === 0) {
                 // 1 player
                 g_friendlyFire = false;
@@ -55,17 +78,26 @@ update : function() {
                 // 2 players
                 g_friendlyFire = false;
                 g_enemiesEnabled = true;
-                g_numPlayers = 2;                
+                g_numPlayers = 2;
             }
             else if (this.selectedItem === 2) {
                 // VS mode
                 g_friendlyFire = true;
                 g_enemiesEnabled = false;
-                g_numPlayers = 2;                               
+                g_numPlayers = 2;
             }
-            
-            // enter pressed in main menu, go to level select
-            this.switchToLevelSelect();
+            else if (this.selectedItem === 3) {
+                //Instructions menu
+                this.helpMenu = true;
+            }
+            // enter pressed in main menu, and not going to help, so go to level select
+            if(!this.helpMenu) {
+                this.switchToLevelSelect();
+            }
+        }
+        else if(this.helpMenu){
+            //enter pressed in help menu, go back to main menu
+            this.helpMenu = false;
         }
         else if (this.levelSelect) {
             // enter pressed in level select, close menu and start game
@@ -73,17 +105,19 @@ update : function() {
             this.close();
         }
     }
-    else if (eatKey(38) || eatKey(keyCode('W'))) {
+    else if ((!this.helpMenu) && (eatKey(38) || eatKey(keyCode('W')))) {
         // up arrow
         this.selectedItem = (this.selectedItem - 1);
         if (this.selectedItem < 0) {
             this.selectedItem = this.menuItems.length - 1;
         }
     }
-    else if (eatKey(40) || eatKey(keyCode('S'))) {
+
+
+    else if  ((!this.helpMenu) && (eatKey(40) || eatKey(keyCode('S')))) {
         // down arrow
         this.selectedItem = (this.selectedItem + 1) % this.menuItems.length;
-    }            
+    }
 },
 
 render : function(ctx) {
@@ -94,22 +128,29 @@ render : function(ctx) {
     ctx.font="20px Georgia";
     // iterate through menuItems and draw on screen
     if (!this.levelSelect) {
-        // if main menu then draw all items
-        for (var i = 0; i < this.menuItems.length; i++) {
-            if (i === this.selectedItem) {
-                // draw selected item in different color
-                ctx.fillStyle = "red";
+
+        if(!this.helpMenu) {
+            // if main menu then draw all items
+            for (var i = 0; i < this.menuItems.length; i++) {
+                if (i === this.selectedItem) {
+                    // draw selected item in different color
+                    ctx.fillStyle = "red";
+                }
+                else {
+                    ctx.fillStyle = "white";
+                }
+                ctx.fillText(this.menuItems[i],centerX,centerY-30+i*30);
             }
-            else {
-                ctx.fillStyle = "white";
-            }
-            ctx.fillText(this.menuItems[i],centerX,centerY-30+i*30); 
-        } 
-    }        
+        }
+        else {
+            //Draw help menu.
+            this.drawHelpMenu(ctx);
+        }
+    }
     else {
         // if level select the draw only selected stage
         ctx.fillStyle = "white";
-        ctx.fillText("STAGE " + this.menuItems[this.selectedItem],centerX,centerY); 
+        ctx.fillText("STAGE " + this.menuItems[this.selectedItem],centerX,centerY);
     }
 
 }
