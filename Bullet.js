@@ -106,7 +106,7 @@ Bullet.prototype.decrementBulletTimeout = function(tank) {
 // decrements bullet counter for tank before killing bullet
 Bullet.prototype.killMeNow = function () {
     var that = this;
-    setTimeout(function () { that.tank.bulletsAlive--; } , 200);
+    setTimeout(function () { that.tank.bulletsAlive--; } , 150);
     return entityManager.KILL_ME_NOW;
 };
 
