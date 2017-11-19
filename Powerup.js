@@ -21,7 +21,7 @@ function Powerup(descr) {
     // Use sprite manager when it works
     this.sprite = spriteManager.spriteStructure(this.type);
     this.scale  = this.scale  || 1;
-
+    g_SFX.request(this.soundSpawn);
 }
 
 Powerup.prototype = new Entity();
@@ -36,6 +36,10 @@ Powerup.prototype.cy = 200;
 Powerup.prototype.displayFrame = true;
 Powerup.prototype.frameCounter = 0;
 Powerup.prototype.cycleSpeed = 7;
+
+Powerup.prototype.soundSpawn = "powerupSpawn";
+Powerup.prototype.soundPickup = "powerupPickup";
+Powerup.prototype.soundExtraLife = "extraLife";
 
 Powerup.prototype.pointsValue = 500;
 
@@ -56,6 +60,10 @@ Powerup.prototype.update = function (du) {
 
 
 Powerup.prototype.getPickedUp = function (tank) {
+    if (this.type === consts.POWERUP_TANK)
+        g_SFX.request(this.soundExtraLife);
+    else
+        g_SFX.request(this.soundPickup);
     entityManager.activatePowerup(tank, this.type);
     entityManager.generateEffect("points", {cx: this.cx, cy: this.cy, points: this.pointsValue});
     this.kill();

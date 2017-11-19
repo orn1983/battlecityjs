@@ -54,7 +54,22 @@ function SFXManager() {
             "audio": new Audio("sounds/tank_move.wav"),
             "interruptable": false,
             "requested": false,
-            "repeating": true}
+            "repeating": true},
+        "powerupSpawn": {
+            "audio": new Audio("sounds/powerup_spawned.wav"),
+            "interruptable": true,
+            "requested": false,
+            "repeating": false},
+        "powerupPickup": {
+            "audio": new Audio("sounds/powerup_pickup.wav"),
+            "interruptable": true,
+            "requested": false,
+            "repeating": false},
+        "extraLife": {
+            "audio": new Audio("sounds/extra_life.wav"),
+            "interruptable": true,
+            "requested": false,
+            "repeating": false}
     };
 
     this.configure = function() {
