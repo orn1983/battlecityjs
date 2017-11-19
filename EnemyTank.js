@@ -150,19 +150,19 @@ EnemyTank.prototype.update = function (du) {
     switch (this.orientation) {
         case(consts.DIRECTION_UP):
 	        this.lockToNearestGrid();
-            this.move(du, this.cx, this.cy - this.moveDistance);
+            this.move(du, this.cx, this.cy - this.moveDistance * du);
         break;
         case(consts.DIRECTION_DOWN):
             this.lockToNearestGrid();
-            this.move(du, this.cx, this.cy + this.moveDistance);
+            this.move(du, this.cx, this.cy + this.moveDistance * du);
         break;
         case(consts.DIRECTION_LEFT):
             this.lockToNearestGrid();
-            this.move(du, this.cx - this.moveDistance, this.cy);
+            this.move(du, this.cx - this.moveDistance * du, this.cy);
         break;
         case(consts.DIRECTION_RIGHT):
             this.lockToNearestGrid();
-            this.move(du, this.cx + this.moveDistance, this.cy);
+            this.move(du, this.cx + this.moveDistance * du, this.cy);
         break;
     }
 
@@ -187,16 +187,16 @@ EnemyTank.prototype.update = function (du) {
     if (this.slideCounter > 0) {
         switch(this.orientation) {
             case(consts.DIRECTION_UP):
-                this.slide(du, this.cx, this.cy - this.moveDistance);
+                this.slide(du, this.cx, this.cy - this.moveDistance * du);
                 break;
             case(consts.DIRECTION_DOWN):
-                this.slide(du, this.cx, this.cy + this.moveDistance);
+                this.slide(du, this.cx, this.cy + this.moveDistance * du);
                 break;
             case(consts.DIRECTION_LEFT):
-                this.slide(du, this.cx - this.moveDistance, this.cy);
+                this.slide(du, this.cx - this.moveDistance * du, this.cy);
                 break;
             case(consts.DIRECTION_RIGHT):
-                this.slide(du, this.cx + this.moveDistance, this.cy);
+                this.slide(du, this.cx + this.moveDistance * du, this.cy);
                 break;
         }
         this.slideCounter -= 1;
