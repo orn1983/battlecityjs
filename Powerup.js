@@ -37,6 +37,8 @@ Powerup.prototype.displayFrame = true;
 Powerup.prototype.frameCounter = 0;
 Powerup.prototype.cycleSpeed = 7;
 
+Powerup.prototype.pointsValue = 500;
+
 Powerup.prototype.update = function (du) {
     // Update the display status
     this.frameCounter++;
@@ -55,6 +57,7 @@ Powerup.prototype.update = function (du) {
 
 Powerup.prototype.getPickedUp = function (tank) {
     entityManager.activatePowerup(tank, this.type);
+    entityManager.generateEffect("points", {cx: this.cx, cy: this.cy, points: this.pointsValue});
     this.kill();
 };
 

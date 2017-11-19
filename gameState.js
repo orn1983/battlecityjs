@@ -10,6 +10,8 @@ var gameState = {
 	
 	_currentLevel : 0,
 
+	// OA: Each type already knows how many points it's woth (this.pointsValue),
+	// but let's hold off on refactoring until the end if we have time
 	_BASIC_SCORE   : 100,
 	_FAST_SCORE    : 200,
 	_POWER_SCORE   : 300,
