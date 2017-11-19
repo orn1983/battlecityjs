@@ -126,9 +126,10 @@ PlayerTank.prototype.update = function (du) {
     if (this._isDeadNow)
         return entityManager.KILL_ME_NOW;
     
-    if (this.frozenCounter >= 0) {
+    if (this.frozenCounter > 0) {
         // don't move if tank is frozen
-        this.frozenCounter -= du;
+        //this.frozenCounter -= du;
+        // frozenCounter now set to 0 in _doReset
     }
     else if (keys[this.KEY_UP]) {
         this.orientation = consts.DIRECTION_UP;
@@ -342,8 +343,7 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
 
 PlayerTank.prototype._doReset = function () {
     this.orientation = this.reset_orientation;
-    //this.forceFieldType = 1;
-    //entityManager.generateEffect("invulnerable", this, this.removeForceField);
+    this.frozenCounter = 0;
     this.addForceField(1);
     this.isDead = false;
 };
