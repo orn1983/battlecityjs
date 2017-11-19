@@ -112,6 +112,7 @@ PlayerTank.prototype.update = function (du) {
     
     if (this.numberOfLives <= -1) {
         this.isDead = true;
+        return;
     }
 
     // store old value of isMoving to detect if tank
@@ -303,9 +304,15 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
         var coords = {cx: this.cx, cy: this.cy};
         var that = this;
         var reset = function() { that.reset() };
-        entityManager.generateEffect("explosionBig", coords, reset);
         g_SFX.request(bullet.soundDestroyPlayer);
         this.numberOfLives--;
+        if (this.numberOfLives >= 0) {
+            entityManager.generateEffect("explosionBig", coords, reset);
+        }
+        else {
+            // don't reset player if out of lives
+            entityManager.generateEffect("explosionBig", coords);
+        }
     }
 
     //Player got shot by other player
@@ -316,9 +323,15 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
             var coords = {cx: this.cx, cy: this.cy};
             var that = this;
             var reset = function() { that.reset() };
-            entityManager.generateEffect("explosionBig", coords, reset);
             g_SFX.request(bullet.soundDestroyPlayer);
             this.numberOfLives--;
+            if (this.numberOfLives >= 0) {
+                entityManager.generateEffect("explosionBig", coords, reset);
+            }
+            else {
+                // don't reset player if out of lives
+                entityManager.generateEffect("explosionBig", coords);
+            }
         }
         else {  // friendly fire is off
             // freeze player for a while
