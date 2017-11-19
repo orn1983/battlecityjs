@@ -565,6 +565,7 @@ EnemyTank.prototype.maybeFireBullet = function () {
             }
 
 
+            // Check if we should fire bullet
             if (Math.random() <= this.chanceOfBulletFire) {
                 // Reset chances to 30%
                 this.chanceOfBulletFire = 0.3;
