@@ -33,17 +33,22 @@ Powerup.prototype.halfWidth = g_canvas.width/g_gridSize;
 Powerup.prototype.cx = 200;
 Powerup.prototype.cy = 200;
 
-Powerup.prototype.animateThisFrame = true;
-
+Powerup.prototype.displayFrame = true;
+Powerup.prototype.frameCounter = 0;
+Powerup.prototype.cycleSpeed = 7;
 
 Powerup.prototype.update = function (du) {
+    // Update the display status
+    this.frameCounter++;
+    console.log(this.frameCounter);
+    if (this.frameCounter % this.cycleSpeed === 0) {
+        console.log("toggle frame");
+        this.displayFrame = !this.displayFrame;
+    }
     spatialManager.unregister(this);
 
     if (this._isDeadNow)
         return entityManager.KILL_ME_NOW;
-
-    //Change blink
-    this.animateThisFrame = !this.animateThisFrame;
 
     spatialManager.register(this);
 
@@ -58,7 +63,7 @@ Powerup.prototype.getPickedUp = function (tank) {
 
 Powerup.prototype.render = function (ctx) {
 
-    if(this.animateThisFrame)
+    if(this.displayFrame)
     {
 
         this.sprite = spriteManager.spritePowerup(this.type);
