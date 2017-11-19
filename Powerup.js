@@ -41,7 +41,6 @@ Powerup.prototype.update = function (du) {
     // Update the display status
     this.frameCounter++;
     if (this.frameCounter % this.cycleSpeed === 0) {
-        console.log("toggle frame");
         this.displayFrame = !this.displayFrame;
     }
     spatialManager.unregister(this);
