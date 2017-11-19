@@ -182,12 +182,13 @@ drawHelpMenu : function(ctx) {
     ctx.font=smallFont;
     var spriteTextRow1 = spriteScaledRow + 270;
     var spriteTextRow2 = spriteTextRow1 + 15;
-    var spriteTextRow3 = spriteTextRow1 + 80;
-    var spriteTextRow4 = spriteTextRow3 + 10;
+    var spriteTextRow3 = spriteTextRow1 + 100;
+    var spriteTextRow4 = spriteTextRow3 + 15;
     var spriteTextLeftOffset = 95;
-    var spriteTextRightOffset = 140;
+    var spriteTextRightOffset = 514;
     var spriteTextColumnMultiplier = 85;
 
+    //Text for enemy tanks
     ctx.fillText("Drives slow",spriteTextLeftOffset+spriteTextColumnMultiplier*0,
         spriteTextRow1);
     ctx.fillText("Fires slow",spriteTextLeftOffset+spriteTextColumnMultiplier*0,
@@ -196,7 +197,97 @@ drawHelpMenu : function(ctx) {
         spriteTextRow1);
     ctx.fillText("Fires normally",spriteTextLeftOffset+spriteTextColumnMultiplier*1,
         spriteTextRow2);
-    //ctx.fillText("Fires slow",centerX,canvasHeight-30);
+    ctx.fillText("Drives normally",spriteTextLeftOffset+spriteTextColumnMultiplier*0,
+        spriteTextRow3);
+    ctx.fillText("Fires fast",spriteTextLeftOffset+spriteTextColumnMultiplier*0,
+        spriteTextRow4);
+    ctx.fillText("Drives normally",spriteTextLeftOffset+spriteTextColumnMultiplier*1,
+        spriteTextRow3);
+    ctx.fillText("Fires normally",spriteTextLeftOffset+spriteTextColumnMultiplier*1,
+        spriteTextRow4);
+
+    //Text for statue.
+    ctx.fillText("If the flag is destroyed,",centerX, spriteTextRow1);
+    ctx.fillText("YOU LOSE THE GAME",centerX, spriteTextRow2);
+
+    //Text for powerups
+    ctx.fillText("Force field",spriteTextRightOffset+spriteTextColumnMultiplier*0,
+        spriteTextRow1);
+    ctx.fillText("Freeze",spriteTextRightOffset+spriteTextColumnMultiplier*1,
+        spriteTextRow1);
+    ctx.fillText("enemies",spriteTextRightOffset+spriteTextColumnMultiplier*1,
+        spriteTextRow2);
+    ctx.fillText("Barricade",spriteTextRightOffset+spriteTextColumnMultiplier*2,
+        spriteTextRow1);
+    ctx.fillText("the flag",spriteTextRightOffset+spriteTextColumnMultiplier*2,
+        spriteTextRow2);
+    ctx.fillText("Augment",spriteTextRightOffset+spriteTextColumnMultiplier*0,
+        spriteTextRow3);
+    ctx.fillText("your bullets",spriteTextRightOffset+spriteTextColumnMultiplier*0,
+        spriteTextRow4);
+    ctx.fillText("Enemies",spriteTextRightOffset+spriteTextColumnMultiplier*1,
+        spriteTextRow3);
+    ctx.fillText("self-destruct",spriteTextRightOffset+spriteTextColumnMultiplier*1,
+        spriteTextRow4);
+    ctx.fillText("Extra life",spriteTextRightOffset+spriteTextColumnMultiplier*2,
+        spriteTextRow3);
+
+    ctx.font=headerFont;
+    ctx.textAlign="center";
+    ctx.fillText("------",centerX,520);
+    ctx.fillText("Environment",centerX,540);
+
+    var spriteBrick = spriteManager.spriteStructure(consts.STRUCTURE_BRICK,
+        consts.STRUCTURE_WHOLE);
+    var spriteSteel = spriteManager.spriteStructure(consts.STRUCTURE_STEEL,
+        consts.STRUCTURE_WHOLE);
+    var spriteTrees = spriteManager.spriteTerrain(consts.TERRAIN_TREES,0);
+    var spriteWater = spriteManager.spriteTerrain(consts.TERRAIN_WATER,0);
+    var spriteIce = spriteManager.spriteTerrain(consts.TERRAIN_ICE,0);
+
+    var spriteEnvLeftOffset = 30;
+    var spriteEnvColumnMultiplier = 47;
+    var spriteEnvScaledRow = 195;
+
+    ctx.save();
+    ctx.scale(g_spriteScale, g_spriteScale);
+    spriteBrick.drawAt(ctx, spriteEnvLeftOffset+spriteEnvColumnMultiplier*0,
+        spriteEnvScaledRow);
+    spriteSteel.drawAt(ctx, spriteEnvLeftOffset+spriteEnvColumnMultiplier*1,
+        spriteEnvScaledRow);
+    spriteTrees.drawAt(ctx, spriteEnvLeftOffset+spriteEnvColumnMultiplier*2,
+        spriteEnvScaledRow);
+    spriteWater.drawAt(ctx, spriteEnvLeftOffset+spriteEnvColumnMultiplier*3,
+        spriteEnvScaledRow);
+    spriteIce.drawAt(ctx, spriteEnvLeftOffset+spriteEnvColumnMultiplier*4,
+        spriteEnvScaledRow);
+    ctx.restore();
+
+    //Text for environment
+    ctx.font=regularFont;
+    ctx.textAlign="center";
+    var envLine = spriteEnvScaledRow + 410;
+    var envOffset = spriteEnvLeftOffset + 69;
+    var envMultiplier = 135;
+    ctx.fillText("Brick",envOffset+envMultiplier*0, envLine);
+    ctx.fillText("Steel",envOffset+envMultiplier*1, envLine);
+    ctx.fillText("Trees",envOffset+envMultiplier*2, envLine);
+    ctx.fillText("Water",envOffset+envMultiplier*3, envLine);
+    ctx.fillText("Ice",envOffset+envMultiplier*4+2, envLine);
+
+
+
+    ctx.textAlign="center"; //For explanation texts
+    ctx.font=smallFont;
+    var spriteTextRow1 = spriteScaledRow + 270;
+    var spriteTextRow2 = spriteTextRow1 + 15;
+    var spriteTextRow3 = spriteTextRow1 + 100;
+    var spriteTextRow4 = spriteTextRow3 + 15;
+    var spriteTextLeftOffset = 95;
+    var spriteTextRightOffset = 514;
+    var spriteTextColumnMultiplier = 85;
+
+
 
     ctx.font=headerFont;
     ctx.textAlign="center";
