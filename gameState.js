@@ -9,6 +9,8 @@
 var gameState = {
 	
 	_currentLevel : 0,
+    _gameOver     : false,
+
 
 	// OA: Each type already knows how many points it's woth (this.pointsValue),
 	// but let's hold off on refactoring until the end if we have time
@@ -298,6 +300,7 @@ addScore : function(player, type) {
 },
 
 createLevel : function() {
+    //entityManager.destroyLevel();
     createLevel(g_levels[g_sortedLevelKeys[this._currentLevel]]);
     createEnemies(g_enemies[g_sortedEnemyKeys[this._currentLevel]]);
     entityManager.generateStatue();
@@ -315,7 +318,28 @@ getFreezeTimer : function () {
 	return this._freezeTimer;
 },
 
+setGameOver : function () {
+    if (!this._gameOver) {
+        this._gameOver = true;
+        this.gameOverSprite = spriteManager.spriteGameOver();
+        this.goX = g_canvas.width/2;
+        this.goY = g_canvas.height;    
+    }
+},
+
 update : function(du) {
+    
+    if (this._gameOver) {
+        // update position of game over graphic
+        this.goY = Math.max(g_canvas.height/2, this.goY - 2 * du);
+        if (this.goY === g_canvas.height/2 && !this._nextLevelRequested) {
+            // return to main menu after a while
+            this._nextLevelRequested = true;
+            var that = this;
+            setTimeout(function() {that._nextLevelRequested = false; that.goY = g_canvas.height; that._gameOver = false; main._isGameOver = false; mainMenu.init();}, 2000);
+        }
+    }
+    
     // update spawn timer
 	this._spawnTimer -= du;
 	
@@ -354,6 +378,15 @@ update : function(du) {
 		this.resetSpawnTimer();
 	}
 	//Todo: give new life for each 20.000 points you earn.
+},
+
+render : function(ctx) {
+    if (this._gameOver) {
+        // draws scrolling game over graphic
+        this.gameOverSprite.drawScaledAt(ctx, this.goX, this.goY, consts.DIRECTION_UP, g_spriteScale);
+    }
+    
+    this.drawInfo();
 },
 
 

@@ -176,7 +176,7 @@ function renderSimulation(ctx) {
 
         if (g_renderSpatialDebug) spatialManager.render(ctx);
         
-        gameState.drawInfo();        
+        gameState.render(ctx);        
     }
     else {
         mainMenu.render(g_backgroundCtx);

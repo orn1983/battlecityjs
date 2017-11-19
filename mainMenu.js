@@ -13,6 +13,14 @@ levelSelect : false,
 helpMenu : false,
 
 init : function() {
+    // lots of stuff that needs to be reset
+    entityManager._playerTanks.length = 0;
+    entityManager.destroyLevel();
+    g_gameStarted = false; 
+    this.levelSelect = false;
+    this.menuItems.length = 0;
+    this.selectedItem = 0;
+    this.menuItems = ["1 PLAYER", "2 PLAYERS", "VS MODE", "INSTRUCTIONS"];
     g_backgroundCtx.save();
     // hide playfield
     g_canvas.style.display = "none";
@@ -34,7 +42,7 @@ close : function() {
 
 switchToLevelSelect : function() {
     this.levelSelect = true;
-    this.menuItems = [];
+    this.menuItems.length = 0;
     for (var i = 0; i < 35; i++)
         this.menuItems[i] = i+1;
     this.selectedItem = 0;
