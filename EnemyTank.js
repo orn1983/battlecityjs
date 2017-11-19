@@ -41,7 +41,9 @@ EnemyTank.prototype.SOUTH = 1;
 EnemyTank.prototype.WEST = 2;
 EnemyTank.prototype.EAST = 3;
 
-//TODO: Initialize xy coords based on default location for tank in environment
+// Start off with a 90% chance of firing bullets
+EnemyTank.prototype.chanceOfBulletFire = 0.95;
+
 EnemyTank.prototype.cx = 200;
 EnemyTank.prototype.cy = 200;
 
@@ -562,9 +564,17 @@ EnemyTank.prototype.maybeFireBullet = function () {
                     break;
             }
 
-            this.bulletsAlive++;
-            entityManager.fireBullet(turretX, turretY, this.bulletVelocity,
-                this.orientation, this.isPlayer, this.bulletStrength, this);
+
+            if (Math.random() <= this.chanceOfBulletFire) {
+                // Reset chances to 30%
+                this.chanceOfBulletFire = 0.3;
+                this.bulletsAlive++;
+                entityManager.fireBullet(turretX, turretY, this.bulletVelocity,
+                    this.orientation, this.isPlayer, this.bulletStrength, this);
+            }
+            else {
+                this.chanceOfBulletFire += 0.05;
+            }
         }
 
 };
