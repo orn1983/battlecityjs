@@ -245,9 +245,11 @@ destroyLevel : function() {
     this._enemyTanks.length = 0;
     this._enemyTanksInPlay.length = 0;
     this._bullets.length = 0;
+    this._effects.length = 0;
     this.resetPlayerTanks();
     this._powerups.length = 0;
     this._trees.length = 0;
+    
 },
 
 resetPlayerTanks : function() {
