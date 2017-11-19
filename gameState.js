@@ -323,11 +323,11 @@ update : function(du) {
 	this._freezeTimer -= du;
     
     // end game if player(s) is/are dead
-    //if (entityManager._playerTanks[0].isDead) {
-    //    if (g_numPlayers === 1 || (g_numPlayers === 2 && entityManager._playerTanks[1].isDead)) {
-    //        setTimeout(function () { main.gameOver(); } , 1000);
-    //    }
-    //}
+    if (entityManager._playerTanks[0].numberOfLives < 0) {
+        if (g_numPlayers === 1 || (g_numPlayers === 2 && entityManager._playerTanks[1].numberOfLives < 0)) {
+            setTimeout(function () { main.gameOver(); } , 1000);
+        }
+    }
 	
     // check if players are dead
     //var lives = entityManager.getPlayerLives(1);
