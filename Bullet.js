@@ -32,7 +32,6 @@ function Bullet(descr) {
 
 Bullet.prototype = new Entity();
 
-// HACKED-IN AUDIO (no preloading)
 Bullet.prototype.soundFire = "bulletFire";
 // OA: Maybe the following sounds should be owned by the entities being
 // hit rather than the bullets. The bullets are the aggressors, so it
@@ -56,9 +55,6 @@ Bullet.prototype.type = consts.BULLET;
 // sprites are 4x4 pixels
 Bullet.prototype.halfHeight = 4 * g_spriteScale / 2;
 Bullet.prototype.halfWidth = 4 * g_spriteScale / 2;
-
-// Convert times from milliseconds to "nominal" time units.
-//Bullet.prototype.lifeSpan = 3000 / NOMINAL_UPDATE_INTERVAL;
 
 Bullet.prototype.update = function (du) {
 
@@ -127,12 +123,4 @@ Bullet.prototype.render = function (ctx) {
     this.sprite = spriteManager.spriteBullet(this.direction);
     this.sprite.drawScaledAt(ctx, this.cx, this.cy, this.direction, g_spriteScale);
     
-    
-//HD: Shouldn't bullet call its own sprite like tank does,
-//rather than referencing the g_sprites array?
-    //g_sprites.bullet.drawCentredAt(
-    //this.sprite[this.direction].drawScaledAt(
-    //    ctx, this.cx, this.cy, this.direction
-    //);
-
 };
