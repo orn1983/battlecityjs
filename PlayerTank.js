@@ -132,22 +132,22 @@ PlayerTank.prototype.update = function (du) {
     else if (keys[this.KEY_UP]) {
         this.orientation = consts.DIRECTION_UP;
 		this.lockToNearestGrid();
-        this.move(du, this.cx, this.cy - this.moveDistance);
+        this.move(du, this.cx, this.cy - this.moveDistance * du);
     }
     else if (keys[this.KEY_DOWN]) {
         this.orientation = consts.DIRECTION_DOWN;
 		this.lockToNearestGrid();
-        this.move(du, this.cx, this.cy + this.moveDistance);
+        this.move(du, this.cx, this.cy + this.moveDistance * du);
     }
     else if (keys[this.KEY_LEFT]) {
         this.orientation = consts.DIRECTION_LEFT;
 		this.lockToNearestGrid();
-        this.move(du, this.cx - this.moveDistance, this.cy);
+        this.move(du, this.cx - this.moveDistance * du, this.cy);
     }
     else if (keys[this.KEY_RIGHT]) {
         this.orientation = consts.DIRECTION_RIGHT;
 		this.lockToNearestGrid();
-        this.move(du, this.cx + this.moveDistance, this.cy);
+        this.move(du, this.cx + this.moveDistance * du, this.cy);
     }
 
     //HD: Handle firing. (Remember that we can fire even if we can't move.)
@@ -166,16 +166,16 @@ PlayerTank.prototype.update = function (du) {
     if (this.slideCounter > 0) {
         switch(this.orientation) {
             case(consts.DIRECTION_UP):
-                this.slide(du, this.cx, this.cy - this.moveDistance);
+                this.slide(du, this.cx, this.cy - this.moveDistance * du);
                 break;
             case(consts.DIRECTION_DOWN):
-                this.slide(du, this.cx, this.cy + this.moveDistance);
+                this.slide(du, this.cx, this.cy + this.moveDistance * du);
                 break;
             case(consts.DIRECTION_LEFT):
-                this.slide(du, this.cx - this.moveDistance, this.cy);
+                this.slide(du, this.cx - this.moveDistance * du, this.cy);
                 break;
             case(consts.DIRECTION_RIGHT):
-                this.slide(du, this.cx + this.moveDistance, this.cy);
+                this.slide(du, this.cx + this.moveDistance * du, this.cy);
                 break;
         }
         this.slideCounter -= 1;
