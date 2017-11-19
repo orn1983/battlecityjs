@@ -28,6 +28,9 @@ PlayerTank.prototype.rememberResets = function () {
     // Remember my reset positions
     this.reset_cx = this.cx;
     this.reset_cy = this.cy;
+    this.reset_bulletVelocity = this.bulletVelocity;
+    this.reset_canFireTwice = this.canFireTwice;
+    this.reset_bulletStrength = this.bulletStrength;
 
     this.reset_orientation = this.orientation;
 };
@@ -306,7 +309,7 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
         this.isDead = true;
         var coords = {cx: this.cx, cy: this.cy};
         var that = this;
-        var reset = function() { that.reset() };
+        var reset = function() { that.reset(true) };
         g_SFX.request(bullet.soundDestroyPlayer);
         this.numberOfLives--;
         if (this.numberOfLives >= 0) {
@@ -325,7 +328,7 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
             this.isDead = true;
             var coords = {cx: this.cx, cy: this.cy};
             var that = this;
-            var reset = function() { that.reset() };
+            var reset = function() { that.reset(true) };
             g_SFX.request(bullet.soundDestroyPlayer);
             this.numberOfLives--;
             if (this.numberOfLives >= 0) {
@@ -351,7 +354,13 @@ PlayerTank.prototype._doReset = function () {
     this.isDead = false;
 };
 
-PlayerTank.prototype.reset = function () {
+PlayerTank.prototype.reset = function (death=false) {
+    if (death) {
+        this.starLevel = consts.TANK_POWER_NONE;
+        this.bulletVelocity = this.reset_bulletVelocity;
+        this.canFireTwice = this.reset_canFireTwice;
+        this.bulletStrength = this.reset_bulletStrength;
+    }
     this.frozenCounter = 50;
     this.setPos(this.reset_cx, this.reset_cy);
     var that = this;
