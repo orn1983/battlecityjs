@@ -15,7 +15,7 @@
 // Construct a "sprite" from the given `image`,
 //
 function Sprite(image, sx, sy, width, height, numCols=1, numRows=1) {
-    this.image = image;
+    // this.image = image;
     if (sx !== undefined && sy !== undefined && width && height && numCols && numRows) {
         this.width = width;
         this.height = height;

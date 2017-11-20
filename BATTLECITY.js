@@ -211,6 +211,7 @@ function preloadDone() {
         mainMenu.init();
         
     }
+	Sprite.prototype.image = g_images.spritesheet;
     main.init();
 }
 
