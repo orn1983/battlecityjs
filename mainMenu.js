@@ -16,7 +16,7 @@ init : function() {
     // lots of stuff that needs to be reset
     entityManager._playerTanks.length = 0;
     entityManager.destroyLevel();
-    g_gameStarted = false; 
+    g_gameStarted = false;
     this.levelSelect = false;
     this.menuItems.length = 0;
     this.selectedItem = 0;
@@ -283,8 +283,6 @@ drawHelpMenu : function(ctx) {
     ctx.fillText("Water",envOffset+envMultiplier*3, envLine);
     ctx.fillText("Ice",envOffset+envMultiplier*4+2, envLine);
 
-
-
     ctx.textAlign="center"; //For explanation texts
     ctx.font=smallFont;
     var spriteTextRow1 = spriteScaledRow + 270;
@@ -295,8 +293,6 @@ drawHelpMenu : function(ctx) {
     var spriteTextRightOffset = 514;
     var spriteTextColumnMultiplier = 85;
 
-
-
     ctx.font=headerFont;
     ctx.textAlign="center";
     ctx.fillStyle = "red";
@@ -305,11 +301,6 @@ drawHelpMenu : function(ctx) {
 },
 
 update : function() {
-
-    //HD: TEMP VALUE ASSIGNMENTS FOR this.levelSelect AND this.helpMenu
-    //WHILE I WORK ON THE HELP MENU DESIGN. REMOVE THESE ONCE I'M DONE.
-    //this.levelSelect = false;
-    //this.helpMenu = true;
 
     setInterval(gamepadManager.updateMenuInputs(), 3000);
 
@@ -374,11 +365,6 @@ render : function(ctx) {
     ctx.textAlign="center";
     ctx.font="20px Georgia";
     // iterate through menuItems and draw on screen
-
-    //HD: TEMP VALUE ASSIGNMENTS FOR this.levelSelect AND this.helpMenu
-    //WHILE I WORK ON THE HELP MENU DESIGN. REMOVE THESE ONCE I'M DONE.
-    //this.levelSelect = false;
-    //this.helpMenu = true;
 
     if (!this.levelSelect) {
 

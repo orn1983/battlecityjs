@@ -37,7 +37,7 @@ var g_friendlyFire = false;
 
 var g_enemiesEnabled = true;
 
-var g_gameStarted = true;
+var g_gameStarted = false;
 
 // used to scale sprites from spritesheet to our canvas
 // original playfield was 208px w/h, our is 600px w/h
