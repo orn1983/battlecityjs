@@ -9,8 +9,4 @@ o Fix shielded tanks
   + Change color depending on shield left
 
 Nice to have:
-o Instructions (most basic form: HTML hardcoded on blank part of page;
-  more advanced form: separate part of main menu; final form: pictures and icons
-  pulled from spriteManager, fancy-like.)
-o Main menu
 o Score tally
