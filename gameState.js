@@ -73,7 +73,7 @@ prevLevel : function() {
         entityManager.initLevel();
 		this._spawnPosition = 1;
         this._nextLevelRequested = false;
-        this.resetSpawnTimer();
+        this.initialSpawnTimer();
     }
 },
 
@@ -87,7 +87,7 @@ nextLevel : function() {
         entityManager.initLevel();
 		this._spawnPosition = 1;
         this._nextLevelRequested = false;
-        this.resetSpawnTimer();
+        this.initialSpawnTimer();
     }
 },
 
@@ -293,7 +293,12 @@ createLevel : function() {
     createLevel(g_levels[g_sortedLevelKeys[this._currentLevel]]);
     createEnemies(g_enemies[g_sortedEnemyKeys[this._currentLevel]]);
     entityManager.generateStatue();
+    this.initialSpawnTimer();
 }, 
+
+initialSpawnTimer : function() {
+	this._spawnTimer = 0;
+},
 
 resetSpawnTimer : function() {
 	this._spawnTimer = 3000 / NOMINAL_UPDATE_INTERVAL;
