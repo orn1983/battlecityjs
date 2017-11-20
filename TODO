@@ -5,6 +5,11 @@ o Clean up unnecessary comments (of course we can leave the ones that explain
   what our code does, but let's make sure there's no "//HD: Jesus Christ. Alright.
   This boolean is my 56th attempt attempt to fix tank collision...")
 
+o Fix shielded tanks
+  + Make them take three hits
+  + Play shield hit sound when hit shield
+  + Change color depending on shield left
+
 Nice to have:
 o Instructions (most basic form: HTML hardcoded on blank part of page;
   more advanced form: separate part of main menu; final form: pictures and icons
