@@ -269,7 +269,7 @@ PlayerTank.prototype.maybeFireBullet = function () {
         if (this.bulletsAlive === 0 || (this.bulletsAlive === 1 && this.canFireTwice))  {
             var turretX, turretY;
             // offset so bullet doesn't collide with tank!
-            var alpha = 6;
+            var alpha = 7;
 
             switch(this.orientation) {
                 // added offsets when shooting up or down

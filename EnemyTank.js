@@ -676,7 +676,7 @@ EnemyTank.prototype.maybeFireBullet = function () {
     if( (this.bulletsAlive === 0) && (this.bulletDelayCounter % 30 === 0) ) {
             var turretX, turretY;
             // offset so bullet doesn't collide with tank!
-            var alpha = 5;
+            var alpha = 7;
 
             switch(this.orientation) {
                 case(consts.DIRECTION_UP):
