@@ -114,7 +114,7 @@ Brick.prototype.placeBlackSpot = function(ctx){
 			util.fillBox(ctx, Math.floor(this.cx-this.halfWidth), this.cy-this.halfHeight-1, this.halfWidth+2, this.halfHeight+1, "#000");
 		}
 		if(this.vertical.toString() === [false, true].toString()){
-			util.fillBox(ctx, Math.floor(this.cx-this.halfWidth)+1, this.cy, this.halfWidth+2, this.halfHeight+1, "#000");
+			util.fillBox(ctx, Math.floor(this.cx-this.halfWidth), this.cy, this.halfWidth+2, this.halfHeight+1, "#000");
 		}
 	}
 	else if(this.horizontal.toString() === [false, true].toString()){
