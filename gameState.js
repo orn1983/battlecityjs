@@ -93,10 +93,8 @@ nextLevel : function() {
     }
 },
 
-// EAH: more stuff that has no home
-// Don't want to spend more time on this code atm in case we
-// end up throwing it all away, but at least it can be used
-// as proof-of-concept
+// draws current level info (lives, enemy tanks left, level number)
+// on background canvas (sidebar)
 drawInfo : function() {
 
     // used for both player 1 and player 2
@@ -150,7 +148,6 @@ drawNumberOfEnemyTanksLeft : function() {
     var x = 675;
     var y = 70;
     for (var i = 0; i < num; i++) {
-        //x = x + (i % 2) * 5;
         y = y + ((i+1) % 2) * 24;
         enemyTankIcon.drawScaledAt(g_backgroundCtx, x + (i % 2) * 24, y, consts.DIRECTION_UP, g_spriteScale);
     }
@@ -160,10 +157,6 @@ drawNumberOfEnemyTanksLeft : function() {
 
 // saves the state of the "fortress" around he statue
 saveFortress : function(bricks) {
-    // coords of fortress bricks:
-    // 255 < x < 350
-    // y > 530
-    
     // empty fortress array
     this.fortress.length = 0;
     
@@ -299,7 +292,6 @@ addScore : function(player, type) {
 },
 
 createLevel : function() {
-    //entityManager.destroyLevel();
     createLevel(g_levels[g_sortedLevelKeys[this._currentLevel]]);
     createEnemies(g_enemies[g_sortedEnemyKeys[this._currentLevel]]);
     entityManager.generateStatue();
@@ -351,32 +343,20 @@ update : function(du) {
             setTimeout(function () { main.gameOver(); } , 1000);
         }
     }
-	
-    // check if players are dead
-    //var lives = entityManager.getPlayerLives(1);
-    //if (g_numPlayers === 2) {
-    //    lives += entityManager.getPlayerLives(2);
-    //}
-    //if (lives < 0 - g_numPlayers) {
-    //    
-    //}
     
 	// see if level is over, then start next level
 	if(entityManager.getNumberOfEnemyTanks() === 0 && !this._nextLevelRequested){
-        // make sure destroy level also kills all enemies in current level.
         var that = this;
         setTimeout(function() { that.nextLevel() }, 2000);
         this._nextLevelRequested = true;
 	}
 	var nr = entityManager.getNumberOfEnemyTanks();
 	
-	
 	// spawn another enemy if we should
 	if(this._spawnTimer < 0 && entityManager._enemyTanksInPlay.length < 4 && entityManager._enemyTanks.length > 0){
 		entityManager.spawnEnemyTank();
 		this.resetSpawnTimer();
 	}
-	//Todo: give new life for each 20.000 points you earn.
 },
 
 render : function(ctx) {
