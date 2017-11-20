@@ -234,7 +234,7 @@ EnemyTank.prototype.updateAbilities = function() {
         case(consts.TANK_ENEMY_ARMOR):
             this.moveDistance = 2;
             this.bulletVelocity = 9;
-            this.numberOfLives = 3;
+            this.numberOfLives = 4;
             this.pointsValue = 400;
         break;
     }
@@ -790,7 +790,8 @@ EnemyTank.prototype.render = function (ctx, du) {
         this.type,
         powerlevelSprite,
         this.orientation,
-        this.animationFrame
+        this.animationFrame,
+        this.numberOfLives
     );
 
     this.sprite.drawCentredAt(ctx, this.cx, this.cy, consts.DIRECTION_UP, this.halfWidth, this.halfHeight);

@@ -3,9 +3,6 @@ o Clean up unnecessary comments (of course we can leave the ones that explain
   what our code does, but let's make sure there's no "//HD: Jesus Christ. Alright.
   This boolean is my 56th attempt attempt to fix tank collision...")
 
-o Fix shielded tanks
-  + Change color depending on shield left
-
 Nice to have:
 o Score tally
 o Fix lock to grid collision bug

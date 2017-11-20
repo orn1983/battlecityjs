@@ -17,7 +17,7 @@ for the sprites they need to draw themselves.
 
 var spriteManager = {
 
-    spriteTank : function(type, power, direction, frameNumber) {
+    spriteTank : function(type, power, direction, frameNumber, life) {
         //HD: Framenumber should always be 0 or 1 for tanks.
         var sx = 0
         var sy = 0;
@@ -48,8 +48,38 @@ var spriteManager = {
                 sy = 64+mul*2;
             break;
             case(consts.TANK_ENEMY_ARMOR):
-                sx = 128;
-                sy = 64+mul*3;
+                // depending on life left, color of armored tanks goes:
+                // green -> yellow -> green/yellow blinking -> gray
+                // unless it has powerup, then it goes:
+                // green/red -> yellow/red -> green/yellow/red -> gray/red
+                if (power === consts.TANK_POWER_DROPSPOWERUP ) {
+                    // red
+                    sx = 128;
+                    sy = 64+mul*11;
+                }
+                else if (life === 1) { // gray
+                    sx = 128;
+                    sy = 64+mul*3;
+                }
+                else if (life === 2) { // green/yellow
+                    if (frameNumber === 0) { // green
+                        sx = 0;
+                        sy = 64+mul*11;
+                    }
+                    else { // frameNumber === 1, yellow
+                        sx = 0;
+                        sy = 64+mul*3;
+                    }
+                }
+                else if (life === 3) { // yellow
+                    sx = 0;
+                    sy = 64+mul*3;
+                }
+                else { // life === 4, green
+                    sx = 0;
+                    sy = 64+mul*11;
+                }
+                
             break;
         }
 
@@ -71,7 +101,7 @@ var spriteManager = {
             }
         }
 
-        if( power==consts.TANK_POWER_DROPSPOWERUP )
+        if( type !== consts.TANK_ENEMY_ARMOR && power === consts.TANK_POWER_DROPSPOWERUP )
         {
             sy += mul*8;
         }
