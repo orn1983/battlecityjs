@@ -105,7 +105,7 @@ drawInfo : function() {
     playerTankIcon.drawScaledAt(g_backgroundCtx, 670, 422, consts.DIRECTION_UP, 3);
 
     // just putting 2 here as starting value for now
-    p1lives = spriteManager.spriteNumber(entityManager.getPlayerLives(1));
+    p1lives = spriteManager.spriteNumber(Math.min(9,entityManager.getPlayerLives(1)));
     p1lives.drawScaledAt(g_backgroundCtx, 695, 422, consts.DIRECTION_UP, 3);
 
     if (g_numPlayers === 2) {
@@ -115,7 +115,7 @@ drawInfo : function() {
 
         playerTankIcon.drawScaledAt(g_backgroundCtx, 670, 502, consts.DIRECTION_UP, 3);
 
-        p2lives = spriteManager.spriteNumber(entityManager.getPlayerLives(2));
+        p2lives = spriteManager.spriteNumber(Math.min(9,entityManager.getPlayerLives(2)));
         p2lives.drawScaledAt(g_backgroundCtx, 695, 502, consts.DIRECTION_UP, 3);
     }
 
