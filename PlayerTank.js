@@ -198,6 +198,15 @@ PlayerTank.prototype.update = function (du) {
 
 };
 
+PlayerTank.prototype.incrementBulletCount = function () {
+    this.bulletsAlive++;
+}
+
+PlayerTank.prototype.decrementBulletCount = function () {
+    this.bulletsAlive = Math.max(0, this.bulletsAlive -1);
+}
+
+
 PlayerTank.prototype.slide = function(du, newX, newY) {
     var hitEntity = this.findHitEntity(newX, newY);
     if (!hitEntity)
@@ -293,7 +302,7 @@ PlayerTank.prototype.maybeFireBullet = function () {
 
             //We send in "this" so that entityManager can calculate
             //whether the tank is allowed to fire again, if it tries to.
-            this.bulletsAlive++;
+            this.incrementBulletCount();
             entityManager.fireBullet(turretX, turretY, this.bulletVelocity,
                 this.orientation, this.isPlayer, this.bulletStrength, this);
         }

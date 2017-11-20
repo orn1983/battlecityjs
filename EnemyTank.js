@@ -28,6 +28,14 @@ function EnemyTank(descr) {
 
 EnemyTank.prototype = new Entity();
 
+EnemyTank.prototype.incrementBulletCount = function () {
+    this.bulletsAlive++;
+};
+
+EnemyTank.prototype.decrementBulletCount = function () {
+    this.bulletsAlive = Math.max(0, this.bulletsAlive-1);
+};
+
 EnemyTank.prototype.rememberResets = function () {
     // Remember my reset positions
     this.reset_cx = this.cx;
@@ -665,7 +673,7 @@ EnemyTank.prototype.maybeFireBullet = function () {
 
     this.bulletDelayCounter++;
 
-        if( (this.bulletsAlive === 0) && (this.bulletDelayCounter % 30 === 0) ) {
+    if( (this.bulletsAlive === 0) && (this.bulletDelayCounter % 30 === 0) ) {
             var turretX, turretY;
             // offset so bullet doesn't collide with tank!
             var alpha = 5;
