@@ -19,6 +19,8 @@ function Sprite(image, sx, sy, width, height, numCols=1, numRows=1) {
     if (sx !== undefined && sy !== undefined && width && height && numCols && numRows) {
         this.width = width;
         this.height = height;
+        this.halfWidth = this.width/2;
+        this.halfHeight = this.height/2;
         this.sx = sx;
         this.sy = sy;
         // Figure out the scale at which to draw from the number of canvas squares
@@ -50,19 +52,15 @@ Sprite.prototype.drawAt = function (ctx, x, y) {
 };
 
 Sprite.prototype.drawCentredAt = function (ctx, cx, cy, orientation) {
-    var w = this.width,
-        h = this.height;
-
     ctx.save();
     ctx.translate(cx, cy);
-    ctx.rotate(Math.PI/2 * orientation);
     ctx.scale(this.scaleX, this.scaleY);
 
     // drawImage expects "top-left" coords, so we offset our destination
     // coords accordingly, to draw our sprite centred at the origin
     ctx.drawImage(this.image,
                   this.sx, this.sy, this.width, this.height,
-                  -w/2, -h/2, this.width, this.height);
+                  -this.halfWidth, -this.halfHeight, this.width, this.height);
 
     ctx.restore();
 };
