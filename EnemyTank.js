@@ -720,6 +720,7 @@ EnemyTank.prototype.takeBulletHit = function (bullet) {
 
         if(this.numberOfLives>1)
         {
+            g_SFX.request(bullet.soundHitShield);
             this.numberOfLives -= 1;
         }
         else {
