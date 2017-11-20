@@ -99,7 +99,7 @@ var spriteManager = {
         //The "1,1" is for numCols and numRows, which the Sprite constructor
         //requires. Not sure we need them for this, but I don't see that they
         //do any harm.
-        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
+        return new Sprite(g_sheetCanvas, sx, sy, width, height, 1, 1);
 
     },
 
@@ -127,7 +127,7 @@ var spriteManager = {
             break;
         }
 
-        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
+        return new Sprite(g_sheetCanvas, sx, sy, width, height, 1, 1);
 
     },
 
@@ -182,7 +182,7 @@ var spriteManager = {
             break;
         }
 
-        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
+        return new Sprite(g_sheetCanvas, sx, sy, width, height, 1, 1);
     },
 
     spriteTerrain : function(type, frameNum){
@@ -218,7 +218,7 @@ var spriteManager = {
             break;
         }
 
-        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
+        return new Sprite(g_sheetCanvas, sx, sy, width, height, 1, 1);
     },
 
     spriteEffect: function(type, frameNumber){
@@ -263,7 +263,7 @@ var spriteManager = {
                 sy += mul*4;
             break;
         }
-        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
+        return new Sprite(g_sheetCanvas, sx, sy, width, height, 1, 1);
 
     },
 
@@ -297,7 +297,7 @@ var spriteManager = {
 
         }
 
-        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
+        return new Sprite(g_sheetCanvas, sx, sy, width, height, 1, 1);
     },
 
     spritePlayerIcon : function(player) {
@@ -310,7 +310,7 @@ var spriteManager = {
             sy = 160;
         }
 
-        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
+        return new Sprite(g_sheetCanvas, sx, sy, width, height, 1, 1);
     },
 
     spritePlayerTankIcon : function() {
@@ -319,7 +319,7 @@ var spriteManager = {
         var width = 7;
         var height = 8;
 
-        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
+        return new Sprite(g_sheetCanvas, sx, sy, width, height, 1, 1);
     },
 
     spriteFlagIcon : function() {
@@ -328,7 +328,7 @@ var spriteManager = {
         var width = 16;
         var height = 15;
 
-        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
+        return new Sprite(g_sheetCanvas, sx, sy, width, height, 1, 1);
     },
 
     spriteEnemyIcon : function() {
@@ -337,7 +337,7 @@ var spriteManager = {
         var width = 8;
         var height = 8;
 
-        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
+        return new Sprite(g_sheetCanvas, sx, sy, width, height, 1, 1);
     },
 
     spritePause : function() {
@@ -346,7 +346,7 @@ var spriteManager = {
         var width = 39;
         var height = 7;
 
-        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
+        return new Sprite(g_sheetCanvas, sx, sy, width, height, 1, 1);
     },
 
     spriteGameOver : function() {
@@ -355,7 +355,7 @@ var spriteManager = {
         var width = 31;
         var height = 15;
 
-        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
+        return new Sprite(g_sheetCanvas, sx, sy, width, height, 1, 1);
     },
 
     spriteStage : function() {
@@ -364,7 +364,7 @@ var spriteManager = {
         var width = 40;
         var height = 8;
 
-        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
+        return new Sprite(g_sheetCanvas, sx, sy, width, height, 1, 1);
     },
 
     spriteNumber : function(number) {
@@ -380,6 +380,6 @@ var spriteManager = {
             sy += mul;
         }
 
-        return new Sprite(g_images.spritesheet, sx, sy, width, height, 1, 1);
+        return new Sprite(g_sheetCanvas, sx, sy, width, height, 1, 1);
     },
 }

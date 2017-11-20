@@ -213,8 +213,8 @@ function preloadDone() {
         mainMenu.init();
         
     }
+    // Initialize Spritesheet on new canvas for added speed
 	g_brickCtx.drawImage(g_images.spritesheet, 0,0);
-	Sprite.prototype.image = g_sheetCanvas;
 	
     main.init();
 }
