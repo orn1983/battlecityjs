@@ -234,7 +234,7 @@ EnemyTank.prototype.updateAbilities = function() {
         case(consts.TANK_ENEMY_ARMOR):
             this.moveDistance = 2;
             this.bulletVelocity = 9;
-            this.numberOfLives = 2;
+            this.numberOfLives = 3;
             this.pointsValue = 400;
         break;
     }
