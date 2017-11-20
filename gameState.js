@@ -21,7 +21,7 @@ var gameState = {
 	_ARMOR_SCORE   : 400,
 	_POWERUP_SCORE : 500,
 	
-	_spawnTimer    : 100 / NOMINAL_UPDATE_INTERVAL,
+	_spawnTimer    : 3000 / NOMINAL_UPDATE_INTERVAL,
 	_freezeTimer   : 0,
 
 	// this will count how many tanks of each type each player kills,
@@ -301,6 +301,10 @@ resetSpawnTimer : function() {
 
 setFreezeTimer : function () {
 	this._freezeTimer = 15000 / NOMINAL_UPDATE_INTERVAL;
+},
+
+setFreezeTimerToZero : function () {
+    this._freezeTimer = 0;
 },
 
 getFreezeTimer : function () {

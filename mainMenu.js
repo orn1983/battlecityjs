@@ -17,6 +17,8 @@ init : function() {
     entityManager._playerTanks.length = 0;
     entityManager.destroyLevel();
     g_gameStarted = false;
+    gameState.setFreezeTimerToZero();
+    gameState.resetSpawnTimer();
     this.levelSelect = false;
     this.menuItems.length = 0;
     this.selectedItem = 0;
