@@ -257,6 +257,7 @@ destroyLevel : function() {
 resetPlayerTanks : function() {
 	for (var i = 0; i < this._playerTanks.length ; i++){
 		this._playerTanks[i].isDead = true;
+		this._playerTanks[i].bulletsAlive = 0;
 		this._playerTanks[i].reset();
 	}
 },
@@ -358,7 +359,6 @@ update: function(du) {
 render: function(ctx) {
 
     var debugX = 10, debugY = 100;
-
     for (var c = 0; c < this._categories.length; ++c) {
 
         var aCategory = this._categories[c];
