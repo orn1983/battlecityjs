@@ -70,10 +70,8 @@ main._iterCore = function (dt) {
 main._isGameOver = false;
 
 main.gameOver = function () {
-    //g_gameStarted = false;
     this._isGameOver = true;
     gameState.setGameOver();
-    //console.log("gameOver: quitting...");
 };
 
 // Annoying shim for Firefox and Safari

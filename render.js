@@ -30,7 +30,7 @@ function render(ctx) {
     if (g_doClear) {
         util.clearCanvas(ctx);
         
-        //EAH: adding clear for background canvas
+        // also clear background canvas
         util.clearBackgroundCanvas(g_backgroundCtx);
     }
     

@@ -48,8 +48,6 @@ Sprite.prototype.drawAt = function (ctx, x, y) {
 Sprite.prototype.drawCentredAt = function (ctx, cx, cy, orientation, halfWidth, halfHeight) {
     ctx.drawImage(this.image,
                   this.sx, this.sy, this.width, this.height,
-                  //cx-this.halfWidth*g_spriteScale,
-                  //cy-this.halfHeight*g_spriteScale,
                   cx-halfWidth,
                   cy-halfHeight,
                   this.width*g_spriteScale,
@@ -65,7 +63,9 @@ Sprite.prototype.drawScaledAt = function (ctx, cx, cy, direction, scale) {
     // coords accordingly, to draw our sprite centred at the origin
     ctx.drawImage(this.image,
                   this.sx, this.sy, this.width, this.height,
-                  cx-w/2*g_spriteScale, cy-h/2*g_spriteScale, this.width*g_spriteScale, this.height*g_spriteScale);
-
+                  cx-w/2*g_spriteScale, 
+                  cy-h/2*g_spriteScale, 
+                  this.width*g_spriteScale, 
+                  this.height*g_spriteScale);
 };
 
