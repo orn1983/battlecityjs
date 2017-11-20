@@ -77,7 +77,7 @@ PlayerTank.prototype.forceFieldType = 0;
 //up a "freeze-time" powerup: The entityManager then sets this to some positive
 //integer, and the tank needs to let it count down. When it reaches 0, the tank
 //can move again.
-PlayerTank.prototype.frozenCounter = 0;
+PlayerTank.prototype.frozen = false;
 
 PlayerTank.prototype.moveDistance = 2;
 
@@ -129,10 +129,8 @@ PlayerTank.prototype.update = function (du) {
     if (this._isDeadNow)
         return entityManager.KILL_ME_NOW;
     
-    if (this.frozenCounter > 0) {
-        // don't move if tank is frozen
-        //this.frozenCounter -= du;
-        // frozenCounter now set to 0 in _doReset
+    if (this.frozen) {
+        // Do nothing -- just prevent rest of ifs.
     }
     else if (keys[this.KEY_UP]) {
         this.orientation = consts.DIRECTION_UP;
@@ -341,7 +339,7 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
         }
         else {  // friendly fire is off
             // freeze player for a while
-            this.frozenCounter = 100;
+            this.frozen = true;
         }
     }
     return true;
@@ -349,7 +347,7 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
 
 PlayerTank.prototype._doReset = function () {
     this.orientation = this.reset_orientation;
-    this.frozenCounter = 0;
+    this.frozen = false;
     this.addForceField(1);
     this.isDead = false;
 };
@@ -361,7 +359,7 @@ PlayerTank.prototype.reset = function (death=false) {
         this.canFireTwice = this.reset_canFireTwice;
         this.bulletStrength = this.reset_bulletStrength;
     }
-    this.frozenCounter = 50;
+    this.frozen = true;
     this.setPos(this.reset_cx, this.reset_cy);
     var that = this;
     var do_reset = function () { that._doReset() };

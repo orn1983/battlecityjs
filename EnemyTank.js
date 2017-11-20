@@ -81,12 +81,6 @@ EnemyTank.prototype.canFireTwice = false;
 //increments when bullet fired, decrements when bullet is destroyed
 EnemyTank.prototype.bulletsAlive = 0;
 
-//Counter while tank is frozen. Only affects AI tanks when a player tank picks
-//up a "freeze-time" powerup: The entityManager then sets this to some positive
-//integer, and the tank needs to let it count down. When it reaches 0, the tank
-//can move again.
-EnemyTank.prototype.frozenCounter = 0;
-
 //TODO: Implement higher speed when player picks up a powerup, plus permanent
 //lower and higher speeds when entityManager creates certain enemy types
 EnemyTank.prototype.moveDistance = 2;
