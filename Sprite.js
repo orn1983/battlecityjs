@@ -52,17 +52,17 @@ Sprite.prototype.drawAt = function (ctx, x, y) {
 };
 
 Sprite.prototype.drawCentredAt = function (ctx, cx, cy, orientation) {
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.scale(this.scaleX, this.scaleY);
+    //ctx.save();
+    //ctx.translate(cx, cy);
+    //ctx.scale(this.scaleX, this.scaleY);
 
     // drawImage expects "top-left" coords, so we offset our destination
     // coords accordingly, to draw our sprite centred at the origin
     ctx.drawImage(this.image,
                   this.sx, this.sy, this.width, this.height,
-                  -this.halfWidth, -this.halfHeight, this.width, this.height);
+                  cx-this.halfWidth*g_spriteScale, cy-this.halfHeight*g_spriteScale, this.width*g_spriteScale, this.height*g_spriteScale);
 
-    ctx.restore();
+    //ctx.restore();
 };
 
 //HD: Adding this temp function so we can still use drawCentredAt until
@@ -71,18 +71,18 @@ Sprite.prototype.drawTankAt = function (ctx, cx, cy) {
     var w = this.width,
         h = this.height;
 
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.scale(this.scale, this.scale);
+    //ctx.save();
+    //ctx.translate(cx, cy);
+    //ctx.scale(this.scale, this.scale);
     //ctx.scale(this.scaleX, this.scaleY);
 
     // drawImage expects "top-left" coords, so we offset our destination
     // coords accordingly, to draw our sprite centred at the origin
     ctx.drawImage(this.image,
                   this.sx, this.sy, this.width, this.height,
-                  -w/2, -h/2, this.width, this.height);
+                  cx-w/2*g_spriteScale, cy-h/2*g_spriteScale, this.width*g_spriteScale, this.height*g_spriteScale);
 
-    ctx.restore();
+    //ctx.restore();
 };
 
 
@@ -91,15 +91,15 @@ Sprite.prototype.drawScaledAt = function (ctx, cx, cy, direction, scale) {
     var w = this.width,
         h = this.height;
 
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.scale(scale, scale);
+    //ctx.save();
+    //ctx.translate(cx, cy);
+    //ctx.scale(scale, scale);
 
     // drawImage expects "top-left" coords, so we offset our destination
     // coords accordingly, to draw our sprite centred at the origin
     ctx.drawImage(this.image,
                   this.sx, this.sy, this.width, this.height,
-                  -w/2, -h/2, this.width, this.height);
+                  cx-w/2*g_spriteScale, cy-h/2*g_spriteScale, this.width*g_spriteScale, this.height*g_spriteScale);
 
-    ctx.restore();    
+    //ctx.restore();    
 };
