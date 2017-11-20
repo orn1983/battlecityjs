@@ -50,6 +50,7 @@ Statue.prototype.takeBulletHit = function (bullet) {
     // update sprite
     this.sprite = spriteManager.spriteStructure(consts.STRUCTURE_FLAG, consts.STRUCTURE_ALL_GONE);
     var coords = {cx: this.cx, cy: this.cy};
+    g_SFX.request(bullet.soundDestroyPlayer);
     entityManager.generateEffect("explosionBig", coords);
     // game over
     setTimeout(function () { main.gameOver(); } , 1000);
