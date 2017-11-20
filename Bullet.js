@@ -63,14 +63,6 @@ Bullet.prototype.update = function (du) {
     if (this._isDeadNow)
         return entityManager.KILL_ME_NOW;
 
-    // move bullet
-    switch (this.direction) {
-        case(consts.DIRECTION_UP)    : this.cy -= this.vel * du; break;
-        case(consts.DIRECTION_DOWN)  : this.cy += this.vel * du; break;
-        case(consts.DIRECTION_RIGHT) : this.cx += this.vel * du; break;
-        case(consts.DIRECTION_LEFT)  : this.cx -= this.vel * du; break;
-    }
-
     //
     // Handle collisions
     //
@@ -92,6 +84,15 @@ Bullet.prototype.update = function (du) {
             entityManager.generateEffect("explosionSmall", this);
         return this.killMeNow();
     }
+    
+    // move bullet
+    switch (this.direction) {
+        case(consts.DIRECTION_UP)    : this.cy -= this.vel * du; break;
+        case(consts.DIRECTION_DOWN)  : this.cy += this.vel * du; break;
+        case(consts.DIRECTION_RIGHT) : this.cx += this.vel * du; break;
+        case(consts.DIRECTION_LEFT)  : this.cx -= this.vel * du; break;
+    }
+    
     spatialManager.register(this);
 
 };
