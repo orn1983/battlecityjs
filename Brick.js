@@ -133,7 +133,7 @@ Brick.prototype.render = function (ctx) {
     // pass my scale into the sprite, for drawing
     this.sprite.scale = this.scale;
     this.sprite.drawCentredAt(
-        ctx, this.cx, this.cy, this.rotation
+        ctx, this.cx, this.cy, this.rotation, this.halfWidth, this.halfHeight
     );
 	this.placeBlackSpot(ctx)
 };
