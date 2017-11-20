@@ -129,9 +129,6 @@ Brick.prototype.placeBlackSpot = function(ctx){
 
 
 Brick.prototype.render = function (ctx) {
-    var origScale = this.sprite.scale;
-    // pass my scale into the sprite, for drawing
-    this.sprite.scale = this.scale;
     this.sprite.drawCentredAt(
         ctx, this.cx, this.cy, this.rotation, this.halfWidth, this.halfHeight
     );

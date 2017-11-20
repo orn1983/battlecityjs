@@ -27,8 +27,6 @@ function Terrain(descr) {
 
 Terrain.prototype = new Entity();
 
-//AVG NB: Need these for calculations, but I'm just making up numbers.
-//Adjust them later based on tank size.
 Terrain.prototype.halfHeight = g_canvas.height/g_gridSize/2;
 Terrain.prototype.halfWidth = g_canvas.width/g_gridSize/2;
 
@@ -67,10 +65,7 @@ Terrain.prototype.render = function (ctx) {
     if (this.type === consts.TERRAIN_WATER) {
         this.sprite = spriteManager.spriteTerrain(this.type, this.animationFrame);
     }
-    
-    var origScale = this.sprite.scale;
-    // pass my scale into the sprite, for drawing
-    this.sprite.scale = this.scale;
+
     this.sprite.drawCentredAt(
         ctx, this.cx, this.cy, this.rotation, this.halfWidth, this.halfHeight
     );

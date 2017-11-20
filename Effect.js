@@ -51,9 +51,6 @@ Effect.prototype.metaData[consts.EFFECT_LARGEEXPLOSION] = {numFrames: 2, cycleSp
 Effect.prototype.metaData[consts.EFFECT_INVULNERABLE] = {numFrames: 2, cycleSpeed: 2, numCycles: 100};
 Effect.prototype.metaData[consts.EFFECT_POINTS] = {numFrames: 1, cycleSpeed: 15, numCycles: 1};
 
-// Convert times from milliseconds to "nominal" time units.
-//Bullet.prototype.lifeSpan = 3000 / NOMINAL_UPDATE_INTERVAL;
-
 Effect.prototype.update = function (du) {
     // A cycle is defined as going from frame 0 to frame N and back to 0 again
     // without doing the highest frame 2x in a row
@@ -86,6 +83,9 @@ Effect.prototype.killEffect = function(){
 Effect.prototype.render = function (ctx) {
     // fetch sprite from spriteManager
     this.sprite = spriteManager.spriteEffect(this.type, this.animationFrame);
+    
+    // save halfWidth and halfHeight of sprite as attribute on Effect
+    // so it doesn't have to be recalculated on every render
     if (typeof Effect.prototype.metaData[this.type].halfWidth === "undefined") {
         Effect.prototype.metaData[this.type].halfWidth = this.sprite.width/2 * g_spriteScale;
         Effect.prototype.metaData[this.type].halfHeight = this.sprite.height/2 * g_spriteScale;
