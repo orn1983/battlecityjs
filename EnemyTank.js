@@ -793,12 +793,6 @@ EnemyTank.prototype.render = function (ctx, du) {
         this.animationFrame
     );
 
-
-	//ctx.save();
-	//ctx.translate(this.cx, this.cy);
-	//ctx.scale(g_spriteScale, g_spriteScale);
-	//ctx.translate(-this.cx, -this.cy);
-    this.sprite.drawCentredAt(ctx, this.cx, this.cy);
-    //ctx.restore();
+    this.sprite.drawCentredAt(ctx, this.cx, this.cy, consts.DIRECTION_UP, this.halfWidth, this.halfHeight);
 
 };

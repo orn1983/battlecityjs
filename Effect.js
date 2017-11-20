@@ -79,15 +79,20 @@ Effect.prototype.update = function (du) {
 //HD: Used when the effect is the invulnerability blink; we want the tank to
 //be able to turn it off right away if the tank dies.
 Effect.prototype.killEffect = function(){
-        return entityManager.KILL_ME_NOW;
+    return entityManager.KILL_ME_NOW;
 };
 
 
 Effect.prototype.render = function (ctx) {
     // fetch sprite from spriteManager
     this.sprite = spriteManager.spriteEffect(this.type, this.animationFrame);
+    if (typeof Effect.prototype.metaData[this.type].halfWidth === "undefined") {
+        Effect.prototype.metaData[this.type].halfWidth = this.sprite.width/2 * g_spriteScale;
+        Effect.prototype.metaData[this.type].halfHeight = this.sprite.height/2 * g_spriteScale;
+    }
+    
     if (this.caller)
-        this.sprite.drawCentredAt(ctx, this.caller.cx, this.caller.cy, 1, g_spriteScale);
+        this.sprite.drawCentredAt(ctx, this.caller.cx, this.caller.cy, consts.DIRECTION_UP, Effect.prototype.metaData[this.type].halfWidth, Effect.prototype.metaData[this.type].halfHeight = this.sprite.height/2 * g_spriteScale);
     else
         console.log("Trying to spawn effect but have no co-ordinates");
 };
