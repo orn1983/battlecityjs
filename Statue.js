@@ -57,5 +57,5 @@ Statue.prototype.takeBulletHit = function (bullet) {
 };
 
 Statue.prototype.render = function (ctx) {
-    this.sprite.drawScaledAt(ctx, this.cx, this.cy, this.direction, g_spriteScale);
+    this.sprite.drawCentredAt(ctx, this.cx, this.cy, this.direction, g_spriteScale);
 };

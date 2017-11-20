@@ -104,29 +104,29 @@ drawInfo : function() {
 
     // draw player 1 icon
     var p1icon = spriteManager.spritePlayerIcon(1);
-    // using drawScaledAt for now because it takes a "scale" argument
-    p1icon.drawScaledAt(g_backgroundCtx, 685, 390, consts.DIRECTION_UP, 3);
+    // using drawCentredAt for now because it takes a "scale" argument
+    p1icon.drawCentredAt(g_backgroundCtx, 685, 390, consts.DIRECTION_UP, 3);
 
-    playerTankIcon.drawScaledAt(g_backgroundCtx, 670, 422, consts.DIRECTION_UP, 3);
+    playerTankIcon.drawCentredAt(g_backgroundCtx, 670, 422, consts.DIRECTION_UP, 3);
 
     // just putting 2 here as starting value for now
     p1lives = spriteManager.spriteNumber(entityManager.getPlayerLives(1));
-    p1lives.drawScaledAt(g_backgroundCtx, 695, 422, consts.DIRECTION_UP, 3);
+    p1lives.drawCentredAt(g_backgroundCtx, 695, 422, consts.DIRECTION_UP, 3);
 
     if (g_numPlayers === 2) {
         // draw player 2 icon
         var p2icon = spriteManager.spritePlayerIcon(2);
-        p2icon.drawScaledAt(g_backgroundCtx, 685, 470, consts.DIRECTION_UP, 3);
+        p2icon.drawCentredAt(g_backgroundCtx, 685, 470, consts.DIRECTION_UP, 3);
 
-        playerTankIcon.drawScaledAt(g_backgroundCtx, 670, 502, consts.DIRECTION_UP, 3);
+        playerTankIcon.drawCentredAt(g_backgroundCtx, 670, 502, consts.DIRECTION_UP, 3);
 
         p2lives = spriteManager.spriteNumber(entityManager.getPlayerLives(2));
-        p2lives.drawScaledAt(g_backgroundCtx, 695, 502, consts.DIRECTION_UP, 3);
+        p2lives.drawCentredAt(g_backgroundCtx, 695, 502, consts.DIRECTION_UP, 3);
     }
 
     // draw flag icon
     var flagIcon = spriteManager.spriteFlagIcon();
-    flagIcon.drawScaledAt(g_backgroundCtx, 685, 555, consts.DIRECTION_UP, 3);
+    flagIcon.drawCentredAt(g_backgroundCtx, 685, 555, consts.DIRECTION_UP, 3);
 
     this.drawLevelNumber(this._currentLevel + 1);
     this.drawNumberOfEnemyTanksLeft();
@@ -138,11 +138,11 @@ drawLevelNumber : function(number) {
 
     if (firstDigit > 0) {
         var firstDigitIcon = spriteManager.spriteNumber(firstDigit);
-        firstDigitIcon.drawScaledAt(g_backgroundCtx, 670, 595, consts.DIRECTION_UP, 3);
+        firstDigitIcon.drawCentredAt(g_backgroundCtx, 670, 595, consts.DIRECTION_UP, 3);
     }
 
     var secondDigitIcon = spriteManager.spriteNumber(secondDigit);
-    secondDigitIcon.drawScaledAt(g_backgroundCtx, 695, 595, consts.DIRECTION_UP, 3);
+    secondDigitIcon.drawCentredAt(g_backgroundCtx, 695, 595, consts.DIRECTION_UP, 3);
 },
 
 drawNumberOfEnemyTanksLeft : function() {
@@ -153,7 +153,7 @@ drawNumberOfEnemyTanksLeft : function() {
     for (var i = 0; i < num; i++) {
         //x = x + (i % 2) * 5;
         y = y + ((i+1) % 2) * 24;
-        enemyTankIcon.drawScaledAt(g_backgroundCtx, x + (i % 2) * 24, y, consts.DIRECTION_UP, g_spriteScale);
+        enemyTankIcon.drawCentredAt(g_backgroundCtx, x + (i % 2) * 24, y, consts.DIRECTION_UP, g_spriteScale);
     }
     
 },
@@ -383,7 +383,7 @@ update : function(du) {
 render : function(ctx) {
     if (this._gameOver) {
         // draws scrolling game over graphic
-        this.gameOverSprite.drawScaledAt(ctx, this.goX, this.goY, consts.DIRECTION_UP, g_spriteScale);
+        this.gameOverSprite.drawCentredAt(ctx, this.goX, this.goY, consts.DIRECTION_UP, g_spriteScale);
     }
     
     this.drawInfo();

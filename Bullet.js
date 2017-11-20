@@ -124,6 +124,6 @@ Bullet.prototype.render = function (ctx) {
 
     // fetch sprite from spriteManager
     this.sprite = spriteManager.spriteBullet(this.direction);
-    this.sprite.drawScaledAt(ctx, this.cx, this.cy, this.direction, g_spriteScale);
+    this.sprite.drawCentredAt(ctx, this.cx, this.cy, this.direction, g_spriteScale);
     
 };
