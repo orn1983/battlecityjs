@@ -63,13 +63,11 @@ init : function() {
     createInitialTanks();
 },
     
-    // EAH: No idea where to put these functions so just stuffing them here for now!
 prevLevel : function() {
     //only do something if not already on first level
     if (this._currentLevel > 0) {
         this._currentLevel--;
         entityManager.destroyLevel();
-        //createInitialTanks();
         this.createLevel(g_levels[g_sortedLevelKeys[this._currentLevel]]);
         entityManager.initLevel();
 		this._spawnPosition = 1;
@@ -84,7 +82,6 @@ nextLevel : function() {
     if (this._currentLevel < 34) {
         this._currentLevel++;
         entityManager.destroyLevel();
-        //createInitialTanks();
         this.createLevel(g_levels[g_sortedLevelKeys[this._currentLevel]]);
         entityManager.initLevel();
 		this._spawnPosition = 1;

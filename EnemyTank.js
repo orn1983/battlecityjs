@@ -55,8 +55,6 @@ EnemyTank.prototype.chanceOfBulletFire = 0.95;
 EnemyTank.prototype.cx = 200;
 EnemyTank.prototype.cy = 200;
 
-//HD NB: Need these for calculations, but I'm just making up numbers.
-//Adjust them later based on tank size.
 EnemyTank.prototype.halfHeight = g_canvas.height/g_gridSize-3;
 EnemyTank.prototype.halfWidth = g_canvas.width/g_gridSize-3;
 
@@ -75,15 +73,11 @@ EnemyTank.prototype.blinkRed = false;
 //to increment its movement. It is then decremented with each du
 EnemyTank.prototype.slideCounter = 0;
 
-//Normal bullet speed. Will be changed if player gets a powerup, or if the
-//tank is the enemy time that shoots faster bullets.
+//Normal bullet speed. Changed for some tank types.
 EnemyTank.prototype.bulletVelocity = 6;
 
-//HD: Normal bullet strength. Will be changed if player gets a powerup.
+//HD: Normal bullet strength. Changed for some tank types.
 EnemyTank.prototype.bulletStrength = 1;
-
-//HD: Can only fire one shot at a time. Changed with powerup.
-EnemyTank.prototype.canFireTwice = false;
 
 //counter for bullets alive that belong to tank
 //increments when bullet fired, decrements when bullet is destroyed
@@ -126,9 +120,8 @@ EnemyTank.prototype.noCollision = false;
 
 EnemyTank.prototype.bumpedIntoTank = false;
 
-//HD: Yet another attempt at fixing tank collision. This is set to either false
-//(so we can do a "!lastBumpedTank" check) or to the actual tank object we
-//bumped into last.
+//This is set to either false //(so we can do a "!lastBumpedTank" check)
+//or to the actual tank object we bumped into last.
 EnemyTank.prototype.lastBumpedTank = false;
 
 //HD: Using this to check when the tank should turn
@@ -299,7 +292,7 @@ EnemyTank.prototype.moveOLD = function(du, newX, newY)
             }
         }
 
-        //NB: Stuck-in-brick villan á sér líklega uppruna í næsta else skilyrði:
+        //NB: Stuck-in-brick villan likely causes by following else-statement:
         //Collision is off.
         //We're not headed into safe open space (empty lane or powerup).
         //But we're not stuck inside a tank, either.
@@ -487,11 +480,6 @@ EnemyTank.prototype.move = function(du, newX, newY) {
 		this.canMoveWhileColliding = false;
 	}	
 	
-	// random change direction stuff, for temporary testing
-	// if(Math.random() < 0.01){
-		// this.changeDirection()
-	// }
-	
 	// update animation frame
     this.animationFrameCounter++;
     if (this.animationFrameCounter % 3 === 0) {
@@ -641,9 +629,6 @@ EnemyTank.prototype.changeDirection = function() {
         else {
             this.orientation = consts.DIRECTION_UP;
         }
-
-
-
 };
 
 
@@ -757,21 +742,6 @@ EnemyTank.prototype.explode = function (tank) {
 EnemyTank.prototype.reset = function () {
     this.setPos(this.reset_cx, this.reset_cy);
     this.orientation = this.reset_orientation;
-
-    //this.halt();
-};
-
-
-// EAH; don't need this function anymore?
-EnemyTank.prototype.addSprite = function(image, sx, sy, width, height,
-    numCols=1, numRows=1)
-{
-    // HD TODO: This is the basic 1st version of having an object load its own
-    // sprites, so I'm skipping animation code for now. We let the tank assume
-    // that every two entries in spriteList are animation frames pointing in
-    //the same direction.
-    this.spriteList.push(new Sprite(image, sx, sy, width, height,
-        numCols, numRows));
 };
 
 EnemyTank.prototype.render = function (ctx, du) {
@@ -783,7 +753,6 @@ EnemyTank.prototype.render = function (ctx, du) {
 
         powerlevelSprite = consts.TANK_POWER_NONE;
     }
-
 
     // fetch correct sprite from spriteManager
     this.sprite = spriteManager.spriteTank(

@@ -65,8 +65,7 @@ deferredSetup : function () {
 },
 
 init: function() {
-    //this._generateRocks();
-    //this._generateShip();
+    // nothing to do here!
 },
 
 fireBullet: function(cx, cy, vel, direction, player, strength, tank) {
@@ -78,7 +77,6 @@ fireBullet: function(cx, cy, vel, direction, player, strength, tank) {
         strength     : strength,
         player          : player,
         tank          : tank
-        //sprite      : g_sprites.bullet
     }));
 },
 
@@ -141,13 +139,6 @@ handleGamepads : function() {
         }
     }
 },
-
-
-//resetPlayerTanks: function() {
-//    this._forEachOf(this._playerTanks, PlayerTank.prototype.reset);
-//},
-
-
 
 generatePowerup : function(){
     //Pick random number from 1 to 6;
@@ -237,8 +228,7 @@ removeSteelFortress : function(em) {
 destroyLevel : function() {
     spatialManager.clear();
 
-    // EAH: for some reason array = [] doesn't work (???)
-    // so using array.length = 0 to clear
+    // array.length = 0 used to to clear array
     this._terrain.length = 0;
 	gameState.saveFortress(this._bricks);
     this._bricks.length = 0;

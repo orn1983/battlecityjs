@@ -216,12 +216,6 @@ var spriteManager = {
     },
 
     spriteTerrain : function(type, frameNum){
-        //HD NB: This has no water animation. We can easily add that if we
-        //make the two animation frames be different constants: TERRAIN_WATER1
-        //and TERRAIN_WATER2. I'm sticking with a single frame for now.
-        //EAH: added the parameter frameNum for water to get specific frame;
-        //the magic of JavaScript will just ignore the parameter for other
-        //terrain types :)
         var sx = 256;
         var sy = 80; //x-and-y starting points for the single water frame.
         var width = 8;
@@ -231,8 +225,6 @@ var spriteManager = {
         switch(type)
         {
             case(consts.TERRAIN_WATER):
-                // water frame at (256,80) isn't actually used in-game(?)
-                // so use only those at (264,80) and (272,80)
                 sx += mul*(1+frameNum);
             break;
             case(consts.TERRAIN_TREES):

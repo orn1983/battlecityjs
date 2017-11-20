@@ -18,10 +18,8 @@ function Terrain(descr) {
     // Common inherited setup logic from Entity
     this.setup(descr);
       
-    // Use spriteManager when it works
+    // get sprite:
     this.sprite = spriteManager.spriteTerrain(this.type);
-    // this.sprite = new Sprite(g_images.spritesheet, 256, 32, 16, 16, 1, 1);
-    this.scale  = this.scale  || 1;
 
 };
 

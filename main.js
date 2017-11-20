@@ -43,8 +43,8 @@ main.iter = function (frameTime) {
     // Diagnostics, such as showing current timer values etc.
     this._debugRender(g_ctx);
     
-    // Request the next iteration if needed
-    //if (!this._isGameOver) this._requestNextIteration();
+    // Always request next iteration. Other mechanism will send player
+    // back to main menu if needed
     this._requestNextIteration();
 };
 

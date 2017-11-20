@@ -18,7 +18,7 @@ function Powerup(descr) {
     // Common inherited setup logic from Entity
     this.setup(descr);
 
-    // Use sprite manager when it works
+    // Get sprite:
     this.sprite = spriteManager.spriteStructure(this.type);
     this.scale  = this.scale  || 1;
     g_SFX.request(this.soundSpawn);
@@ -74,7 +74,6 @@ Powerup.prototype.render = function (ctx) {
 
     if(this.displayFrame)
     {
-
         this.sprite = spriteManager.spritePowerup(this.type);
         this.sprite.scaleX = g_spriteScale;
         this.sprite.scaleY = g_spriteScale;

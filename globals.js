@@ -27,9 +27,6 @@ var g_gridSize = 26;
 // number of players, starts as 1
 var g_numPlayers = 1;
 
-// stores "index" of current level, ranges from 0 to 34
-//var g_currentLevel = 0; not used anymore
-
 var g_sortedLevelKeys = Object.keys(g_levels).sort();
 var g_sortedEnemyKeys = Object.keys(g_enemies).sort();
 

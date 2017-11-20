@@ -42,12 +42,7 @@ var consts = {
     STRUCTURE_BOTTOM_GONE   : 21,
     STRUCTURE_RIGHT_GONE    : 22,
     STRUCTURE_ALL_GONE      : 23,
-    //HD: Note that we have two uses for ALL_GONE: One for a structure that
-    //no longer has collision and will be drawn as a blank; and another for the
-    //flag when it has been destroyed.
 
-    //HD NOTE: Water is the only terrain that's constantly animated
-    //EAH: changing these values to correspond to those used in LevelMaker
     TERRAIN_WATER   : 24,
     TERRAIN_TREES   : 25,
     TERRAIN_ICE     : 26,

@@ -72,8 +72,6 @@ findEntityInRange: function(x1, y1, x2, y2) {
     
     // check for outer border of playfield
     if (x1 < 0 || x2 > g_canvas.width || y1 < 0 || y2 > g_canvas.height)
-        // EAH: needs to be modified to return a specific value for e.g.
-        //      bullet hits (maybe?)
         return true;
     
     // no collision
@@ -105,7 +103,6 @@ clear: function() {
 },
 
 // uses grid lookup to detect if (x,y) is on ice
-// maybe belongs in levelManager if we implement it...
 isOnIce: function(x, y) {
     var j = Math.floor(x / g_canvas.width * g_gridSize); 
     var i = Math.floor(y / g_canvas.height * g_gridSize); 
@@ -116,23 +113,6 @@ isOnIce: function(x, y) {
     }
     return false;
 },
-
-// old function from Pat
-/*findEntityInRange: function(posX, posY, radius) {
-    var canvasW = g_canvas.width,
-        canvasH = g_canvas.height;
-
-    for (var ID in this._entities) {
-        var entity = this._entities[ID];
-        var ex = entity.posX;
-        var ey = entity.posY;
-        var er = entity.radius;
-        var distance = util.wrappedDistSq(posX, posY, ex, ey, canvasW, canvasH);
-        var radiiSquared = util.square((radius+er));
-        if (distance < radiiSquared)
-            return entity.entity;
-    }
-},*/
 
 render: function(ctx) {
     var oldStyle = ctx.strokeStyle;

@@ -42,9 +42,6 @@ Border.prototype.takeBulletHit = function (bullet) {
     return true;
 };
 
-// We update the structure if it has been hit by a bullet
-// Hit direction is the direction of which the brick is hit from
-
 
 Border.prototype.render = function (ctx) {
 
