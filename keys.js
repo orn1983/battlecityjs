@@ -5,7 +5,13 @@
 var keys = [];
 
 function handleKeydown(evt) {
-    if (evt.keyCode === keyCode(" "))
+    // Prevent default actions for player controls
+    if (evt.keyCode === keyCode(" ") ||
+        evt.keyCode === 38 || // UP ARROW
+        evt.keyCode === 40 || // DOWN ARROW
+        evt.keyCode === 37 || // LEFT ARROW
+        evt.keyCode === 39    // RIGHT ARROW
+       )
         evt.preventDefault();
     keys[evt.keyCode] = true;
 }

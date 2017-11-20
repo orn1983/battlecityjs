@@ -349,6 +349,8 @@ PlayerTank.prototype.takeBulletHit = function (bullet) {
         else {  // friendly fire is off
             // freeze player for a while
             this.frozen = true;
+            var that = this;
+            setTimeout(function () { that.frozen = false; }, 3000);
         }
     }
     return true;
