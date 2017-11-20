@@ -6,8 +6,6 @@ o Clean up unnecessary comments (of course we can leave the ones that explain
   This boolean is my 56th attempt attempt to fix tank collision...")
 
 o Fix shielded tanks
-  + Make them take three hits
-  + Play shield hit sound when hit shield
   + Change color depending on shield left
 
 Nice to have:
