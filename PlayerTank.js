@@ -70,13 +70,9 @@ PlayerTank.prototype.canFireTwice = false;
 //increments when bullet fired, decrements when bullet is destroyed
 PlayerTank.prototype.bulletsAlive = 0;
 
-//0 is no forcefield, 1 is brief spawning forcefield, 2 is longer powerfup field.
+//0 is no forcefield, 1 is brief spawning forcefield, 2 is longer powerup field.
 PlayerTank.prototype.forceFieldType = 0;
 
-//Counter while tank is frozen. Only affects AI tanks when a player tank picks
-//up a "freeze-time" powerup: The entityManager then sets this to some positive
-//integer, and the tank needs to let it count down. When it reaches 0, the tank
-//can move again.
 PlayerTank.prototype.frozen = false;
 
 PlayerTank.prototype.moveDistance = 2;
@@ -98,9 +94,6 @@ PlayerTank.prototype.animationFrame = 0;
 
 //counts number of updates called
 PlayerTank.prototype.animationFrameCounter = 0;
-
-//Used as a counter to space apart how often the tank fires bullets
-PlayerTank.prototype.bulletDelayCounter = 0;
 
 // HACKED-IN AUDIO (no preloading)
 PlayerTank.prototype.soundIdle = "tankIdle";
@@ -160,7 +153,7 @@ PlayerTank.prototype.update = function (du) {
 
     // if tank was moving but isn't moving now and is on ice...
     if (wasMoving && !this.isMoving && spatialManager.isOnIce(this.cx, this.cy)) {
-        this.slideCounter = 20;
+        this.slideCounter = 30;
     }
 
     // remove slide effect if not on ice or if tank moved
@@ -183,7 +176,7 @@ PlayerTank.prototype.update = function (du) {
                 this.slide(du, this.cx + this.moveDistance * du, this.cy);
                 break;
         }
-        this.slideCounter -= 1;
+        this.slideCounter -= 1 * du;
     }
 
     if (!this.isDead)
@@ -205,7 +198,6 @@ PlayerTank.prototype.incrementBulletCount = function () {
 PlayerTank.prototype.decrementBulletCount = function () {
     this.bulletsAlive = Math.max(0, this.bulletsAlive -1);
 }
-
 
 PlayerTank.prototype.slide = function(du, newX, newY) {
     var hitEntity = this.findHitEntity(newX, newY);
@@ -249,7 +241,7 @@ PlayerTank.prototype.move = function(du, newX, newY)
 
 // use direction to determine wether we lock to X-grid og Y-grid
 PlayerTank.prototype.lockToNearestGrid = function(){
-	if(this.orientation === consts.DIRECTION_UP || this.orientation == consts.DIRECTION_DOWN){
+	if(this.orientation === consts.DIRECTION_UP || this.orientation === consts.DIRECTION_DOWN){
 		// lock to nearest x coordinates on the grid
 		var gridStep = g_canvas.width/g_gridSize;
 		var mod = this.cx % gridStep;
@@ -258,7 +250,7 @@ PlayerTank.prototype.lockToNearestGrid = function(){
 		else
 			this.cx = this.cx-mod;
 	}
-	if(this.orientation === consts.DIRECTION_RIGHT || this.orientation == consts.DIRECTION_LEFT){
+	if(this.orientation === consts.DIRECTION_RIGHT || this.orientation === consts.DIRECTION_LEFT){
 		// lock to nearest y coordinates on the grid
 		var gridStep = g_canvas.height/g_gridSize;
 		var mod = this.cy % gridStep;
@@ -272,7 +264,6 @@ PlayerTank.prototype.lockToNearestGrid = function(){
 PlayerTank.prototype.maybeFireBullet = function () {
 
     if (eatKey(this.KEY_FIRE)) {
-        this.bulletDelayCounter++;
         //tank may only fire if no bullets alive
         //or only one bullet alive and canFireTwice is true
         if (this.bulletsAlive === 0 || (this.bulletsAlive === 1 && this.canFireTwice))  {

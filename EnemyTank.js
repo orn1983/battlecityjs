@@ -179,7 +179,7 @@ EnemyTank.prototype.update = function (du) {
 
     // if tank was moving but isn't moving now and is on ice...
     if (wasMoving && !this.isMoving && spatialManager.isOnIce(this.cx, this.cy)) {
-        this.slideCounter = 10;
+        this.slideCounter = 30;
     }
 
     // remove slide effect if not on ice or if tank moved
@@ -202,7 +202,7 @@ EnemyTank.prototype.update = function (du) {
                 this.slide(du, this.cx + this.moveDistance * du, this.cy);
                 break;
         }
-        this.slideCounter -= 1;
+        this.slideCounter -= 1 * du;
     }
 
     spatialManager.register(this);
