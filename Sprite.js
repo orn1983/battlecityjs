@@ -52,17 +52,12 @@ Sprite.prototype.drawAt = function (ctx, x, y) {
 };
 
 Sprite.prototype.drawCentredAt = function (ctx, cx, cy, orientation) {
-    //ctx.save();
-    //ctx.translate(cx, cy);
-    //ctx.scale(this.scaleX, this.scaleY);
-
-    // drawImage expects "top-left" coords, so we offset our destination
-    // coords accordingly, to draw our sprite centred at the origin
     ctx.drawImage(this.image,
                   this.sx, this.sy, this.width, this.height,
-                  cx-this.halfWidth*g_spriteScale, cy-this.halfHeight*g_spriteScale, this.width*g_spriteScale, this.height*g_spriteScale);
-
-    //ctx.restore();
+                  cx-this.halfWidth*g_spriteScale,
+                  cy-this.halfHeight*g_spriteScale,
+                  this.width*g_spriteScale,
+                  this.height*g_spriteScale);
 };
 
 //HD: Adding this temp function so we can still use drawCentredAt until
