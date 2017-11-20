@@ -10,6 +10,7 @@ var gameState = {
 	
 	_currentLevel : 0,
     _gameOver     : false,
+    _gameOverCalled : false,
 
 
 	// OA: Each type already knows how many points it's woth (this.pointsValue),
@@ -324,7 +325,7 @@ update : function(du) {
             // return to main menu after a while
             this._nextLevelRequested = true;
             var that = this;
-            setTimeout(function() {that._nextLevelRequested = false; that.goY = g_canvas.height; that._gameOver = false; main._isGameOver = false; mainMenu.init();}, 2000);
+            setTimeout(function() {that._nextLevelRequested = false; that._gameOverCalled = false; that.goY = g_canvas.height; that._gameOver = false; main._isGameOver = false; mainMenu.init();}, 2000);
         }
     }
     
@@ -336,8 +337,9 @@ update : function(du) {
     
     // end game if player(s) is/are dead
     if (entityManager._playerTanks[0].numberOfLives < 0) {
-        if (g_numPlayers === 1 || (g_numPlayers === 2 && entityManager._playerTanks[1].numberOfLives < 0)) {
+        if ((g_numPlayers === 1 || (g_numPlayers === 2 && entityManager._playerTanks[1].numberOfLives < 0)) && !this._gameOverCalled) {
             setTimeout(function () { main.gameOver(); } , 1000);
+            this._gameOverCalled = true;
         }
     }
     
