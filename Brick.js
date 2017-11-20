@@ -135,5 +135,5 @@ Brick.prototype.render = function (ctx) {
     this.sprite.drawCentredAt(
         ctx, this.cx, this.cy, this.rotation, this.halfWidth, this.halfHeight
     );
-	this.placeBlackSpot(ctx)
+	this.placeBlackSpot(ctx);
 };
