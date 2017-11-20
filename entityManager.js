@@ -157,8 +157,8 @@ generatePowerup : function(){
     max = Math.floor(max);
     var randomPowerUp = Math.floor(Math.random() * (max - min + 1)) + min;
 
-    var randomcX = Math.floor(Math.random() * (g_canvas.width - 0 + 1)) + 0;
-    var randomcY = Math.floor(Math.random() * (g_canvas.height - 0 + 1)) + min;
+    var randomcX = Math.floor(Math.random() * (g_canvas.width - g_canvas.width/g_gridSize + 1)) + 0;
+    var randomcY = Math.floor(Math.random() * (g_canvas.height - g_canvas.width/g_gridSize*2 + 1)) + min;
 
 
     this._powerups.push(new Powerup(
