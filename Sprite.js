@@ -23,9 +23,6 @@ function Sprite(image, sx, sy, width, height, numCols=1, numRows=1) {
         this.halfHeight = this.height/2;
         this.sx = sx;
         this.sy = sy;
-        // Figure out the scale at which to draw from the number of canvas squares
-        // OA: TODO maybe use Environment variables when we've made them publically
-        // accessible?
         var squareWidth = g_canvas.width / g_gridSize;
         var squareHeight = g_canvas.height / g_gridSize;
         this.scaleX = (squareWidth / this.width) * numCols;

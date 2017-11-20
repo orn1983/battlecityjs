@@ -160,7 +160,7 @@ PlayerTank.prototype.update = function (du) {
 
     // if tank was moving but isn't moving now and is on ice...
     if (wasMoving && !this.isMoving && spatialManager.isOnIce(this.cx, this.cy)) {
-        this.slideCounter = 10;
+        this.slideCounter = 20;
     }
 
     // remove slide effect if not on ice or if tank moved

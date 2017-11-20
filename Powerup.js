@@ -76,8 +76,8 @@ Powerup.prototype.render = function (ctx) {
     {
 
         this.sprite = spriteManager.spritePowerup(this.type);
-		this.sprite.scaleX = g_spriteScale;
-		this.sprite.scaleY = g_spriteScale;
+        this.sprite.scaleX = g_spriteScale;
+        this.sprite.scaleY = g_spriteScale;
         this.sprite.drawCentredAt(ctx, this.cx, this.cy, consts.DIRECTION_UP, this.sprite.width/2*g_spriteScale, this.sprite.height/2*g_spriteScale);
     }
 
