@@ -199,6 +199,8 @@ function requestPreloads() {
 }
 
 var g_sprites = {};
+var g_sheetCanvas = document.getElementById("brickCanvas");
+var g_brickCtx = g_sheetCanvas.getContext("2d");
 
 function preloadDone() {
     if (g_gameStarted) {
@@ -211,7 +213,9 @@ function preloadDone() {
         mainMenu.init();
         
     }
-	Sprite.prototype.image = g_images.spritesheet;
+	g_brickCtx.drawImage(g_images.spritesheet, 0,0);
+	Sprite.prototype.image = g_sheetCanvas;
+	
     main.init();
 }
 
