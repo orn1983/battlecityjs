@@ -141,11 +141,6 @@ function SFXManager() {
         this.SFX[sound].requested = false;
     };
 
-    this.stopMusic = function () {
-       this.SFX.delorean.audio.pause();
-       this.SFX.delorean.audio.currentTime = 0;
-    }
-
     this.toggleSound = function () {
         this.soundsEnabled = !this.soundsEnabled;
         if (!this.soundsEnabled) {
