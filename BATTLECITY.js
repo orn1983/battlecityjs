@@ -105,11 +105,6 @@ function gatherInputs() {
 // UPDATE SIMULATION
 // =================
 
-// We take a very layered approach here...
-//
-// The primary `update` routine handles generic stuff such as
-// pausing, single-step, and time-handling.
-//
 // It then delegates the game-specific logic to `updateSimulation`
 
 
@@ -159,16 +154,6 @@ function processDiagnostics() {
 // =================
 // RENDER SIMULATION
 // =================
-
-// We take a very layered approach here...
-//
-// The primary `render` routine handles generic stuff such as
-// the diagnostic toggles (including screen-clearing).
-//
-// It then delegates the game-specific logic to `gameRender`
-
-
-// GAME-SPECIFIC RENDERING
 
 function renderSimulation(ctx) {
     if (g_gameStarted) {
