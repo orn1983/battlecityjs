@@ -6,3 +6,5 @@ written in HTML canvas and JavasScript.
 School group project at the University of Iceland in the fall of 2017.
 
 Demo gameplay: https://www.youtube.com/watch?v=ViLBANsPbHc
+
+Playable link: http://arnarson.net/battlecityjs
